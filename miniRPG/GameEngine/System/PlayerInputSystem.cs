@@ -6,6 +6,9 @@ namespace miniRPG.GameEngine.System;
 
 public class PlayerInputSystem
 {
+    private AnimationComponent? _animationComponent;
+    private bool _isAnimated;
+    
     public void Update(World world)
     {
         foreach (var entity in world.Entities)
@@ -13,8 +16,14 @@ public class PlayerInputSystem
             if (!entity.HasComponent<PlayerComponent>())
                 continue;
 
+            if (entity.HasComponent<AnimationComponent>())
+            {
+                _animationComponent = entity.GetComponent<AnimationComponent>();
+                _isAnimated = true;
+            }
+            
             var velocity = entity.GetComponent<VelocityComponent>();
-
+            
             if (velocity != null)
             {
                 velocity.X = 0;
@@ -24,16 +33,16 @@ public class PlayerInputSystem
             switch (Keyboard.GetPressedKey())
             {
                 case Keys.W:
-                    velocity.Y = -1;
+                    velocity!.Y = -1;
                     break;
                 case Keys.S:
-                    velocity.Y = 1;
+                    velocity!.Y = 1;
                     break;
                 case Keys.A:
-                    velocity.X = -1;
+                    velocity!.X = -1;
                     break;
                 case Keys.D:
-                    velocity.X = 1;
+                    velocity!.X = 1;
                     break;
             }
         }

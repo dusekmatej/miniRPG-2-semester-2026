@@ -40,7 +40,27 @@ public class AnimationSystem
 
         foreach (var comp in _animationComponents)
         {
-            var frames = comp.AnimationFrames;
+            var frames = comp.AnimationFramesIdle;
+
+            if (comp.IsIdle)
+                frames = comp.AnimationFramesIdle;
+            
+            if (comp.IsRunningUp)
+                frames = comp.AnimationFramesUp;
+            
+            if (comp.IsRunningDown)
+                frames = comp.AnimationFramesDown;
+            
+            if (comp.IsRunningLeft)
+            {
+                frames = comp.AnimationFramesLeft;
+            }
+            
+            if (comp.IsRunningRight)
+            {
+                frames = comp.AnimationFramesRight;
+            }
+            
             if (frames == null || frames.Count == 0)
                 continue;
 
@@ -49,6 +69,7 @@ public class AnimationSystem
                 comp.CurrentFrameIndex = 0;
 
             comp.CurrentFrameIndex = (comp.CurrentFrameIndex + steps) % frames.Count;
+                
             comp.CurrentFrame = frames[comp.CurrentFrameIndex];
         }
     }

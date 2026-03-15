@@ -8,14 +8,12 @@ public static class Keyboard
     public static void KeyDown(Keys key)
     {
         keyPress.Add(key);
-        Console.WriteLine($"Key down: {key}");
         currentlyPressedKey = key;
     }
 
     public static void KeyUp(Keys key)
     {
         keyPress.Remove(key);
-        Console.WriteLine($"Key up: {key}");
         currentlyPressedKey = Keys.None;
     }
 

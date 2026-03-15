@@ -10,7 +10,8 @@ public class Engine
     private PlayerInputSystem Input = new();
     public GeneralRenderSystem GeneralRender = new GeneralRenderSystem();
     private MovementSystem Movement = new MovementSystem();
-    public AnimationSystem Animation = new AnimationSystem();
+    private DirectionDetectionSystem DirectionDetection = new DirectionDetectionSystem();
+    private AnimationSystem Animation = new AnimationSystem();
     
     // Update now accepts elapsed milliseconds since last update
     public void Update(int deltaMs)
@@ -18,5 +19,6 @@ public class Engine
         Input.Update(World);
         Movement.Update(World);
         Animation.Update(World, deltaMs);
+        DirectionDetection.Update(World);
     }
 }
