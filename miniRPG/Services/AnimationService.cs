@@ -25,9 +25,7 @@ public static class AnimationService
 
             var images = new List<Image>();
             foreach (var file in files)
-            {
                 images.Add(Image.FromFile(file));
-            }
 
             return images;
         }
