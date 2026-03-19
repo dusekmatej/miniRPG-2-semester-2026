@@ -1,4 +1,6 @@
 using System.ComponentModel;
+using System.Diagnostics;
+using Timer = System.Windows.Forms.Timer;
 
 namespace miniRPG.Forms;
 
@@ -8,7 +10,6 @@ partial class MainForm
     /// Required designer variable.
     /// </summary>
     private IContainer components = null;
-
     /// <summary>
     /// Clean up any resources being used.
     /// </summary>
@@ -32,22 +33,36 @@ partial class MainForm
     private void InitializeComponent()
     {
         components = new System.ComponentModel.Container();
-        _tmrAnimation = new System.Windows.Forms.Timer(components);
         SuspendLayout();
         // 
         // MainForm
         // 
+        
+        // Optimizations
+        DoubleBuffered = true;
+        KeyPreview = true;
+        SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer, true);
+        UpdateStyles();
+        
         AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         ClientSize = new System.Drawing.Size(800, 450);
         Text = "Mainform";
+        
+        // Game Loop
+        _tmrGameLoop = new();
+        _tmrGameLoop.Interval = 16;
+        _tmrGameLoop.Tick += GameTimerLoop;
+        _tmrGameLoop.Start();
+        _stopwatch = Stopwatch.StartNew();
         Paint += MainForm_Paint;
         KeyDown += MainForm_KeyDown;
         KeyUp += MainForm_KeyUp;
         ResumeLayout(false);
     }
 
-    private System.Windows.Forms.Timer _tmrAnimation;
+    private System.Windows.Forms.Timer _tmrGameLoop;
+    private System.Diagnostics.Stopwatch _stopwatch;
 
     #endregion
 }
