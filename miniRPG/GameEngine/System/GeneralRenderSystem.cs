@@ -25,19 +25,22 @@ public class GeneralRenderSystem
 
             var position = entity.GetComponent<PositionComponent>();
             var animationComponent = entity.GetComponent<AnimationComponent>();
-
+            var textureComponent = entity.GetComponent<TextureComponent>();
+            
             if (position == null)
                 continue;
 
             var screenX = position.X - camera.X + context.X;
             var screenY = position.Y - camera.Y + context.Y;
-
+            
             // Draw the entity. If it has an animation, draw the current frame or a placeholder
+
             if (animationComponent?.CurrentFrame != null)
                 context.Graphics.DrawImage(animationComponent.CurrentFrame, screenX, screenY, 150, 150);
+            else if (textureComponent != null)
+                context.Graphics.DrawImage(textureComponent.Image, screenX, screenY, 150, 150);
             else
                 context.Graphics.FillRectangle(Brushes.Red, screenX, screenY, 20, 20);
-
         }
     }
 }

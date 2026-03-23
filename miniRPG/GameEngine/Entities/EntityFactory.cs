@@ -2,6 +2,7 @@ using System.Drawing;
 using System.Linq;
 using miniRPG.GameEngine.Components;
 using miniRPG.GameEngine.Core;
+using miniRPG.Helpers;
 using miniRPG.Models;
 using miniRPG.Services;
 
@@ -9,36 +10,49 @@ namespace miniRPG.GameEngine.Entities;
 
 public static class EntityFactory
 {
+    // ReSharper disable once InconsistentNaming
+    private const string BASE_CHARACTER = "Resources/Character";
+    private const string BASE_TERRAIN = "Resources/Terrain";
+    
+    // Load character frames
     private static readonly Lazy<List<Image>> PlayerAnimationIdle = new(() =>
     {
-        var imgs = AnimationService.LoadAllDirImages("Resources/Idle");
-        return imgs ?? new List<Image>();
+        var imgs = ImageLoader.LoadAnimation($"{BASE_CHARACTER}/Idle");
+        return imgs ?? [];
     });
 
     private static readonly Lazy<List<Image>> PlayerAnimationsUp = new(() =>
     {
-        var imgs = AnimationService.LoadAllDirImages("Resources/run_up");
-        return imgs ?? new List<Image>();
+        var imgs = ImageLoader.LoadAnimation($"{BASE_CHARACTER}/run_up");
+        return imgs ?? [];
     });
 
     private static readonly Lazy<List<Image>> PlayerAnimationsDown = new(() =>
     {
-        var imgs = AnimationService.LoadAllDirImages("Resources/run_down");
-        return imgs ?? new List<Image>();
+        var imgs = ImageLoader.LoadAnimation($"{BASE_CHARACTER}/run_down");
+        return imgs ?? [];
     });
 
     private static readonly Lazy<List<Image>> PlayerAnimationsRight = new(() =>
     {
-        var imgs = AnimationService.LoadAllDirImages("Resources/run_right");
-        return imgs ?? new List<Image>();
+        var imgs = ImageLoader.LoadAnimation($"{BASE_CHARACTER}/run_right");
+        return imgs ?? [];
     });
 
     private static readonly Lazy<List<Image>> PlayerAnimationLeft = new(() =>
     {
-        var imgs = AnimationService.LoadAllDirImages("Resources/run_left");
-        return imgs ?? new List<Image>();
+        var imgs = ImageLoader.LoadAnimation($"{BASE_CHARACTER}/run_left");
+        return imgs ?? [];
     });
-        
+    
+    // Load object frames
+
+    private static readonly Image RockImage;
+    static EntityFactory()
+    {
+        RockImage = ImageLoader.LoadImage($"{BASE_TERRAIN}/naturalMaterials/rock/frame_001.png");
+    }
+    
     public static Entity CreatePlayer()
     {
         var player = new Entity();
@@ -47,10 +61,7 @@ public static class EntityFactory
         player.AddComponent(new PositionComponent { X = 0, Y = 0 });
         player.AddComponent(new VelocityComponent { X = 0, Y = 0 });
         player.AddComponent(new HealthComponent { Health = 100 });
-
-        // ensure the player has a camera component so rendering systems can find it
-        player.AddComponent(new Camera { X = 0, Y = 0 });
-
+        
         // Set AnimationFrames and initialize CurrentFrame to first frame (or null if none)
         var framesIdle = PlayerAnimationIdle.Value ?? [];
         var framesUp = PlayerAnimationsUp.Value ?? [];
@@ -59,7 +70,6 @@ public static class EntityFactory
         var framesLeft = PlayerAnimationLeft.Value ?? [];
         
         var current = framesIdle.FirstOrDefault();
-        // player.AddComponent(new AnimationComponent { CurrentFrameIndex = 0, CurrentFrame = current, AnimationFramesIdle = framesIdle, IsRunningUp = false});
         player.AddComponent(
             new AnimationComponent
             {
@@ -87,5 +97,14 @@ public static class EntityFactory
         var camera = new Entity();
         camera.AddComponent(new Camera());
         return camera;
+    }
+
+    public static Entity TestEntity()
+    {
+        var entity = new Entity();
+        entity.AddComponent(new PositionComponent { X = 100, Y = 100 });
+        entity.AddComponent(new TextureComponent { Image = RockImage });
+
+        return entity;
     }
 }

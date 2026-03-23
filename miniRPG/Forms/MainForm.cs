@@ -7,7 +7,6 @@ namespace miniRPG.Forms;
     
 public partial class MainForm : Form
 {
-    // Game engine loop initialization
     private readonly Engine _engine;
     private long _lastElapsedMs;
     
@@ -16,15 +15,17 @@ public partial class MainForm : Form
         InitializeComponent();
         
         // Performance optimizations for smoother rendering
-
         var player = EntityFactory.CreatePlayer();
         var camera = EntityFactory.CreateCamera();
+        var testEntity = EntityFactory.TestEntity();
+        
 
         _engine = new Engine();
         
         _engine.World.Entities.Add(camera);
         _engine.World.Entities.Add(player);
-
+        _engine.World.Entities.Add(testEntity);
+        
         // start stopwatch to calculate delta time
         _lastElapsedMs = 0;
     }
@@ -37,7 +38,6 @@ public partial class MainForm : Form
         _lastElapsedMs = now;
 
         _engine.Update(delta);
-
         Invalidate();
     }
 
