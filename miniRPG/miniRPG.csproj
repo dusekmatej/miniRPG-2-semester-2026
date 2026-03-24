@@ -336,6 +336,33 @@
       <None Update="Resources\Terrain\naturalMaterials\rock\frame_010.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+      <None Update="Resources\Terrain\naturalMaterials\biomeBlocks\grass1.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Resources\Terrain\naturalMaterials\biomeBlocks\grass2.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Resources\Terrain\naturalMaterials\biomeBlocks\grass3.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Resources\Terrain\naturalMaterials\biomeBlocks\grassFlower1.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Resources\Terrain\naturalMaterials\biomeBlocks\GrassFlower2.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Resources\Terrain\naturalMaterials\biomeBlocks\GrassFlower3.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Resources\Terrain\naturalMaterials\biomeBlocks\stone!.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Resources\Terrain\naturalMaterials\biomeBlocks\Water.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Resources\Terrain\naturalMaterials\biomeBlocks\TestMap.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
     <ItemGroup>

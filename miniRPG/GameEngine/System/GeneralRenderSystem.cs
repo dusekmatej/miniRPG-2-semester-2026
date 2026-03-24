@@ -38,7 +38,7 @@ public class GeneralRenderSystem
             if (animationComponent?.CurrentFrame != null)
                 context.Graphics.DrawImage(animationComponent.CurrentFrame, screenX, screenY, 150, 150);
             else if (textureComponent != null)
-                context.Graphics.DrawImage(textureComponent.Image, screenX, screenY, 150, 150);
+                context.Graphics.DrawImage(textureComponent.Image, screenX, screenY, 100, 100);
             else
                 context.Graphics.FillRectangle(Brushes.Red, screenX, screenY, 20, 20);
         }

@@ -1,10 +1,6 @@
-using System.Drawing;
-using System.Linq;
 using miniRPG.GameEngine.Components;
 using miniRPG.GameEngine.Core;
 using miniRPG.Helpers;
-using miniRPG.Models;
-using miniRPG.Services;
 
 namespace miniRPG.GameEngine.Entities;
 
@@ -47,10 +43,18 @@ public static class EntityFactory
     
     // Load object frames
 
+    private static readonly string BASE_BIOME_TILES = $"{BASE_TERRAIN}/naturalMaterials/biomeBlocks";
+    
     private static readonly Image RockImage;
+    private static readonly Image GrassImage;
+    private static readonly Image StoneImage;
+    private static readonly Image WaterImage;
     static EntityFactory()
     {
         RockImage = ImageLoader.LoadImage($"{BASE_TERRAIN}/naturalMaterials/rock/frame_001.png");
+        GrassImage = ImageLoader.LoadImage($"{BASE_BIOME_TILES}/grass1.png");
+        StoneImage = ImageLoader.LoadImage($"{BASE_BIOME_TILES}/stone!.png");
+        WaterImage = ImageLoader.LoadImage($"{BASE_BIOME_TILES}/Water.png");
     }
     
     public static Entity CreatePlayer()
@@ -97,6 +101,33 @@ public static class EntityFactory
         var camera = new Entity();
         camera.AddComponent(new Camera());
         return camera;
+    }
+
+    public static Entity CreateGrassEntity(float X, float Y)
+    {
+        var entity = new Entity();
+        entity.AddComponent(new PositionComponent { X = X, Y = Y});
+        entity.AddComponent(new TextureComponent { Image = GrassImage});
+
+        return entity;
+    }    
+    
+    public static Entity CreateStoneEntity(float X, float Y)
+    {
+        var entity = new Entity();
+        entity.AddComponent(new PositionComponent { X = X, Y = Y});
+        entity.AddComponent(new TextureComponent { Image = StoneImage});
+
+        return entity;
+    }    
+    
+    public static Entity CreateWaterEntity(float X, float Y)
+    {
+        var entity = new Entity();
+        entity.AddComponent(new PositionComponent { X = X, Y = Y});
+        entity.AddComponent(new TextureComponent { Image = WaterImage});
+
+        return entity;
     }
 
     public static Entity TestEntity()
