@@ -28,12 +28,13 @@ public partial class MainForm : Form
         var camera = EntityFactory.CreateCamera();
         var testEntity = EntityFactory.TestEntity();
 
-        var _tiles = File.ReadAllLines("Resources/Terrain/naturalMaterials/biomeBlocks/TestMap.txt");
-        var _tilesChars = _tiles.SelectMany(line => line.ToCharArray()).ToArray();
+        // var _tiles = File.ReadAllLines("Resources/Terrain/naturalMaterials/biomeBlocks/TestMap.txt");
+        // var _tilesChars = _tiles.SelectMany(line => line.ToCharArray()).ToArray();
         _engine = new Engine();
         
 
         
+        /*
         for (int y = 0; y < height; y++)
         {
             for (int x = 0; x < width; x++)
@@ -54,7 +55,7 @@ public partial class MainForm : Form
                 _sum++;
                 _renderCoordsX += TileSize;
             }
-        }
+        }*/
         
         _engine.World.Entities.Add(camera);
         _engine.World.Entities.Add(player);
