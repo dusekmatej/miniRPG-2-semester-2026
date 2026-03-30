@@ -1,5 +1,6 @@
 using miniRPG.GameEngine.Components;
 using miniRPG.GameEngine.Core;
+using miniRPG.GameEngine.System;
 using miniRPG.Helpers;
 
 namespace miniRPG.GameEngine.Entities;
@@ -40,21 +41,14 @@ public static class EntityFactory
         var imgs = ImageLoader.LoadAnimation($"{BASE_CHARACTER}/run_left");
         return imgs ?? [];
     });
+
     
     // Load object frames
-
-    private static readonly string BASE_BIOME_TILES = $"{BASE_TERRAIN}/naturalMaterials/biomeBlocks";
-    
     private static readonly Image RockImage;
-    private static readonly Image GrassImage;
-    private static readonly Image StoneImage;
-    private static readonly Image WaterImage;
+    
     static EntityFactory()
     {
-        RockImage = ImageLoader.LoadImage($"{BASE_TERRAIN}/naturalMaterials/rock/frame_001.png");
-        GrassImage = ImageLoader.LoadImage($"{BASE_BIOME_TILES}/grass1.png");
-        StoneImage = ImageLoader.LoadImage($"{BASE_BIOME_TILES}/stone!.png");
-        WaterImage = ImageLoader.LoadImage($"{BASE_BIOME_TILES}/Water.png");
+        RockImage = ImageLoader.Image($"{BASE_TERRAIN}/naturalMaterials/rock/frame_001.png");
     }
     
     public static Entity CreatePlayer()
@@ -64,7 +58,6 @@ public static class EntityFactory
         player.AddComponent(new PlayerComponent { Stone = 100 });
         player.AddComponent(new PositionComponent { X = 0, Y = 0 });
         player.AddComponent(new VelocityComponent { X = 0, Y = 0 });
-        player.AddComponent(new HealthComponent { Health = 100 });
         
         // Set AnimationFrames and initialize CurrentFrame to first frame (or null if none)
         var framesIdle = PlayerAnimationIdle.Value ?? [];
@@ -100,34 +93,8 @@ public static class EntityFactory
     {
         var camera = new Entity();
         camera.AddComponent(new Camera());
+
         return camera;
-    }
-
-    public static Entity CreateGrassEntity(float X, float Y)
-    {
-        var entity = new Entity();
-        entity.AddComponent(new PositionComponent { X = X, Y = Y});
-        entity.AddComponent(new TextureComponent { Image = GrassImage});
-
-        return entity;
-    }    
-    
-    public static Entity CreateStoneEntity(float X, float Y)
-    {
-        var entity = new Entity();
-        entity.AddComponent(new PositionComponent { X = X, Y = Y});
-        entity.AddComponent(new TextureComponent { Image = StoneImage});
-
-        return entity;
-    }    
-    
-    public static Entity CreateWaterEntity(float X, float Y)
-    {
-        var entity = new Entity();
-        entity.AddComponent(new PositionComponent { X = X, Y = Y});
-        entity.AddComponent(new TextureComponent { Image = WaterImage});
-
-        return entity;
     }
 
     public static Entity TestEntity()
@@ -138,4 +105,15 @@ public static class EntityFactory
 
         return entity;
     }
+
+    // public static Entity CreateGrassEntity(float x, float y)
+    // {
+    //     var e = new Entity();
+    //     var textureComp = TerrainHelper.GetTexture(new Tile { Type = TileType.Grass, Variation = 1 });
+    //
+    //     e.AddComponent(new PositionComponent { X = x, Y = y });
+    //     e.AddComponent(textureComp);
+    //
+    //     return e;
+    // }
 }

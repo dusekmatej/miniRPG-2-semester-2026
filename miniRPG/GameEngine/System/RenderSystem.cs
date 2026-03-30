@@ -1,10 +1,11 @@
 using miniRPG.GameEngine.Other;
 using miniRPG.GameEngine.Components;
 using miniRPG.GameEngine.Core;
+using miniRPG.Helpers;
 
 namespace miniRPG.GameEngine.System;
 
-public class GeneralRenderSystem
+public class RenderSystem
 {
     public void Render(World world, RenderContext context)
     {
@@ -17,6 +18,8 @@ public class GeneralRenderSystem
 
         if (camera == null)
             throw new Exception("Camera component was not found!");
+        TerrainCoordsHolder.CameraX = camera.X;
+        TerrainCoordsHolder.CameraY = camera.Y;
         
         foreach (var entity in world.Entities)
         {
@@ -29,7 +32,7 @@ public class GeneralRenderSystem
             
             if (position == null)
                 continue;
-
+            
             var screenX = position.X - camera.X + context.X;
             var screenY = position.Y - camera.Y + context.Y;
             

@@ -1,9 +1,14 @@
+using miniRPG.GameEngine.Components;
+
 namespace miniRPG.Helpers;
 
 public static class ImageLoader
 {
-    private static readonly String[] AllowedExtensions = new[] { ".png", ".jpg", ".jpeg", ".bmp", ".gif" };
+    // HashSet is faster than array/list, 
+    private static readonly HashSet<string> AllowedExtensions = new(StringComparer.OrdinalIgnoreCase)
+        { ".png", ".jpg", ".jpeg", ".bmp", ".gif" };
     
+    // TODO: Refactor to use arrays instead of lists for better performance and memory management
     public static List<Image>? LoadAnimation(string filePath)
     {
         try
@@ -11,17 +16,9 @@ public static class ImageLoader
             if (string.IsNullOrWhiteSpace(filePath) || !Directory.Exists(filePath))
                 return new List<Image>();
 
-            var files = Directory.GetFiles(filePath)
-                .Where(f => AllowedExtensions.Contains(
-                    Path.GetExtension(f),
-                    StringComparer.OrdinalIgnoreCase));
-
-            var images = new List<Image>();
-            
-            foreach (var file in files)
-                images.Add(Image.FromFile(file));
-
-            return images;
+            return Directory.EnumerateFiles(filePath)
+                .Where(f => AllowedExtensions.Contains(Path.GetExtension(f)))
+                .Select(SafeLoad).ToList();
         }
         catch
         {
@@ -29,18 +26,70 @@ public static class ImageLoader
         }
     }
 
-    public static Image? LoadImage(string filePath)
+    public static Image? Image(string filePath)
     {
         try
         {
             if (string.IsNullOrWhiteSpace(filePath) || !File.Exists(filePath))
                 return null;
 
-            return Image.FromFile(filePath);
+            if (!AllowedExtensions.Contains(Path.GetExtension(filePath)))
+                return null;
+
+            byte[] bytes = File.ReadAllBytes(filePath);
+            using var memoryStream = new MemoryStream(bytes);
+
+            return System.Drawing.Image.FromStream(memoryStream);
         }
         catch
         {
             return null;
         }
+    }
+    
+    public static Texture? Texture(string filePath)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(filePath) || !File.Exists(filePath))
+                return null;
+
+            if (!AllowedExtensions.Contains(Path.GetExtension(filePath)))
+                return null;
+
+            byte[] bytes = File.ReadAllBytes(filePath);
+            using var memoryStream = new MemoryStream(bytes);
+
+            return new Texture { Image = System.Drawing.Image.FromStream(memoryStream) };
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    public static Image[]? AllImagesFromDir(string filePath)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(filePath) || !Directory.Exists(filePath))
+                return null;
+
+            return Directory.EnumerateFiles(filePath)
+                .Where(f => AllowedExtensions.Contains(Path.GetExtension(f)))
+                .Select(SafeLoad).ToArray();
+        }
+        catch
+        {
+            return null;
+        }
+        
+    }
+    
+    // Helper for performance improvement, prevents "File in use" error
+    private static Image SafeLoad(string filePath)
+    {
+        using var bytes = new MemoryStream(File.ReadAllBytes(filePath));
+        return System.Drawing.Image.FromStream(bytes);
     }
 }

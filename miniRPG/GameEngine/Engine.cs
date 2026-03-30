@@ -11,7 +11,8 @@ public class Engine
     public readonly World World = new();
     
     // ### Systems ###
-    public readonly GeneralRenderSystem GeneralRender = new();
+    public readonly RenderTerrain TerrainRender = new();
+    public readonly RenderSystem Render = new();
     private readonly CameraSystem _cameraSystem = new();
     private readonly PlayerInputSystem _input = new();
     private readonly MovementSystem _movement = new();
