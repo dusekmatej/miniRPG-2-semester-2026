@@ -18,8 +18,6 @@ public class RenderSystem
 
         if (camera == null)
             throw new Exception("Camera component was not found!");
-        TerrainCoordsHolder.CameraX = camera.X;
-        TerrainCoordsHolder.CameraY = camera.Y;
         
         foreach (var entity in world.Entities)
         {

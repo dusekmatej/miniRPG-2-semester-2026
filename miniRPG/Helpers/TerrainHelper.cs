@@ -4,7 +4,7 @@ namespace miniRPG.Helpers;
 
 public class TerrainHelper
 {
-    private const string BASE_PATH = "Resources/Terrain/Biome";
+    private const string BASE_PATH = "Art/Terrain/Biome";
 
     private static Texture?[] _grassTextures;
     private static Texture?[] _waterTextures;

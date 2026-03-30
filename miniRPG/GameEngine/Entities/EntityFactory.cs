@@ -8,8 +8,8 @@ namespace miniRPG.GameEngine.Entities;
 public static class EntityFactory
 {
     // ReSharper disable once InconsistentNaming
-    private const string BASE_CHARACTER = "Resources/Character";
-    private const string BASE_TERRAIN = "Resources/Terrain";
+    private const string BASE_CHARACTER = "Art/Character";
+    private const string BASE_TERRAIN = "Art/Terrain";
     
     // Load character frames
     private static readonly Lazy<List<Image>> PlayerAnimationIdle = new(() =>
@@ -48,7 +48,7 @@ public static class EntityFactory
     
     static EntityFactory()
     {
-        RockImage = ImageLoader.Image($"{BASE_TERRAIN}/naturalMaterials/rock/frame_001.png");
+        RockImage = ImageLoader.Image($"{BASE_TERRAIN}/rock/frame_001.png");
     }
     
     public static Entity CreatePlayer()
@@ -105,15 +105,4 @@ public static class EntityFactory
 
         return entity;
     }
-
-    // public static Entity CreateGrassEntity(float x, float y)
-    // {
-    //     var e = new Entity();
-    //     var textureComp = TerrainHelper.GetTexture(new Tile { Type = TileType.Grass, Variation = 1 });
-    //
-    //     e.AddComponent(new PositionComponent { X = x, Y = y });
-    //     e.AddComponent(textureComp);
-    //
-    //     return e;
-    // }
 }

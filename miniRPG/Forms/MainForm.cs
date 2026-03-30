@@ -35,33 +35,6 @@ public partial class MainForm : Form
         // Generate test terrain
         _terrain = new Terrain(10, 10);
         _terrain.GenerateTestMap();
-
-        /*var _tiles = File.ReadAllLines("Resources/Terrain/Biome/TestMap.txt");
-        var _tilesChars = _tiles.SelectMany(line => line.ToCharArray()).ToArray();
-        
-
-        
-        for (int y = 0; y < height; y++)
-        {
-            for (int x = 0; x < width; x++)
-            {
-                if (x == 99)
-                {
-                    _renderCoordsY += TileSize;
-                    _renderCoordsX = 0;
-                }
-                
-                if (_tilesChars[_sum] == 'G')
-                    _engine.World.Entities.Add(EntityFactory.CreateGrassEntity(_renderCoordsX, _renderCoordsY));
-                else if (_tilesChars[_sum] == 'M')
-                    _engine.World.Entities.Add(EntityFactory.CreateGrassEntity(_renderCoordsX, _renderCoordsY));
-                else if (_tilesChars[_sum] == 'O')
-                    _engine.World.Entities.Add(EntityFactory.CreateGrassEntity(_renderCoordsX, _renderCoordsY));
-
-                _sum++;
-                _renderCoordsX += TileSize;
-            }
-        }*/
         
         _engine.World.Entities.Add(camera);
         _engine.World.Entities.Add(player);
