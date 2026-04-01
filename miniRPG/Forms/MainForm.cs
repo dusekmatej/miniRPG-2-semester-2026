@@ -32,9 +32,9 @@ public partial class MainForm : Form
         
         _engine = new Engine();
         
-        // Generate test terrain
-        _terrain = new Terrain(10, 10);
-        _terrain.GenerateTestMap();
+        // Generate test terrain, now with perlin
+        Terrain terrain = new Terrain(200, 200);
+        terrain.GenerateTestMap();
         
         _engine.World.Entities.Add(camera);
         _engine.World.Entities.Add(player);

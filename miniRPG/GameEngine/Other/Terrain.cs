@@ -1,3 +1,5 @@
+using miniRPG.GameEngine.Other;
+
 namespace miniRPG.GameEngine.Components;
 
 public class Terrain
@@ -17,6 +19,51 @@ public class Terrain
 
         Map = new Tile[width, height];
     }
+
+    public void GeneratePerlinMap(int seed)
+    {
+        PerlinNoise noise = new PerlinNoise(seed);
+
+        float biomeScale = 0.02f;
+        float detailScale = 0.2f;
+
+        for (int x = 0; x < Width; x++)
+        {
+            for (int y = 0; y < Height; y++)
+            {
+                // --- BIOME NOISE ---
+                float biomeValue = noise.Sample(x * biomeScale, y * biomeScale);
+
+                TileType type;
+
+                if (biomeValue < 0.2f) type = TileType.Water;
+                else if (biomeValue < 0.4f) type = TileType.Grass;
+                else if (biomeValue < 0.6f) type = TileType.Grass;
+                else if (biomeValue < 0.8f) type = TileType.Mountain;
+                else type = TileType.Mountain;
+
+                // --- DETAIL NOISE (variation) ---
+                float detailValue = noise.Sample(x * detailScale, y * detailScale);
+
+                int variant = 0;
+
+                if (type == TileType.Grass)
+                {
+                    if (detailValue < 0.33f) variant = 0;
+                    else if (detailValue < 0.66f) variant = 1;
+                    else variant = 2;
+                }
+
+                // --- ASSIGN TILE ---
+                Map[x, y] = new Tile
+                {
+                    Type = type,
+                    Variation = variant
+                };
+            }
+        }
+    }
+    
 
     public void GenerateTestMap()
     {

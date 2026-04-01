@@ -333,3 +333,4 @@ C:\Users\matdu\source\Kyberna\PRG\miniRPG-2-semester-2026\miniRPG\bin\Debug\net1
 C:\Users\matdu\source\Kyberna\PRG\miniRPG-2-semester-2026\miniRPG\bin\Debug\net10.0-windows\Art\Terrain\Biome\Grass\GrassFlower3.png
 C:\Users\matdu\source\Kyberna\PRG\miniRPG-2-semester-2026\miniRPG\bin\Debug\net10.0-windows\Art\Terrain\Biome\Mountains\mountain1.png
 C:\Users\matdu\source\Kyberna\PRG\miniRPG-2-semester-2026\miniRPG\bin\Debug\net10.0-windows\Art\Terrain\Biome\Water\water.png
+C:\Users\matdu\source\Kyberna\PRG\miniRPG-2-semester-2026\miniRPG\bin\Debug\net10.0-windows\Art\Terrain\rock\frame_001.png
