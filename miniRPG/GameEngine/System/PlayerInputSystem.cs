@@ -33,16 +33,16 @@ public class PlayerInputSystem
             switch (Keyboard.GetPressedKey())
             {
                 case Keys.W:
-                    velocity!.Y = -20;
+                    velocity!.Y = -5;
                     break;
                 case Keys.S:
-                    velocity!.Y = 20;
+                    velocity!.Y = 5;
                     break;
                 case Keys.A:
-                    velocity!.X = -20;
+                    velocity!.X = -5;
                     break;
                 case Keys.D:
-                    velocity!.X = 20;
+                    velocity!.X = 5;
                     break;
             }
         }

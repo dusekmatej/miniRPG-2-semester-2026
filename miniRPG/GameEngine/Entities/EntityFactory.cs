@@ -51,12 +51,12 @@ public static class EntityFactory
         RockImage = ImageLoader.Image($"{BASE_TERRAIN}/rock/frame_001.png");
     }
     
-    public static Entity CreatePlayer()
+    public static Entity CreatePlayer(float posX = 0, float posY = 0)
     {
         var player = new Entity();
         // Add components to the player entity
         player.AddComponent(new PlayerComponent { Stone = 100 });
-        player.AddComponent(new PositionComponent { X = 0, Y = 0 });
+        player.AddComponent(new PositionComponent { X = posX, Y = posY });
         player.AddComponent(new VelocityComponent { X = 0, Y = 0 });
         
         // Set AnimationFrames and initialize CurrentFrame to first frame (or null if none)
@@ -89,10 +89,10 @@ public static class EntityFactory
         return player;
     }
     
-    public static Entity CreateCamera()
+    public static Entity CreateCamera(float playerPosX = 0f, float playerPosY = 0f)
     {
         var camera = new Entity();
-        camera.AddComponent(new Camera());
+        camera.AddComponent(new Camera { X = playerPosX, Y = playerPosY } );
 
         return camera;
     }

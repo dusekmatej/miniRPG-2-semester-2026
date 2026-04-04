@@ -1,7 +1,6 @@
 using miniRPG.GameEngine.Other;
 using miniRPG.GameEngine.Components;
 using miniRPG.GameEngine.Core;
-using miniRPG.Helpers;
 
 namespace miniRPG.GameEngine.System;
 
@@ -31,8 +30,8 @@ public class RenderSystem
             if (position == null)
                 continue;
             
-            var screenX = position.X - camera.X + context.X;
-            var screenY = position.Y - camera.Y + context.Y;
+            var screenX = position.X - camera.X + (context.ScreenWidth / 2f);
+            var screenY = position.Y - camera.Y + (context.ScreenHeight / 2f);
             
             // Draw the entity. If it has an animation, draw the current frame or a placeholder
 

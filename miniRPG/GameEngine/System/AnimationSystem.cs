@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using miniRPG.GameEngine.Components;
 using miniRPG.GameEngine.Core;
 
@@ -12,9 +13,16 @@ public class AnimationSystem
     private readonly int _frameIntervalMs = 200;
     private int _accumulatorMs = 0;
 
+    private readonly Stopwatch _internalClock = Stopwatch.StartNew();
+    private long _lastUpdateMs = 0;
+
     // Driven by the main game loop; deltaMs is elapsed ms since last update
-    public void Update(World world, int deltaMs)
+    public void Update(World world)
     {
+        long currentMs = _internalClock.ElapsedMilliseconds;
+        int deltaMs = (int)(currentMs - _lastUpdateMs);
+        _lastUpdateMs = currentMs;
+        
         _animationComponents.Clear();
 
         foreach (var entity in world.Entities)

@@ -1,45 +1,44 @@
+using miniRPG.Game;
 using miniRPG.Helpers;
-using miniRPG.GameEngine;
 using miniRPG.GameEngine.Components;
 using miniRPG.GameEngine.Entities;
 using miniRPG.GameEngine.Other;
+using Timer = System.Windows.Forms.Timer;
 
 namespace miniRPG.Forms;
-    
+
+// TODO: Game\
+// TODO:    \GAME
+// TODO:    \GameBootstrapper.cs
+// TODO: Components\
+// TODO:    \RenderLayerComponent.cs
+
+// TODO: Rendering\
+// TODO:    /RenderContext.cs
+// TODO:    /RenderPipeline.cs
+// TODO:    /IRenderPass.cs
+// TODO:        /Passes
+// TODO:            /RenderTerrain.cs
+// TODO:            /RenderSystem.cs
+
+
+// TODO: Root\
+// TODO:    \World
+// TODO:        \Terrain.cs
+// TODO:        \PerlinNoise.cs
+
+
 public partial class MainForm : Form
 {
-    private readonly Engine _engine;
+    private Game.Game _game = new();
+    
     private readonly Terrain _terrain;
     private long _lastElapsedMs;
-
-    private int _renderCoordsX = 0;
-    private int _renderCoordsY = 0;
-    private int _sum = 0;
-
-    private int width = 100;
-    private int height = 100;
-
-    private const int TileSize = 98;
     
     public MainForm()
     {
         InitializeComponent();
-        
-        // Performance optimizations for smoother rendering
-        var player = EntityFactory.CreatePlayer();
-        var camera = EntityFactory.CreateCamera();
-        var testEntity = EntityFactory.TestEntity();
-        
-        _engine = new Engine();
-        
-        // Generate test terrain, now with perlin
-        Terrain terrain = new Terrain(200, 200);
-        terrain.GenerateTestMap();
-        
-        _engine.World.Entities.Add(camera);
-        _engine.World.Entities.Add(player);
-        _engine.World.Entities.Add(testEntity);
-        
+        _game.Initialize();
         
         // start stopwatch to calculate delta time
         _lastElapsedMs = 0;
@@ -47,12 +46,6 @@ public partial class MainForm : Form
 
     private void GameTimerLoop(object sender, EventArgs e)
     {
-        var now = _stopwatch.ElapsedMilliseconds;
-        var delta = (int)(now - _lastElapsedMs);
-        if (delta <= 0) delta = 1;
-        _lastElapsedMs = now;
-
-        _engine.Update(delta);
         Invalidate();
     }
 
@@ -63,16 +56,11 @@ public partial class MainForm : Form
         var context = new RenderContext
         {
             Graphics = e.Graphics,
-            X = ClientSize.Width / 2f,
-            Y = ClientSize.Height / 2f,
+            ScreenWidth = ClientSize.Width,
+            ScreenHeight = ClientSize.Height,
         };
         
-        // Render first the terrain because of the layering
-        // terrain will be behind everything else
-        _engine.TerrainRender.Render(_terrain, _engine.World, context);
-        
-        // Render the items
-        _engine.Render.Render(_engine.World, context);
+        _game.Render(context);
         g.ResetTransform();
     }
     
@@ -92,5 +80,12 @@ public partial class MainForm : Form
     private void MainForm_KeyUp(object sender, KeyEventArgs e) 
     {
         Keyboard.KeyUp(e.KeyCode);
+    }
+
+    private void Update(object? sender, EventArgs e)
+    {
+        _game.Update();
+
+        Invalidate();
     }
 }

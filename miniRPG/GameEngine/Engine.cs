@@ -19,12 +19,12 @@ public class Engine
     private readonly DirectionDetectionSystem _directionDetection = new();
     private readonly AnimationSystem _animation = new();
     
-    public void Update(int deltaMs)
+    public void Update()
     {
         _input.Update(World);
         _movement.Update(World);
         _cameraSystem.Update(World);
-        _animation.Update(World, deltaMs);
+        _animation.Update(World);
         _directionDetection.Update(World);
     }
 }

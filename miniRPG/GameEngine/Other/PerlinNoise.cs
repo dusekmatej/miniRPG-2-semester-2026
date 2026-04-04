@@ -12,9 +12,7 @@ public class PerlinNoise
         int[] basePerm = GeneratePermutation(seed);
 
         for (int i = 0; i < 512; i++)
-        {
             perm[i] = basePerm[i % 256];
-        }
     }
 
     public float Sample(float x, float y)

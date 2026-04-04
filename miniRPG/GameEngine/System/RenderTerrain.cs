@@ -3,6 +3,8 @@ using miniRPG.GameEngine.Core;
 using miniRPG.GameEngine.Other;
 using miniRPG.Helpers;
 
+
+// TODO: Terrain is null
 namespace miniRPG.GameEngine.System;
 
 public class RenderTerrain
@@ -18,10 +20,31 @@ public class RenderTerrain
         
         if (camera == null)
             throw new Exception("Camera component was not found! In TerrainRender!");
-            
-        for (int x = 0; x < t.Width; x++)
+        
+        if (t == null)
+            throw new Exception("Terrain is null in RenderTerrain!");
+
+        var halfW = context.ScreenWidth / 2f;
+        var halfH = context.ScreenHeight / 2f;
+
+        var worldLeft = camera.X - halfW;
+        var worldTop = camera.Y - halfH;
+        var worldRight = camera.X + halfW;
+        var worldBottom = camera.Y + halfH;
+
+        var startX = (int)MathF.Floor(worldLeft / t.TileSize);
+        var startY = (int)MathF.Floor(worldTop / t.TileSize);
+        var endX = (int)MathF.Ceiling(worldRight / t.TileSize);
+        var endY = (int)MathF.Ceiling(worldBottom / t.TileSize);
+
+        startX = Math.Clamp(startX, 0, t.Width);
+        startY = Math.Clamp(startY, 0, t.Height);
+        endX = Math.Clamp(endX, 0, t.Width);
+        endY = Math.Clamp(endY, 0, t.Height);
+                        
+        for (int x = startX; x < endX; x++)
         {
-            for (int y = 0; y < t.Height; y++)
+            for (int y = startY; y < endY; y++)
             {
                 Tile tile = t.Map[x, y];
 
@@ -33,8 +56,8 @@ public class RenderTerrain
                 var posX = x * t.TileSize;
                 var posY = y * t.TileSize;
 
-                var screenX = posX - camera.X + context.X;
-                var screenY = posY - camera.Y + context.Y;
+                var screenX = posX - camera.X + (context.ScreenWidth / 2f);
+                var screenY = posY - camera.Y + (context.ScreenHeight / 2f);
 
                 if (texture != null)
                     context.Graphics.DrawImage(texture.Image, screenX, screenY, t.TileSize + t.TILE_MIXING, t.TileSize + t.TILE_MIXING);

@@ -36,10 +36,9 @@ public class Terrain
 
                 TileType type;
 
-                if (biomeValue < 0.2f) type = TileType.Water;
-                else if (biomeValue < 0.4f) type = TileType.Grass;
+                if (biomeValue < 0.3f) type = TileType.Water;
                 else if (biomeValue < 0.6f) type = TileType.Grass;
-                else if (biomeValue < 0.8f) type = TileType.Mountain;
+                else if (biomeValue < 0.9f) type = TileType.Mountain;
                 else type = TileType.Mountain;
 
                 // --- DETAIL NOISE (variation) ---
