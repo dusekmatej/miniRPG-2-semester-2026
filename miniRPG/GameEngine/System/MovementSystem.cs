@@ -9,14 +9,17 @@ public class MovementSystem
     {
         foreach (var entity in world.Entities)
         {
-            if (!entity.HasComponent<PositionComponent>() || !entity.HasComponent<VelocityComponent>())
+            if (!entity.HasComponent<TrensformComponent>() || !entity.HasComponent<VelocityComponent>())
                 continue;
 
-            var position = entity.GetComponent<PositionComponent>();
+            var transform = entity.GetComponent<TrensformComponent>();
             var velocity = entity.GetComponent<VelocityComponent>();
 
-            position.X += velocity.X;
-            position.Y += velocity.Y;
+            if (transform == null || velocity == null)
+                continue;
+            
+            transform.X += velocity.X;
+            transform.Y += velocity.Y;
         }
     }
 }

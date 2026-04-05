@@ -1,4 +1,5 @@
 using miniRPG.GameEngine.Core;
+using miniRPG.GameEngine.Rendering;
 using miniRPG.GameEngine.System;
 
 namespace miniRPG.GameEngine;
@@ -11,8 +12,7 @@ public class Engine
     public readonly World World = new();
     
     // ### Systems ###
-    public readonly RenderTerrain TerrainRender = new();
-    public readonly RenderSystem Render = new();
+    public readonly IRenderLayer Renderer;
     private readonly CameraSystem _cameraSystem = new();
     private readonly PlayerInputSystem _input = new();
     private readonly MovementSystem _movement = new();

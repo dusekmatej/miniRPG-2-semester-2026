@@ -51,9 +51,7 @@ partial class MainForm
         
         // Game Loop
         _tmrGameLoop = new();
-        _tmrTerrainLoop = new();
         _tmrGameLoop.Interval = 16;
-        _tmrTerrainLoop.Interval = 200;
         _tmrGameLoop.Tick += Update;
         _tmrGameLoop.Start();
         _stopwatch = Stopwatch.StartNew();
@@ -64,7 +62,6 @@ partial class MainForm
     }
 
     private System.Windows.Forms.Timer _tmrGameLoop;
-    private System.Windows.Forms.Timer _tmrTerrainLoop;
     private System.Diagnostics.Stopwatch _stopwatch;
 
     #endregion

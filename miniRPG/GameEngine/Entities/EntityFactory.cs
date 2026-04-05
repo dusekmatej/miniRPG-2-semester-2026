@@ -1,15 +1,17 @@
+using System.IO;
 using miniRPG.GameEngine.Components;
 using miniRPG.GameEngine.Core;
-using miniRPG.GameEngine.System;
 using miniRPG.Helpers;
+
+// ReSharper disable InconsistentNaming
 
 namespace miniRPG.GameEngine.Entities;
 
 public static class EntityFactory
 {
-    // ReSharper disable once InconsistentNaming
-    private const string BASE_CHARACTER = "Art/Character";
-    private const string BASE_TERRAIN = "Art/Terrain";
+    private static readonly string APP_BASE = AppDomain.CurrentDomain.BaseDirectory;
+    private static readonly string BASE_CHARACTER = Path.Join(APP_BASE, "Art/Character");
+    private static readonly string BASE_TERRAIN = Path.Join(APP_BASE, "Art/Terrain");
     
     // Load character frames
     private static readonly Lazy<List<Image>> PlayerAnimationIdle = new(() =>
@@ -53,11 +55,11 @@ public static class EntityFactory
     
     public static Entity CreatePlayer(float posX = 0, float posY = 0)
     {
-        var player = new Entity();
+        var e = new Entity();
         // Add components to the player entity
-        player.AddComponent(new PlayerComponent { Stone = 100 });
-        player.AddComponent(new PositionComponent { X = posX, Y = posY });
-        player.AddComponent(new VelocityComponent { X = 0, Y = 0 });
+        e.AddComponent(new PlayerComponent { Stone = 100 });
+        e.AddComponent(new TrensformComponent { X = posX, Y = posY, Width = 150, Height = 150 });
+        e.AddComponent(new VelocityComponent { X = 0, Y = 0 });
         
         // Set AnimationFrames and initialize CurrentFrame to first frame (or null if none)
         var framesIdle = PlayerAnimationIdle.Value ?? [];
@@ -67,7 +69,7 @@ public static class EntityFactory
         var framesLeft = PlayerAnimationLeft.Value ?? [];
         
         var current = framesIdle.FirstOrDefault();
-        player.AddComponent(
+        e.AddComponent(
             new AnimationComponent
             {
                 CurrentFrameIndex = 0,
@@ -86,23 +88,21 @@ public static class EntityFactory
                 AnimationFramesLeft = framesLeft,
             });
         
-        return player;
+        return e;
     }
     
     public static Entity CreateCamera(float playerPosX = 0f, float playerPosY = 0f)
     {
-        var camera = new Entity();
-        camera.AddComponent(new Camera { X = playerPosX, Y = playerPosY } );
+        var e = new Entity();
+        e.AddComponent(new Camera { X = playerPosX, Y = playerPosY } );
 
-        return camera;
+        return e;
     }
 
-    public static Entity TestEntity()
+    public static Entity InteractableRock(float positionX, float positionY)
     {
-        var entity = new Entity();
-        entity.AddComponent(new PositionComponent { X = 100, Y = 100 });
-        entity.AddComponent(new TextureComponent { Image = RockImage });
+        var e = new Entity();
 
-        return entity;
+        return e;
     }
 }

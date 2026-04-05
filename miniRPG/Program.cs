@@ -10,9 +10,16 @@ static class Program
     [STAThread]
     static void Main()
     {
-        // To customize application configuration such as set high DPI settings or default font,
-        // see https://aka.ms/applicationconfiguration.
         ApplicationConfiguration.Initialize();
-        Application.Run(new MainForm());
+
+        // First show the load screen only
+        // using (Load loadScreen = new Load())
+        // {
+        //     loadScreen.ShowDialog();
+        // }
+        // Uncomment when done!
+        
+        Application.Run(new MainForm()); 
+        // Application.Run(new Load()); // Only testing purposes
     }
 }

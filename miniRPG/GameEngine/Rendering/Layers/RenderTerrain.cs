@@ -1,15 +1,15 @@
-using miniRPG.GameEngine.Components;
-using miniRPG.GameEngine.Core;
-using miniRPG.GameEngine.Other;
-using miniRPG.Helpers;
+namespace miniRPG.GameEngine.Rendering.Layers;
+
+using Components;
+using Core;
+using Other;
+using Rendering;
+using Helpers;
 
 
-// TODO: Terrain is null
-namespace miniRPG.GameEngine.System;
-
-public class RenderTerrain
+public class RenderTerrain : IRenderLayer
 {
-    public void Render(Terrain t, World world, RenderContext context)
+    public void Render(World world, Terrain? t, RenderContext context)
     {
         var cameraEntity = world.Entities.FirstOrDefault(e => e.HasComponent<Camera>());
         

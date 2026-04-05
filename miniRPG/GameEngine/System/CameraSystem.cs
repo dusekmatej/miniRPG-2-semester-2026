@@ -16,10 +16,14 @@ public class CameraSystem
         var target = world.Entities.FirstOrDefault(e => e.HasComponent<PlayerComponent>());
         if (target == null) return;
 
-        var position = target.GetComponent<PositionComponent>();
-        if (position == null) return;
+        var transform = target.GetComponent<TrensformComponent>();
+        if (transform == null) return;
 
-        camera.X += (position.X - camera.X) * 0.05f;
-        camera.Y += (position.Y - camera.Y) * 0.05f;
+        // Adjust the position per character width and height which is not accounted for
+        var realPositionX = transform.X + (transform.Width / 2);
+        var realPositionY = transform.Y + (transform.Height / 2);
+        
+        camera.X += (realPositionX - camera.X) * 0.05f;
+        camera.Y += (realPositionY - camera.Y) * 0.05f;
     }
 }
