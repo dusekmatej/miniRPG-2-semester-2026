@@ -1,4 +1,7 @@
 // ReSharper disable InconsistentNaming
+
+using Timer = System.Windows.Forms.Timer;
+
 namespace miniRPG.Forms;
 
 public partial class Load : Form
@@ -29,8 +32,8 @@ public partial class Load : Form
 
         if (_progressBar.Value > 100)
         {
-            _testTimer.Enabled = false;
-            _testTimer.Stop();
+            _loadTimer.Enabled = false;
+            _loadTimer.Stop();
             Close();
         }
     }

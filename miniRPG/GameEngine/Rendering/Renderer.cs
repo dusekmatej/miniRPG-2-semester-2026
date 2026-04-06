@@ -4,7 +4,7 @@ using Other;
 using Components;
 using Core;
 
-public class RenderManager
+public class Renderer
 {
     private readonly List<IRenderLayer> _renderLayers = new();
 
@@ -12,5 +12,10 @@ public class RenderManager
     {
         foreach (var layer in _renderLayers)
             layer.Render(world, terrain, context);
+    }
+
+    public void Add(IRenderLayer layer)
+    {
+        _renderLayers.Add(layer);
     }
 }

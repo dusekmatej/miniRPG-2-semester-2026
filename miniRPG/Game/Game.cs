@@ -26,6 +26,7 @@ public class Game
         // Create entities
         var player = EntityFactory.CreatePlayer(mapCenterX, mapCenterY);
         var camera = EntityFactory.CreateCamera(mapCenterX, mapCenterY);
+        var testInteractable = EntityFactory.TestInteractable(mapCenterX + 98, mapCenterY + 98);
         
         if (_engine == null)
             throw new NullReferenceException("Engine is not initialized!");
@@ -42,7 +43,6 @@ public class Game
     
     public void Render(RenderContext renderContext)
     {
-        // TODO: ADD RENDER PASSES TO THE LIST
         if (_engine == null)
             throw new NullReferenceException("Engine is not initialized!");
         

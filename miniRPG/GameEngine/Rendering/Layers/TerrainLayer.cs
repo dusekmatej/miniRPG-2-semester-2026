@@ -7,7 +7,7 @@ using Rendering;
 using Helpers;
 
 
-public class RenderTerrain : IRenderLayer
+public class TerrainLayer : IRenderLayer
 {
     public void Render(World world, Terrain? t, RenderContext context)
     {
@@ -22,7 +22,7 @@ public class RenderTerrain : IRenderLayer
             throw new Exception("Camera component was not found! In TerrainRender!");
         
         if (t == null)
-            throw new Exception("Terrain is null in RenderTerrain!");
+            throw new Exception("Terrain is null in TerrainLayer!");
 
         var halfW = context.ScreenWidth / 2f;
         var halfH = context.ScreenHeight / 2f;

@@ -50,7 +50,8 @@ public static class EntityFactory
     
     static EntityFactory()
     {
-        RockImage = ImageLoader.Image($"{BASE_TERRAIN}/rock/frame_001.png");
+        // RockImage = ImageLoader.Image($"{BASE_TERRAIN}/rock/frame_001.png");
+        RockImage = ImageLoader.Image("Art/Terrain/rock/frame_001.png");
     }
     
     public static Entity CreatePlayer(float posX = 0, float posY = 0)
@@ -99,10 +100,11 @@ public static class EntityFactory
         return e;
     }
 
-    public static Entity InteractableRock(float positionX, float positionY)
+    public static Entity TestInteractable(float posX, float posY)
     {
         var e = new Entity();
-
-        return e;
+        e.AddComponent(new TrensformComponent { X = posX, Y = posY, Width = 150, Height = 150 });
+        e.AddComponent(new TextureComponent { Image = RockImage });
+    return e;
     }
 }

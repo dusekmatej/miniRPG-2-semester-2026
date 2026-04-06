@@ -1,6 +1,6 @@
 namespace miniRPG.Game;
 
-public class GameBootstrapper
+public class GameInitialization
 {
     public void CreateWorld()
     {

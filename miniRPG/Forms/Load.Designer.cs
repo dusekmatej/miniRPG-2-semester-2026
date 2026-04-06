@@ -46,6 +46,14 @@ partial class Load
         _lblMain.Text = "Loading...";
         _lblMain.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
         // 
+        // _testTimer
+        //
+        _loadTimer = new();
+        _loadTimer.Enabled = true;
+        _loadTimer.Interval = 1000;
+        _loadTimer.Start();
+        _loadTimer.Tick += IncreaseProgressBar;
+        // 
         // _progressBar
         // 
         _progressBar.Location = new System.Drawing.Point(12, 132);
@@ -67,9 +75,8 @@ partial class Load
     }
 
     private System.Windows.Forms.ProgressBar _progressBar;
-
+    private System.Windows.Forms.Timer _loadTimer;
     private System.Windows.Forms.Label _lblMain;
-    private System.Windows.Forms.Timer _testTimer;
 
     #endregion
 }

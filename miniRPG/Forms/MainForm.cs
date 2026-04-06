@@ -5,19 +5,6 @@ using Helpers;
 using GameEngine.Other;
 
 
-// TODO: Game\
-// TODO: Components\
-// TODO:    \RenderLayerComponent.cs
-
-// TODO: Rendering\
-// TODO:    /RenderContext.cs
-// TODO:    /RenderPipeline.cs
-// TODO:    /IRenderLayer.cs
-// TODO:        /Passes
-// TODO:            /RenderTerrain.cs
-// TODO:            /RenderSystem.cs
-
-
 public partial class MainForm : Form
 {
     private Game.Game _game = new();

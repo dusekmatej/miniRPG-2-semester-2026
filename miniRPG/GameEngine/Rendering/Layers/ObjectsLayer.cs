@@ -5,7 +5,7 @@ using Components;
 using Core;
 using Rendering;
 
-public class RenderSystem : IRenderLayer
+public class ObjectsLayer : IRenderLayer
 {
     public void Render(World world, Terrain? terrain, RenderContext context)
     {
