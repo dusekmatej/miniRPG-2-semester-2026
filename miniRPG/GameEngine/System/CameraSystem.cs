@@ -16,7 +16,7 @@ public class CameraSystem
         var target = world.Entities.FirstOrDefault(e => e.HasComponent<PlayerComponent>());
         if (target == null) return;
 
-        var transform = target.GetComponent<TrensformComponent>();
+        var transform = target.GetComponent<TransformComponent>();
         if (transform == null) return;
 
         // Adjust the position per character width and height which is not accounted for

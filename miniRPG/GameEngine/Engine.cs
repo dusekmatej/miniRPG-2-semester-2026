@@ -16,6 +16,7 @@ public class Engine
     public readonly Renderer Renderer = new();
     private readonly CameraSystem _cameraSystem = new();
     private readonly PlayerInputSystem _input = new();
+    private readonly CheckRadius _checkRadius = new();
     private readonly MovementSystem _movement = new();
     private readonly DirectionDetectionSystem _directionDetection = new();
     private readonly AnimationSystem _animation = new();
@@ -30,6 +31,7 @@ public class Engine
     public void Update()
     {
         _input.Update(World);
+        _checkRadius.Update(World);
         _movement.Update(World);
         _cameraSystem.Update(World);
         _animation.Update(World);

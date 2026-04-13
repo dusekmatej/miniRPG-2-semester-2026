@@ -21,10 +21,10 @@ public class ObjectsLayer : IRenderLayer
         
         foreach (var entity in world.Entities)
         {
-            if (!entity.HasComponent<TrensformComponent>())
+            if (!entity.HasComponent<TransformComponent>())
                 continue;
 
-            var transform = entity.GetComponent<TrensformComponent>();
+            var transform = entity.GetComponent<TransformComponent>();
             var animationComponent = entity.GetComponent<AnimationComponent>();
             var textureComponent = entity.GetComponent<TextureComponent>();
             

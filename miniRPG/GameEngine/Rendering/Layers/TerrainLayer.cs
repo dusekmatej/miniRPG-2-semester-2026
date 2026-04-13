@@ -48,7 +48,7 @@ public class TerrainLayer : IRenderLayer
             {
                 Tile tile = t.Map[x, y];
 
-                var texture = TerrainHelper.GetTexture(tile);
+                var texture = TileLoader.GetTexture(tile);
 
                 if (texture == null)
                     Console.WriteLine("Texture not found!");

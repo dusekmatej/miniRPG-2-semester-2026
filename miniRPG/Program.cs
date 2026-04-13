@@ -13,10 +13,10 @@ static class Program
         ApplicationConfiguration.Initialize();
 
         // First show the load screen only
-        // using (Load loadScreen = new Load())
-        // {
-        //     loadScreen.ShowDialog();
-        // }
+        using (Load loadScreen = new Load())
+        {
+            loadScreen.ShowDialog();
+        }
         // Uncomment when done!
         
         Application.Run(new MainForm()); 

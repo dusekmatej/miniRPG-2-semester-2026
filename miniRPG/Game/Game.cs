@@ -34,6 +34,7 @@ public class Game
         // Imprt them to the world
         _engine.World.Entities.Add(camera);
         _engine.World.Entities.Add(player);
+        _engine.World.Entities.Add(testInteractable);
     }
 
     public void Update()

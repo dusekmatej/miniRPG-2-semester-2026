@@ -6,7 +6,7 @@ using GameEngine.Components;
 // ReSharper disable InconsistentNaming
 #pragma warning disable CS8602 // Possible null reference on line 22
 
-public class TerrainHelper
+public class TileLoader
 {
     private static readonly string APP_BASE = AppDomain.CurrentDomain.BaseDirectory;
     private static readonly string BASE_PATH = Path.Join(APP_BASE, "Art/Terrain/Biome");
@@ -20,7 +20,7 @@ public class TerrainHelper
         // Load textures then check if they are really loaded, if not then return null
         LoadTextures();
         if (_grassTextures.Length == 0 || _waterTextures.Length == 0  || _mountainTextures.Length == 0)
-            throw new NullReferenceException("Textures are null inside of TerrainHelper!");
+            throw new NullReferenceException("Textures are null inside of TileLoader!");
 
         // Pick which texture return
         switch (tile.Type)

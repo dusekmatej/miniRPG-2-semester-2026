@@ -9,10 +9,10 @@ public class MovementSystem
     {
         foreach (var entity in world.Entities)
         {
-            if (!entity.HasComponent<TrensformComponent>() || !entity.HasComponent<VelocityComponent>())
+            if (!entity.HasComponent<TransformComponent>() || !entity.HasComponent<VelocityComponent>())
                 continue;
 
-            var transform = entity.GetComponent<TrensformComponent>();
+            var transform = entity.GetComponent<TransformComponent>();
             var velocity = entity.GetComponent<VelocityComponent>();
 
             if (transform == null || velocity == null)

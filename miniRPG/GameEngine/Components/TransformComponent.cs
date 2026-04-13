@@ -1,6 +1,6 @@
 namespace miniRPG.GameEngine.Components;
 
-public class TrensformComponent
+public class TransformComponent
 {
     public float X;
     public float Y;
