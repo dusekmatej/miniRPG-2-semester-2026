@@ -1,6 +1,4 @@
-using miniRPG.GameEngine.Core;
-
-namespace miniRPG.GameEngine.Other;
+namespace miniRPG.GameEngine.Rendering;
 
 public class RenderContext
 {

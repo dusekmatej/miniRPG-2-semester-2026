@@ -1,7 +1,7 @@
 using miniRPG.GameEngine;
 using miniRPG.GameEngine.Components;
 using miniRPG.GameEngine.Entities;
-using miniRPG.GameEngine.Other;
+using miniRPG.GameEngine.Rendering;
 
 namespace miniRPG.Game;
 
