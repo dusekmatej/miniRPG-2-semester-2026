@@ -1,6 +1,7 @@
 using System.IO;
 using miniRPG.GameEngine.Components;
 using miniRPG.GameEngine.Core;
+using miniRPG.GameEngine.System;
 using miniRPG.Helpers;
 
 // ReSharper disable InconsistentNaming
@@ -106,6 +107,18 @@ public static class EntityFactory
         e.AddComponent(new TransformComponent { X = posX, Y = posY, Width = 98, Height = 98 });
         e.AddComponent(new TextureComponent { Image = RockImage });
         e.AddComponent(new Interactable());
-    return e;
+        
+        return e;
     }
+
+    public static Entity HealthBar(int windowWidth, int windowHeight)
+    {
+
+        var e = new Entity();
+        e.AddComponent(new UiComponent { X = windowWidth - 150, Y = windowHeight - (windowHeight / 2) - 200, Width = 100, Height = 30 });
+        e.AddComponent(new StatisticBarComponent { StatBarColor = Brushes.Red, CurrentValue = 100 });
+        
+        return e;
+    }
+    
 }

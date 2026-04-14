@@ -13,7 +13,7 @@ public partial class MainForm : Form
     {
         InitializeComponent();
         
-        _game.Initialize();
+        _game.Initialize(ClientSize.Width, ClientSize.Height);
     }
     
     private void MainForm_Paint(object sender, PaintEventArgs e)

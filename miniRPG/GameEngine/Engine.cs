@@ -20,12 +20,14 @@ public class Engine
     private readonly MovementSystem _movement = new();
     private readonly DirectionDetectionSystem _directionDetection = new();
     private readonly AnimationSystem _animation = new();
+    private readonly StatBarSystem _statBar = new();
 
     // Load layers into the renderer
     public Engine()
     {
         Renderer.Add(new TerrainLayer());
         Renderer.Add(new ObjectsLayer());
+        Renderer.Add(new StatisticBarLayer());
     }
     
     public void Update()
@@ -36,5 +38,6 @@ public class Engine
         _cameraSystem.Update(World);
         _animation.Update(World);
         _directionDetection.Update(World);
+        _statBar.Update(World);
     }
 }

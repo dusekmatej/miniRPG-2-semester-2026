@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\matdu\\source\\miniRPG-2-semester-2026\\miniRPG\\miniRPG.csproj": {}
+    "C:\\Users\\frant\\source\\School\\PRG\\miniRPG-semester-project-2026 updated\\miniRPG\\miniRPG.csproj": {}
   },
   "projects": {
-    "C:\\Users\\matdu\\source\\miniRPG-2-semester-2026\\miniRPG\\miniRPG.csproj": {
+    "C:\\Users\\frant\\source\\School\\PRG\\miniRPG-semester-project-2026 updated\\miniRPG\\miniRPG.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\matdu\\source\\miniRPG-2-semester-2026\\miniRPG\\miniRPG.csproj",
+        "projectUniqueName": "C:\\Users\\frant\\source\\School\\PRG\\miniRPG-semester-project-2026 updated\\miniRPG\\miniRPG.csproj",
         "projectName": "miniRPG",
-        "projectPath": "C:\\Users\\matdu\\source\\miniRPG-2-semester-2026\\miniRPG\\miniRPG.csproj",
-        "packagesPath": "C:\\Users\\matdu\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\matdu\\source\\miniRPG-2-semester-2026\\miniRPG\\obj\\",
+        "projectPath": "C:\\Users\\frant\\source\\School\\PRG\\miniRPG-semester-project-2026 updated\\miniRPG\\miniRPG.csproj",
+        "packagesPath": "C:\\Users\\frant\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\frant\\source\\School\\PRG\\miniRPG-semester-project-2026 updated\\miniRPG\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\matdu\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\frant\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -68,7 +64,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Users\\matdu\\.dotnet\\sdk\\10.0.201/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Users\\frant\\.dotnet\\sdk\\10.0.201/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
