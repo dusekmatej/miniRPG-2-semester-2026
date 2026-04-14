@@ -11,3 +11,6 @@ The initial idea for this project was to remake a "game" that I worked on nearly
 
 ## Challenges
 One of the most challenging things is, that we always have to be thinking about the performance impact, finding ways to cut some corners somewhere for better performance. Because the whole game is inside of **Windows Forms**, which is not optimized for making a game. For sure not a 2D Top-Down game that runs on 60FP/S with open-world map.
+
+## What's next?
+My vision for this is currently implement some basic game mechanics like mining, woodcutting, inventory system, survival elements. I will probably keep working on this game even after the semester project will be due.
