@@ -26,7 +26,7 @@ public class ObjectsLayer : IRenderLayer
 
             var transform = entity.GetComponent<TransformComponent>();
             var animationComponent = entity.GetComponent<AnimationComponent>();
-            var textureComponent = entity.GetComponent<TextureComponent>();
+            var textureComponent = entity.GetComponent<Texture>();
             
             if (transform == null)
                 continue;

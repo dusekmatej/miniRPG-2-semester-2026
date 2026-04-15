@@ -105,7 +105,7 @@ public static class EntityFactory
     {
         var e = new Entity();
         e.AddComponent(new TransformComponent { X = posX, Y = posY, Width = 98, Height = 98 });
-        e.AddComponent(new TextureComponent { Image = RockImage });
+        e.AddComponent(new Texture { Image = RockImage });
         e.AddComponent(new Interactable());
         
         return e;
