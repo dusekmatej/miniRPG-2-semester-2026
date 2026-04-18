@@ -9,7 +9,7 @@ using GameEngine.Components;
 public class TileLoader
 {
     private static readonly string APP_BASE = AppDomain.CurrentDomain.BaseDirectory;
-    private static readonly string BASE_PATH = Path.Join(APP_BASE, "Art/Terrain/Biome");
+    private static readonly string BASE_PATH = Path.Join(APP_BASE, "Art/Terrain/Tiles");
 
     private static  Texture?[]? _grassTextures;
     private static Texture?[]? _waterTextures;

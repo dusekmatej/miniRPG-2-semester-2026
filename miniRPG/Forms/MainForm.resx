@@ -61,4 +61,7 @@
   <metadata name="_tmrAnimation.TrayLocation" type="System.Drawing.Point, System.Drawing.Primitives, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="TerrainLayer_Render_TerrainLayer__Texture_not_found_" xml:space="preserve">
+    <value>TerrainLayer: Texture not found!</value>
+  </data>
 </root>

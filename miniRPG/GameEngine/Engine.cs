@@ -10,16 +10,17 @@ namespace miniRPG.GameEngine;
 public class Engine
 {
     // ### World & Camera ###
+    private readonly CameraSystem _cameraSystem = new();
     public readonly World World = new();
 
     // ### Systems ###
     public readonly Renderer Renderer = new();
-    private readonly CameraSystem _cameraSystem = new();
     private readonly PlayerInputSystem _input = new();
-    private readonly CheckRadius _checkRadius = new();
     private readonly MovementSystem _movement = new();
-    private readonly DirectionDetectionSystem _directionDetection = new();
     private readonly AnimationSystem _animation = new();
+    private readonly InventorySystem _inventory = new();
+    private readonly CheckRadius _checkRadius = new();
+    private readonly DirectionDetectionSystem _directionDetection = new();
     private readonly StatBarSystem _statBar = new();
 
     // Load layers into the renderer
@@ -37,6 +38,7 @@ public class Engine
         _movement.Update(World);
         _cameraSystem.Update(World);
         _animation.Update(World);
+        _inventory.Update(World);
         _directionDetection.Update(World);
         _statBar.Update(World);
     }

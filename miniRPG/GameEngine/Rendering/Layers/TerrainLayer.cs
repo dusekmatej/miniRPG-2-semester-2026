@@ -51,7 +51,7 @@ public class TerrainLayer : IRenderLayer
                 var texture = TileLoader.GetTexture(tile);
 
                 if (texture == null)
-                    Console.WriteLine("Texture not found!");
+                    Console.WriteLine(@"TerrainLayer: Texture not found!");
 
                 var posX = x * t.TileSize;
                 var posY = y * t.TileSize;

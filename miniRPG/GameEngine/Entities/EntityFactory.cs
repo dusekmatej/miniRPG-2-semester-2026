@@ -1,7 +1,8 @@
 using System.IO;
 using miniRPG.GameEngine.Components;
 using miniRPG.GameEngine.Core;
-using miniRPG.GameEngine.System;
+using miniRPG.GameEngine.Databases;
+using miniRPG.GameEngine.InventoryEssentials;
 using miniRPG.Helpers;
 
 // ReSharper disable InconsistentNaming
@@ -52,7 +53,8 @@ public static class EntityFactory
     static EntityFactory()
     {
         // RockImage = ImageLoader.Image($"{BASE_TERRAIN}/rock/frame_001.png");
-        RockImage = ImageLoader.Image($"{BASE_TERRAIN}/rock/frame_001.png");
+        // RockImage = ImageLoader.Image($"{BASE_TERRAIN}/Objects/Rocks/bronze_rock.png");
+        // var RockTexture = TextureDatabase.Get("bronze_rock");
     }
     
     public static Entity CreatePlayer(float posX = 0, float posY = 0)
@@ -62,6 +64,7 @@ public static class EntityFactory
         e.AddComponent(new PlayerComponent { Stone = 100 });
         e.AddComponent(new TransformComponent { X = posX, Y = posY, Width = 150, Height = 150 });
         e.AddComponent(new VelocityComponent { X = 0, Y = 0 });
+        e.AddComponent(new Inventory());
         
         // Set AnimationFrames and initialize CurrentFrame to first frame (or null if none)
         var framesIdle = PlayerAnimationIdle.Value ?? [];
@@ -105,7 +108,8 @@ public static class EntityFactory
     {
         var e = new Entity();
         e.AddComponent(new TransformComponent { X = posX, Y = posY, Width = 98, Height = 98 });
-        e.AddComponent(new Texture { Image = RockImage });
+        // e.AddComponent(new Texture { Image = RockImage });
+        e.AddComponent(TextureDatabase.Get("bronze_rock"));
         e.AddComponent(new Interactable());
         
         return e;
@@ -120,5 +124,4 @@ public static class EntityFactory
         
         return e;
     }
-    
 }
