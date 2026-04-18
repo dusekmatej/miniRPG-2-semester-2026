@@ -40,19 +40,19 @@ public class TileLoader
     {
         _waterTextures =
         [
-            ImageLoader.Texture($"{BASE_PATH}/Water/water.png")
+            TextureLoader.LoadTexture($"{BASE_PATH}/Water/water.png")
         ];
 
         _grassTextures =
         [
-            ImageLoader.Texture($"{BASE_PATH}/Grass/grass1.png"),
-            ImageLoader.Texture($"{BASE_PATH}/Grass/grass2.png"),
-            ImageLoader.Texture($"{BASE_PATH}/Grass/grass3.png")
+            TextureLoader.LoadTexture($"{BASE_PATH}/Grass/grass1.png"),
+            TextureLoader.LoadTexture($"{BASE_PATH}/Grass/grass2.png"),
+            TextureLoader.LoadTexture($"{BASE_PATH}/Grass/grass3.png")
         ];
 
         _mountainTextures =
         [
-            ImageLoader.Texture($"{BASE_PATH}/Mountains/mountain1.png")
+            TextureLoader.LoadTexture($"{BASE_PATH}/Mountains/mountain1.png")
         ];
     }
 }

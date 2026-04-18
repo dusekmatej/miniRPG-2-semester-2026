@@ -16,35 +16,35 @@ public static class EntityFactory
     private static readonly string BASE_TERRAIN = Path.Join(APP_BASE, "Art/Terrain");
     
     // Load character frames
-    private static readonly Lazy<List<Image>> PlayerAnimationIdle = new(() =>
+    /*private static readonly Lazy<List<Image>> PlayerAnimationIdle = new(() =>
     {
-        var imgs = ImageLoader.LoadAnimation($"{BASE_CHARACTER}/Idle");
+        var imgs = TextureLoader.LoadAnimation($"{BASE_CHARACTER}/Idle");
         return imgs ?? [];
     });
 
     private static readonly Lazy<List<Image>> PlayerAnimationsUp = new(() =>
     {
-        var imgs = ImageLoader.LoadAnimation($"{BASE_CHARACTER}/run_up");
+        var imgs = TextureLoader.LoadAnimation($"{BASE_CHARACTER}/run_up");
         return imgs ?? [];
     });
 
     private static readonly Lazy<List<Image>> PlayerAnimationsDown = new(() =>
     {
-        var imgs = ImageLoader.LoadAnimation($"{BASE_CHARACTER}/run_down");
+        var imgs = TextureLoader.LoadAnimation($"{BASE_CHARACTER}/run_down");
         return imgs ?? [];
     });
 
     private static readonly Lazy<List<Image>> PlayerAnimationsRight = new(() =>
     {
-        var imgs = ImageLoader.LoadAnimation($"{BASE_CHARACTER}/run_right");
+        var imgs = TextureLoader.LoadAnimation($"{BASE_CHARACTER}/run_right");
         return imgs ?? [];
     });
 
     private static readonly Lazy<List<Image>> PlayerAnimationLeft = new(() =>
     {
-        var imgs = ImageLoader.LoadAnimation($"{BASE_CHARACTER}/run_left");
+        var imgs = TextureLoader.LoadAnimation($"{BASE_CHARACTER}/run_left");
         return imgs ?? [];
-    });
+    });*/
 
     
     // Load object frames
@@ -52,8 +52,8 @@ public static class EntityFactory
     
     static EntityFactory()
     {
-        // RockImage = ImageLoader.Image($"{BASE_TERRAIN}/rock/frame_001.png");
-        // RockImage = ImageLoader.Image($"{BASE_TERRAIN}/Objects/Rocks/bronze_rock.png");
+        // RockImage = TextureLoader.Image($"{BASE_TERRAIN}/rock/frame_001.png");
+        // RockImage = TextureLoader.Image($"{BASE_TERRAIN}/Objects/Rocks/bronze_rock.png");
         // var RockTexture = TextureDatabase.Get("bronze_rock");
     }
     
@@ -67,11 +67,18 @@ public static class EntityFactory
         e.AddComponent(new Inventory());
         
         // Set AnimationFrames and initialize CurrentFrame to first frame (or null if none)
-        var framesIdle = PlayerAnimationIdle.Value ?? [];
-        var framesUp = PlayerAnimationsUp.Value ?? [];
-        var framesDown = PlayerAnimationsDown.Value ?? [];
-        var framesRight = PlayerAnimationsRight.Value ?? [];
-        var framesLeft = PlayerAnimationLeft.Value ?? [];
+        // var framesIdle = PlayerAnimationIdle.Value ?? [];
+        // var framesUp = PlayerAnimationsUp.Value ?? [];
+        // var framesDown = PlayerAnimationsDown.Value ?? [];
+        // var framesRight = PlayerAnimationsRight.Value ?? [];
+        // var framesLeft = PlayerAnimationLeft.Value ?? [];
+        var framesIdle = TextureDatabase.GetAnimation("idle") ?? [];
+        var framesUp = TextureDatabase.GetAnimation("run_up") ?? [];
+        var framesDown = TextureDatabase.GetAnimation("run_down") ?? [];
+        var framesLeft = TextureDatabase.GetAnimation("run_left") ?? [];
+        var framesRight = TextureDatabase.GetAnimation("run_right") ?? [];
+        
+        
         
         var current = framesIdle.FirstOrDefault();
         e.AddComponent(

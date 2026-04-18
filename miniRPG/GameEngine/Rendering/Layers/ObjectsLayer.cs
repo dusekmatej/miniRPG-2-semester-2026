@@ -36,7 +36,7 @@ public class ObjectsLayer : IRenderLayer
             
             // Draw the entity. If it has an animation, draw the current frame or a placeholder
             if (animationComponent?.CurrentFrame != null)
-                context.Graphics.DrawImage(animationComponent.CurrentFrame, screenX, screenY, transform.Width, transform.Height);
+                context.Graphics.DrawImage(animationComponent.CurrentFrame.Image, screenX, screenY, transform.Width, transform.Height);
             else if (textureComponent != null)
                 context.Graphics.DrawImage(textureComponent.Image, screenX, screenY, transform.Width, transform.Height);
             else

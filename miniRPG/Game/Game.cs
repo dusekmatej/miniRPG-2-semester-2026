@@ -1,4 +1,3 @@
-
 using System.IO;
 using miniRPG.Helpers;
 
@@ -17,10 +16,26 @@ public class Game
     
     private static readonly string APP_BASE = AppDomain.CurrentDomain.BaseDirectory;
     private static readonly string BASE_TERRAIN = Path.Join(APP_BASE, "Art/Terrain");
+    private static readonly string BASE_CHARACTER = Path.Join(APP_BASE, "Art/Character");
+
+    private string[]? _animationPaths =
+    [
+        $"{BASE_CHARACTER}/idle",
+        $"{BASE_CHARACTER}/run_down",
+        $"{BASE_CHARACTER}/run_left",
+        $"{BASE_CHARACTER}/run_right",
+        $"{BASE_CHARACTER}/run_up"
+    ];
+
+    private string[]? _imagePaths =
+    [
+        $"{BASE_TERRAIN}/Objects/Rocks/bronze_rock.png",
+    ];
+    
 
     public void Initialize(int clientWidth, int clientHeight)
     {
-        TextureDatabase.Load("bronze_rock", new Texture{ Image = ImageLoader.Image($"{BASE_TERRAIN}/Objects/Rocks/bronze_rock.png") });
+        DatabasePopulator.LoadTextures(_imagePaths, _animationPaths);
         _engine = new Engine();
 
         // Generate test terrain, now with perlin

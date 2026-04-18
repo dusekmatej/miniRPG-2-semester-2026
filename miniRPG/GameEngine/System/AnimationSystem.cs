@@ -69,14 +69,14 @@ public class AnimationSystem
                 frames = comp.AnimationFramesRight;
             }
             
-            if (frames == null || frames.Count == 0)
+            if (frames == null || frames.Count() == 0)
                 continue;
 
             // Ensure index is inside bounds
-            if (comp.CurrentFrameIndex < 0 || comp.CurrentFrameIndex >= frames.Count)
+            if (comp.CurrentFrameIndex < 0 || comp.CurrentFrameIndex >= frames.Count())
                 comp.CurrentFrameIndex = 0;
 
-            comp.CurrentFrameIndex = (comp.CurrentFrameIndex + steps) % frames.Count;
+            comp.CurrentFrameIndex = (comp.CurrentFrameIndex + steps) % frames.Count();
                 
             comp.CurrentFrame = frames[comp.CurrentFrameIndex];
         }

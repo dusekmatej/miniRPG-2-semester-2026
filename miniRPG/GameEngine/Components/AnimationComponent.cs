@@ -6,7 +6,7 @@ namespace miniRPG.GameEngine.Components;
 public class AnimationComponent
 {
     public int CurrentFrameIndex;
-    public Image? CurrentFrame;
+    public Texture? CurrentFrame;
 
     public bool IsIdle;
     public bool IsRunningUp;
@@ -14,9 +14,9 @@ public class AnimationComponent
     public bool IsRunningRight;
     public bool IsRunningLeft;
     
-    public List<Image>? AnimationFramesIdle;
-    public List<Image>? AnimationFramesUp;
-    public List<Image>? AnimationFramesDown;
-    public List<Image>? AnimationFramesLeft;
-    public List<Image>? AnimationFramesRight;
+    public Texture[] AnimationFramesIdle;
+    public Texture[] AnimationFramesUp;
+    public Texture[] AnimationFramesDown;
+    public Texture[] AnimationFramesLeft;
+    public Texture[] AnimationFramesRight;
 }
