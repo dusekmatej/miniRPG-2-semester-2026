@@ -270,6 +270,15 @@
       <None Update="Art\Terrain\Items\Ores\iron_ore.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+      <None Update="Art\Terrain\Items\Ingots\bronze_ingot.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Art\Terrain\Items\Ingots\gold_ingot.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Art\Terrain\Items\Ingots\iron_ingot.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
     <ItemGroup>

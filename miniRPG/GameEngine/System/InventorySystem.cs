@@ -20,7 +20,7 @@ public class InventorySystem
                 throw new Exception("Inventory is null!");
 
             if (Helpers.Keyboard.IsKeyDown(Keys.I))
-                inventory.Add(_rand.Next(0, 5));
+                inventory.Add(_rand.Next(0, 8));
 
             if (Helpers.Keyboard.IsKeyDown(Keys.P))
                 inventory.DisplayInventory();

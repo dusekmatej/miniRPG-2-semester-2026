@@ -37,10 +37,17 @@ public static class DatabasePopulator
         var coal_ore = new Item(2, "Coal Ore", "Coal ore", ItemType.Ore, TextureDatabase.Get("coal_ore"));
         var iron_ore = new Item(3, "Iron Ore", "Iron ore", ItemType.Ore, TextureDatabase.Get("iron_ore"));
         var gold_ore = new Item(4, "Gold Ore", "Gold ore", ItemType.Ore, TextureDatabase.Get("gold_ore"));
+
+        var bronze_ingot = new Item(5, "Bronze Ingot", "Bronze ingot", ItemType.Ingot, TextureDatabase.Get("bronze_ingot"));
+        var iron_ingot = new Item(6, "Iron Ingot", "Iron ingot", ItemType.Ingot, TextureDatabase.Get("iron_ingot"));
+        var gold_ingot = new Item(7, "Gold Ingot", "Gold ingot",  ItemType.Ingot, TextureDatabase.Get("gold_ingot"));
         
         ItemDatabase.Load(bronze_ore);
         ItemDatabase.Load(coal_ore);
         ItemDatabase.Load(iron_ore);
         ItemDatabase.Load(gold_ore);
+        ItemDatabase.Load(bronze_ingot);
+        ItemDatabase.Load(iron_ingot);
+        ItemDatabase.Load(gold_ingot);
     }
 }

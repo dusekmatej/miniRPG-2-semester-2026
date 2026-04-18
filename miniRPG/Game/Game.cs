@@ -17,6 +17,8 @@ public class Game
     private static readonly string APP_BASE = AppDomain.CurrentDomain.BaseDirectory;
     private static readonly string BASE_TERRAIN = Path.Join(APP_BASE, "Art/Terrain");
     private static readonly string BASE_CHARACTER = Path.Join(APP_BASE, "Art/Character");
+    private static readonly string BASE_ORES =  Path.Join(BASE_TERRAIN, "Items/Ores");
+    private static readonly string BASE_INGOTS = Path.Join(BASE_TERRAIN, "Items/Ingots");
 
     private string[]? _animationPaths =
     [
@@ -30,10 +32,14 @@ public class Game
     private string[]? _imagePaths =
     [
         $"{BASE_TERRAIN}/Objects/Rocks/bronze_rock.png",
-        $"{BASE_TERRAIN}/Objects/Rocks/bronze_ore.png",
-        $"{BASE_TERRAIN}/Objects/Rocks/iron_ore.png",
-        $"{BASE_TERRAIN}/Objects/Rocks/coal_ore.png",
-        $"{BASE_TERRAIN}/Objects/Trees/gold_ore.png",
+        $"{BASE_ORES}/bronze_ore.png",
+        $"{BASE_ORES}/iron_ore.png",
+        $"{BASE_ORES}/coal_ore.png",
+        $"{BASE_ORES}/gold_ore.png",
+        $"{BASE_INGOTS}/bronze_ingot.png",
+        $"{BASE_INGOTS}/iron_ingot.png",
+        $"{BASE_INGOTS}/coal_ingot.png",
+        $"{BASE_INGOTS}/gold_ingot.png",
     ];
     
 

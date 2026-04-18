@@ -517,3 +517,6 @@ C:\Users\matdu\source\School\PRG\miniRPG-2-semester-2026\miniRPG\bin\Debug\net10
 C:\Users\matdu\source\School\PRG\miniRPG-2-semester-2026\miniRPG\bin\Debug\net10.0-windows\Art\Terrain\Items\Ores\coal_ore.png
 C:\Users\matdu\source\School\PRG\miniRPG-2-semester-2026\miniRPG\bin\Debug\net10.0-windows\Art\Terrain\Items\Ores\gold_ore.png
 C:\Users\matdu\source\School\PRG\miniRPG-2-semester-2026\miniRPG\bin\Debug\net10.0-windows\Art\Terrain\Items\Ores\iron_ore.png
+C:\Users\matdu\source\School\PRG\miniRPG-2-semester-2026\miniRPG\bin\Debug\net10.0-windows\Art\Terrain\Items\Ingots\bronze_ingot.png
+C:\Users\matdu\source\School\PRG\miniRPG-2-semester-2026\miniRPG\bin\Debug\net10.0-windows\Art\Terrain\Items\Ingots\gold_ingot.png
+C:\Users\matdu\source\School\PRG\miniRPG-2-semester-2026\miniRPG\bin\Debug\net10.0-windows\Art\Terrain\Items\Ingots\iron_ingot.png
