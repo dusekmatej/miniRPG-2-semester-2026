@@ -5,6 +5,8 @@ namespace miniRPG.GameEngine.System;
 
 public class InventorySystem
 {
+    private Random _rand = new Random();
+    
     public void Update(World world)
     {
         foreach (var e in world.Entities)
@@ -18,7 +20,7 @@ public class InventorySystem
                 throw new Exception("Inventory is null!");
 
             if (Helpers.Keyboard.IsKeyDown(Keys.I))
-                inventory.Add();
+                inventory.Add(_rand.Next(0, 5));
 
             if (Helpers.Keyboard.IsKeyDown(Keys.P))
                 inventory.DisplayInventory();

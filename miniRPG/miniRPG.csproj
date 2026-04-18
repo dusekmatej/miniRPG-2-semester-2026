@@ -261,6 +261,15 @@
       <None Update="Art\Terrain\Objects\Rocks\bronze_rock.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+      <None Update="Art\Terrain\Items\Ores\coal_ore.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Art\Terrain\Items\Ores\gold_ore.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Art\Terrain\Items\Ores\iron_ore.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
     <ItemGroup>

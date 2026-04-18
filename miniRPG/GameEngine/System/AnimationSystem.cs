@@ -44,7 +44,7 @@ public class AnimationSystem
 
         // advance frames as many intervals passed
         var steps = _accumulatorMs / _frameIntervalMs;
-        _accumulatorMs = _accumulatorMs % _frameIntervalMs;
+        _accumulatorMs %= _frameIntervalMs;
 
         foreach (var comp in _animationComponents)
         {

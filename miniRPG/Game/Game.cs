@@ -30,12 +30,16 @@ public class Game
     private string[]? _imagePaths =
     [
         $"{BASE_TERRAIN}/Objects/Rocks/bronze_rock.png",
+        $"{BASE_TERRAIN}/Objects/Rocks/bronze_ore.png",
+        $"{BASE_TERRAIN}/Objects/Rocks/iron_ore.png",
+        $"{BASE_TERRAIN}/Objects/Rocks/coal_ore.png",
+        $"{BASE_TERRAIN}/Objects/Trees/gold_ore.png",
     ];
     
 
     public void Initialize(int clientWidth, int clientHeight)
     {
-        DatabasePopulator.LoadTextures(_imagePaths, _animationPaths);
+        DatabasePopulator.Populate(_imagePaths, _animationPaths);
         _engine = new Engine();
 
         // Generate test terrain, now with perlin
