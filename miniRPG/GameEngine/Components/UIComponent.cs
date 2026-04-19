@@ -6,4 +6,6 @@ public class UiComponent
     public int Height;
     public int X;
     public int Y;
+    public bool IsVisible = true;
+
 }

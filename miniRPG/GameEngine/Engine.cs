@@ -22,6 +22,7 @@ public class Engine
     private readonly CheckRadius _checkRadius = new();
     private readonly DirectionDetectionSystem _directionDetection = new();
     private readonly StatBarSystem _statBar = new();
+    private readonly InventoryLayer _inventoryLayer = new();
 
     // Load layers into the renderer
     public Engine()
@@ -29,6 +30,7 @@ public class Engine
         Renderer.Add(new TerrainLayer());
         Renderer.Add(new ObjectsLayer());
         Renderer.Add(new StatisticBarLayer());
+        Renderer.Add(_inventoryLayer);
     }
     
     public void Update()
