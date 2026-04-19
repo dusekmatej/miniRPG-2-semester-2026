@@ -279,6 +279,9 @@
       <None Update="Art\Terrain\Items\Ingots\iron_ingot.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+      <None Update="Art\Terrain\Ui\Inventory\inventory_open.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
     <ItemGroup>

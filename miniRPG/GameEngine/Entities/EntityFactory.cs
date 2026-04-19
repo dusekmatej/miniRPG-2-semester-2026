@@ -67,4 +67,16 @@ public static class EntityFactory
         
         return e;
     }
+
+    public static Entity Inventory(int windowWidth, int windowHeight)
+    {
+        var e = new Entity();
+
+        var invWidth = 30;
+        var invHeight = 400;
+
+        e.AddComponent(new UiComponent {X = 20, Y = 20, Width = 200, Height = 160});
+        e.AddComponent(new InventoryComponent());
+        return e;
+    }
 }

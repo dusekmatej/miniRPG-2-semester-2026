@@ -19,7 +19,8 @@ public class Game
     private static readonly string BASE_CHARACTER = Path.Join(APP_BASE, "Art/Character");
     private static readonly string BASE_ORES =  Path.Join(BASE_TERRAIN, "Items/Ores");
     private static readonly string BASE_INGOTS = Path.Join(BASE_TERRAIN, "Items/Ingots");
-
+    private static readonly string BASE_UI = Path.Join(BASE_TERRAIN, "Ui");
+    
     private string[]? _animationPaths =
     [
         $"{BASE_CHARACTER}/idle",
@@ -31,6 +32,7 @@ public class Game
 
     private string[]? _imagePaths =
     [
+        $"{BASE_UI}/Inventory/inventory_open.png",
         $"{BASE_TERRAIN}/Objects/Rocks/bronze_rock.png",
         $"{BASE_ORES}/bronze_ore.png",
         $"{BASE_ORES}/iron_ore.png",
@@ -67,6 +69,7 @@ public class Game
         var camera = EntityFactory.CreateCamera(mapCenterX, mapCenterY);
         var testInteractable = EntityFactory.TestInteractable(mapCenterX + 98, mapCenterY + 98);
         var HealthBar = EntityFactory.HealthBar(clientWidth, clientHeight);
+        var Inventory = EntityFactory.Inventory(clientWidth, clientHeight);
 
         if (_engine == null)
             throw new NullReferenceException("Engine is not initialized!");
@@ -76,6 +79,7 @@ public class Game
         _engine.World.Entities.Add(player);
         _engine.World.Entities.Add(testInteractable);
         _engine.World.Entities.Add(HealthBar);
+        _engine.World.Entities.Add(Inventory);
     }
 
     public void Update()
