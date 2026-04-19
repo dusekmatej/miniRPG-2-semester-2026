@@ -35,23 +35,7 @@ public class InventorySystem
             }
 
             _wasPressed = isKeyCurrentlyDown;
-
-
-
-            /*
-            if (Helpers.Keyboard.IsKeyDown(Keys.T))
-            {
-                if  (_wasKeyPressed)
-                {
-                    _wasKeyPressed = false;
-                    Console.WriteLine($"Inventory {( "CLOSED")}");
-                }
-                else
-                {
-                    IsOpen = !IsOpen;
-                    _wasKeyPressed = true;
-                }
-            }*/
+            
 
         }
     }

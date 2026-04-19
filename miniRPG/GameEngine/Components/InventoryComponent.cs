@@ -8,6 +8,8 @@ public class InventoryComponent
     public Texture Sprite;
     public Inventory Inventory;
     public bool IsOpen = false;
+    public int row = 1;
+    public int collum = 1;
 
     public InventoryComponent()
     {

@@ -33,31 +33,27 @@ partial class MainForm
     private void InitializeComponent()
     {
         components = new System.ComponentModel.Container();
+        _tmrGameLoop = new System.Windows.Forms.Timer(components);
         SuspendLayout();
+        // 
+        // _tmrGameLoop
+        // 
+        _tmrGameLoop.Enabled = true;
+        _tmrGameLoop.Interval = 16;
+        _tmrGameLoop.Tick += Update;
         // 
         // MainForm
         // 
-        
-        // Optimizations
-        DoubleBuffered = true;
-        KeyPreview = true;
-        SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer, true);
-        UpdateStyles();
-        
         AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         ClientSize = new System.Drawing.Size(800, 450);
+        DoubleBuffered = true;
+        KeyPreview = true;
         Text = "Mainform";
-        
-        // Game Loop
-        _tmrGameLoop = new();
-        _tmrGameLoop.Interval = 16;
-        _tmrGameLoop.Tick += Update;
-        _tmrGameLoop.Start();
-        _stopwatch = Stopwatch.StartNew();
         Paint += MainForm_Paint;
         KeyDown += MainForm_KeyDown;
         KeyUp += MainForm_KeyUp;
+        MouseMove += MainForm_MouseMove;
         ResumeLayout(false);
     }
 

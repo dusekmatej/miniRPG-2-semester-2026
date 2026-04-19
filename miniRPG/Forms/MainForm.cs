@@ -1,4 +1,6 @@
 
+using Microsoft.VisualBasic.Devices;
+
 namespace miniRPG.Forms;
 
 // using System.Windows.Forms.Integration;
@@ -47,4 +49,15 @@ public partial class MainForm : Form
         Keyboard.KeyUp(e.KeyCode);
     }
     #endregion
+
+    private void MainForm_MouseMove(object sender, MouseEventArgs e)
+    {
+        var x = e.X;
+        var y = e.Y;
+        
+            MouseHelper.GetMouseX(x);
+            MouseHelper.GetMouseY(y);
+    }
+
+    
 }
