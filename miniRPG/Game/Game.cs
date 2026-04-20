@@ -56,6 +56,7 @@ public class Game
     {
         DatabasePopulator.Populate(_imagePaths, _animationPaths);
         ItemDatabase.Initialize();
+        TileDatabase.Initialize();
         
         _engine = new Engine();
 

@@ -48,7 +48,11 @@ partial class MainForm
         AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         ClientSize = new System.Drawing.Size(800, 450);
-        DoubleBuffered = true;
+        this.DoubleBuffered = true;
+        this.SetStyle(ControlStyles.OptimizedDoubleBuffer | 
+                      ControlStyles.AllPaintingInWmPaint | 
+                      ControlStyles.UserPaint, true);
+        this.UpdateStyles();
         KeyPreview = true;
         Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
         Text = "Mainform";

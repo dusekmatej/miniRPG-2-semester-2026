@@ -234,10 +234,13 @@
       <None Update="Art\Terrain\Items\Ores\bronze_ore.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="Art\Terrain\Tiles\Water\water.png">
+      <None Update="Art\Terrain\Tiles\Water\water0.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="Art\Terrain\Tiles\Mountains\mountain1.png">
+      <None Update="Art\Terrain\Tiles\Mountains\mountain0.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Art\Terrain\Tiles\Grass\grass0.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
       <None Update="Art\Terrain\Tiles\Grass\grass1.png">
@@ -249,13 +252,10 @@
       <None Update="Art\Terrain\Tiles\Grass\grass3.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="Art\Terrain\Tiles\Grass\grassFlower1.png">
+      <None Update="Art\Terrain\Tiles\Grass\grass4.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="Art\Terrain\Tiles\Grass\GrassFlower2.png">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="Art\Terrain\Tiles\Grass\GrassFlower3.png">
+      <None Update="Art\Terrain\Tiles\Grass\grass5.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
       <None Update="Art\Terrain\Objects\Rocks\bronze_rock.png">

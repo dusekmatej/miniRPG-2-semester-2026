@@ -32,6 +32,24 @@ public static class TextureLoader
             return null;
         }
     }
+
+    public static Texture[]? LoadTiles(string dirPath)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(dirPath))
+                return null;
+
+            var currentTextures = Directory.EnumerateFiles(dirPath)
+                .Where(f => Allowed.Contains(Path.GetExtension(f))).Select(SafeLoad).ToArray();
+
+            return currentTextures;
+        }
+        catch
+        {
+            return null;
+        }
+    }
     
     public static Texture? LoadTexture(string filePath)
     {
