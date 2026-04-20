@@ -27,7 +27,7 @@ public class CheckRadius
             if ((targetTransform.X > (transform.X - 100) && targetTransform.X < (transform.X + 100)) &&
                 (targetTransform.Y > (transform.Y - 100) && targetTransform.Y < (transform.Y + 100)))
             {
-                Console.WriteLine("Player in range!");
+               // Console.WriteLine("Player in range!");
             }
     }
     }

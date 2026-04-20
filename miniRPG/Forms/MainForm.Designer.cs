@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Diagnostics;
+using miniRPG.Helpers;
 using Timer = System.Windows.Forms.Timer;
 
 namespace miniRPG.Forms;
@@ -44,16 +45,20 @@ partial class MainForm
         // 
         // MainForm
         // 
-        AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+        AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         ClientSize = new System.Drawing.Size(800, 450);
         DoubleBuffered = true;
         KeyPreview = true;
+        Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
         Text = "Mainform";
         Paint += MainForm_Paint;
         KeyDown += MainForm_KeyDown;
         KeyUp += MainForm_KeyUp;
+        MouseClick += MainForm_MouseClick;
+        MouseEnter += MainForm_MouseEnter;
         MouseMove += MainForm_MouseMove;
+        MouseDown += (s, e) => MouseHelper.ProcessClick(e.Button);
         ResumeLayout(false);
     }
 

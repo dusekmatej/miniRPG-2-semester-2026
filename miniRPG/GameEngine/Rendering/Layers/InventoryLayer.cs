@@ -27,7 +27,7 @@ public class InventoryLayer : IRenderLayer
                 continue;
 
             if (inventoryComp.Sprite?.Image != null && inventoryComp.IsOpen)
-                context.Graphics.DrawImage(inventoryComp.Sprite.Image, comp.X, comp.Y, comp.Width, comp.Height);
+                context.Graphics.DrawImage(inventoryComp.Sprite.Image, comp.X, comp.Y, 200, 200);
         }
 
 

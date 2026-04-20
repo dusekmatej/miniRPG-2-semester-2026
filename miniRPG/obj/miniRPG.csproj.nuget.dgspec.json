@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\frant\\source\\School\\PRG\\miniRPG-semester-project-2026\\miniRPG\\miniRPG.csproj": {}
+    "C:\\Users\\frant\\source\\School\\PRG\\miniRPG-2-semester-2026\\miniRPG\\miniRPG.csproj": {}
   },
   "projects": {
-    "C:\\Users\\frant\\source\\School\\PRG\\miniRPG-semester-project-2026\\miniRPG\\miniRPG.csproj": {
+    "C:\\Users\\frant\\source\\School\\PRG\\miniRPG-2-semester-2026\\miniRPG\\miniRPG.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\frant\\source\\School\\PRG\\miniRPG-semester-project-2026\\miniRPG\\miniRPG.csproj",
+        "projectUniqueName": "C:\\Users\\frant\\source\\School\\PRG\\miniRPG-2-semester-2026\\miniRPG\\miniRPG.csproj",
         "projectName": "miniRPG",
-        "projectPath": "C:\\Users\\frant\\source\\School\\PRG\\miniRPG-semester-project-2026\\miniRPG\\miniRPG.csproj",
+        "projectPath": "C:\\Users\\frant\\source\\School\\PRG\\miniRPG-2-semester-2026\\miniRPG\\miniRPG.csproj",
         "packagesPath": "C:\\Users\\frant\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\frant\\source\\School\\PRG\\miniRPG-semester-project-2026\\miniRPG\\obj\\",
+        "outputPath": "C:\\Users\\frant\\source\\School\\PRG\\miniRPG-2-semester-2026\\miniRPG\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\frant\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -40,7 +40,7 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.200"
+        "SdkAnalysisLevel": "10.0.100"
       },
       "frameworks": {
         "net10.0-windows7.0": {
@@ -64,7 +64,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Users\\frant\\.dotnet\\sdk\\10.0.201/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Users\\frant\\.dotnet\\sdk\\10.0.103/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",

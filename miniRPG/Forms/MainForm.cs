@@ -1,5 +1,8 @@
 
+using System.Windows.Input;
 using Microsoft.VisualBasic.Devices;
+using KeyEventArgs = System.Windows.Forms.KeyEventArgs;
+using MouseEventArgs = System.Windows.Forms.MouseEventArgs;
 
 namespace miniRPG.Forms;
 
@@ -59,5 +62,17 @@ public partial class MainForm : Form
             MouseHelper.GetMouseY(y);
     }
 
-    
+
+    private void MainForm_MouseEnter(object sender, EventArgs e)
+    {
+        
+    }
+
+    private void MainForm_MouseClick(object sender, MouseEventArgs e)
+    {
+        
+        
+    }
+
+
 }
