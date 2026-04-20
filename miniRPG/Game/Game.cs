@@ -48,6 +48,8 @@ public class Game
     public void Initialize(int clientWidth, int clientHeight)
     {
         DatabasePopulator.Populate(_imagePaths, _animationPaths);
+        TileDatabase.Initialize();
+        
         _engine = new Engine();
 
         // Generate test terrain, now with perlin

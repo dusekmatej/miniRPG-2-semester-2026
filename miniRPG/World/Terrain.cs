@@ -48,9 +48,15 @@ public class Terrain
 
                 if (type == TileType.Grass)
                 {
-                    if (detailValue < 0.33f) variant = 0;
-                    else if (detailValue < 0.66f) variant = 1;
-                    else variant = 2;
+                    if (detailValue < 0.18) variant = 0;
+                    else if (detailValue < 0.36) variant = 1;
+                    else if (detailValue < 0.54) variant = 2;
+                    else if (detailValue < 0.71) variant = 3;
+                    else if (detailValue < 0.90) variant = 4;
+                    else variant = 5;
+                    // if (detailValue < 0.33f) variant = 0;
+                    // else if (detailValue < 0.66f) variant = 1;
+                    // else variant = 2;
                 }
 
                 // --- ASSIGN TILE ---
@@ -63,7 +69,6 @@ public class Terrain
         }
     }
     
-
     public void GenerateTestMap()
     {
         Random rand = new Random();
