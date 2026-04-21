@@ -237,7 +237,7 @@
       <None Update="Art\Terrain\Tiles\Water\water0.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="Art\Terrain\Tiles\Mountains\mountain0.png">
+      <None Update="Art\Terrain\Tiles\Mountains\mountain1.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
       <None Update="Art\Terrain\Tiles\Grass\grass0.png">
@@ -280,6 +280,18 @@
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
       <None Update="Art\Terrain\Ui\Inventory\inventory_open.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Art\Terrain\Tiles\BackgroundObjects\bush0.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Art\InProgress\bush0.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Art\Terrain\Tiles\BackgroundObjects\bush0Shadow.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Art\Terrain\Tiles\Mountains\mountain0.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>

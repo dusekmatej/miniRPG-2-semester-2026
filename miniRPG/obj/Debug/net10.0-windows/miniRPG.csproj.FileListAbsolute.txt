@@ -508,11 +508,6 @@ C:\Users\matdu\source\School\PRG\miniRPG-2-semester-2026\miniRPG\bin\Debug\net10
 C:\Users\matdu\source\School\PRG\miniRPG-2-semester-2026\miniRPG\bin\Debug\net10.0-windows\Art\Terrain\Tiles\Grass\grass1.png
 C:\Users\matdu\source\School\PRG\miniRPG-2-semester-2026\miniRPG\bin\Debug\net10.0-windows\Art\Terrain\Tiles\Grass\grass2.png
 C:\Users\matdu\source\School\PRG\miniRPG-2-semester-2026\miniRPG\bin\Debug\net10.0-windows\Art\Terrain\Tiles\Grass\grass3.png
-C:\Users\matdu\source\School\PRG\miniRPG-2-semester-2026\miniRPG\bin\Debug\net10.0-windows\Art\Terrain\Tiles\Grass\grassFlower1.png
-C:\Users\matdu\source\School\PRG\miniRPG-2-semester-2026\miniRPG\bin\Debug\net10.0-windows\Art\Terrain\Tiles\Grass\GrassFlower2.png
-C:\Users\matdu\source\School\PRG\miniRPG-2-semester-2026\miniRPG\bin\Debug\net10.0-windows\Art\Terrain\Tiles\Grass\GrassFlower3.png
-C:\Users\matdu\source\School\PRG\miniRPG-2-semester-2026\miniRPG\bin\Debug\net10.0-windows\Art\Terrain\Tiles\Mountains\mountain1.png
-C:\Users\matdu\source\School\PRG\miniRPG-2-semester-2026\miniRPG\bin\Debug\net10.0-windows\Art\Terrain\Tiles\Water\water.png
 C:\Users\matdu\source\School\PRG\miniRPG-2-semester-2026\miniRPG\bin\Debug\net10.0-windows\Art\Terrain\Objects\Rocks\bronze_rock.png
 C:\Users\matdu\source\School\PRG\miniRPG-2-semester-2026\miniRPG\bin\Debug\net10.0-windows\Art\Terrain\Items\Ores\coal_ore.png
 C:\Users\matdu\source\School\PRG\miniRPG-2-semester-2026\miniRPG\bin\Debug\net10.0-windows\Art\Terrain\Items\Ores\gold_ore.png
@@ -715,3 +710,13 @@ C:\Users\frant\source\School\PRG\miniRPG-2-semester-2026\miniRPG\obj\Debug\net10
 C:\Users\frant\source\School\PRG\miniRPG-2-semester-2026\miniRPG\obj\Debug\net10.0-windows\miniRPG.pdb
 C:\Users\frant\source\School\PRG\miniRPG-2-semester-2026\miniRPG\obj\Debug\net10.0-windows\miniRPG.genruntimeconfig.cache
 C:\Users\frant\source\School\PRG\miniRPG-2-semester-2026\miniRPG\obj\Debug\net10.0-windows\ref\miniRPG.dll
+C:\Users\matdu\source\School\PRG\miniRPG-2-semester-2026\miniRPG\bin\Debug\net10.0-windows\Art\Terrain\Tiles\Grass\grass0.png
+C:\Users\matdu\source\School\PRG\miniRPG-2-semester-2026\miniRPG\bin\Debug\net10.0-windows\Art\Terrain\Tiles\Grass\grass4.png
+C:\Users\matdu\source\School\PRG\miniRPG-2-semester-2026\miniRPG\bin\Debug\net10.0-windows\Art\Terrain\Tiles\Grass\grass5.png
+C:\Users\matdu\source\School\PRG\miniRPG-2-semester-2026\miniRPG\bin\Debug\net10.0-windows\Art\Terrain\Tiles\Water\water0.png
+C:\Users\matdu\source\School\PRG\miniRPG-2-semester-2026\miniRPG\bin\Debug\net10.0-windows\Art\Terrain\Ui\Inventory\inventory_open.png
+C:\Users\matdu\source\School\PRG\miniRPG-2-semester-2026\miniRPG\bin\Debug\net10.0-windows\Art\Terrain\Tiles\BackgroundObjects\bush0.png
+C:\Users\matdu\source\School\PRG\miniRPG-2-semester-2026\miniRPG\bin\Debug\net10.0-windows\Art\InProgress\bush0.png
+C:\Users\matdu\source\School\PRG\miniRPG-2-semester-2026\miniRPG\bin\Debug\net10.0-windows\Art\Terrain\Tiles\BackgroundObjects\bush0Shadow.png
+C:\Users\matdu\source\School\PRG\miniRPG-2-semester-2026\miniRPG\bin\Debug\net10.0-windows\Art\Terrain\Tiles\Mountains\mountain1.png
+C:\Users\matdu\source\School\PRG\miniRPG-2-semester-2026\miniRPG\bin\Debug\net10.0-windows\Art\Terrain\Tiles\Mountains\mountain0.png

@@ -1,6 +1,7 @@
-using miniRPG.GameEngine.Other;
+using miniRPG.GameEngine.Components;
+using miniRPG.GameEngine.Enums;
 
-namespace miniRPG.GameEngine.Components;
+namespace miniRPG.Environment;
 
 public class Terrain
 {
@@ -9,6 +10,7 @@ public class Terrain
 
     public int TileSize { get; private set; } = 100;
     public float TILE_MIXING { get; private set;} = 2f;
+    private Random _random;
     
     public Tile[,] Map { get; private set; }
 
@@ -16,6 +18,7 @@ public class Terrain
     {
         Width = width;
         Height = height;
+        _random = new Random();
 
         Map = new Tile[width, height];
     }
@@ -35,12 +38,35 @@ public class Terrain
                 float biomeValue = noise.Sample(x * biomeScale, y * biomeScale);
 
                 TileType type;
+                VariationType variationType;
 
-                if (biomeValue < 0.3f) type = TileType.Water;
-                else if (biomeValue < 0.6f) type = TileType.Grass;
-                else if (biomeValue < 0.9f) type = TileType.Mountain;
-                else type = TileType.Mountain;
+                if (biomeValue < 0.3f)
+                {
+                    type = TileType.Water;
+                    
+                    // SET DIFFERENT LATER
+                    variationType = VariationType.None;
+                }
+                else if (biomeValue < 0.6f)
+                {
+                    type = TileType.Grass;
 
+                    variationType = _random.Next(0, 100) < 3 ? VariationType.Bush : VariationType.None;
+                }
+                else if (biomeValue < 0.9f)
+                {
+                    type = TileType.Mountain;
+                    
+                    // SET DIFFERENT LATER
+                    variationType = VariationType.None;
+                }
+                else
+                {
+                    type = TileType.Mountain;
+
+                    variationType = VariationType.None;
+                }
+                
                 // --- DETAIL NOISE (variation) ---
                 float detailValue = noise.Sample(x * detailScale, y * detailScale);
 
@@ -59,11 +85,18 @@ public class Terrain
                     // else variant = 2;
                 }
 
+                if (type == TileType.Mountain)
+                {
+                    if (detailValue < 0.75) variant = 0;
+                    else variant = 1;
+                }
+
                 // --- ASSIGN TILE ---
                 Map[x, y] = new Tile
                 {
                     Type = type,
-                    Variation = variant
+                    Variation = variant,
+                    VariationType = variationType
                 };
             }
         }

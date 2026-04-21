@@ -1,4 +1,5 @@
 using miniRPG.GameEngine.Databases;
+using miniRPG.GameEngine.Enums;
 
 namespace miniRPG.Helpers;
 
@@ -35,6 +36,19 @@ public class TileLoader
                 return _mountainTextures[tile.Variation];
         }
         
+        return null;
+    }
+
+    public static Texture? GetVariation(Tile tile)
+    {
+        switch (tile.VariationType)
+        {
+            case VariationType.None:
+                return null;
+            case VariationType.Bush:
+                return TileDatabase.GetSingle("bush");
+        }
+
         return null;
     }
 }

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Drawing;
-
+    
 namespace miniRPG.GameEngine.Components;
 
 public class AnimationComponent
@@ -14,9 +14,9 @@ public class AnimationComponent
     public bool IsRunningRight;
     public bool IsRunningLeft;
     
-    public Texture[] AnimationFramesIdle;
-    public Texture[] AnimationFramesUp;
-    public Texture[] AnimationFramesDown;
-    public Texture[] AnimationFramesLeft;
-    public Texture[] AnimationFramesRight;
+    public required Texture[] AnimationFramesIdle;
+    public required Texture[] AnimationFramesUp;
+    public required Texture[] AnimationFramesDown;
+    public required Texture[] AnimationFramesLeft;
+    public required Texture[] AnimationFramesRight;
 }
