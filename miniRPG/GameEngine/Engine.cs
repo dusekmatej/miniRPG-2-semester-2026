@@ -23,6 +23,7 @@ public class Engine
     private readonly DirectionDetectionSystem _directionDetection = new();
     private readonly StatBarSystem _statBar = new();
     private readonly InventoryLayer _inventoryLayer = new();
+    private readonly InventoryInteractionSystem _inventoryInteraction = new();
 
     // Load layers into the renderer
     public Engine()
@@ -43,5 +44,6 @@ public class Engine
         _inventory.Update(World);
         _directionDetection.Update(World);
         _statBar.Update(World);
+        _inventoryInteraction.Update(World);
     }
 }

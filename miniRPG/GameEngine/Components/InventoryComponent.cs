@@ -8,8 +8,11 @@ public class InventoryComponent
     public Texture Sprite;
     public Inventory Inventory;
     public bool IsOpen = false;
-    public int SlotSize = 50;
-
+    public int SlotSize = 40; 
+    public int SlotOffsetX = 30;
+    public int SlotOffsetY = 55;
+    
+    
     public InventoryComponent()
     {
         if (TextureDatabase.Contains("inventory_open"))

@@ -1,4 +1,3 @@
-
 using System.Windows.Input;
 using Microsoft.VisualBasic.Devices;
 using KeyEventArgs = System.Windows.Forms.KeyEventArgs;
@@ -19,6 +18,8 @@ public partial class MainForm : Form
         InitializeComponent();
         
         _game.Initialize(ClientSize.Width, ClientSize.Height);
+        MouseHelper.SetWindow(Location.X, Location.Y, ClientSize.Width, ClientSize.Height);
+        this.LocationChanged += MainForm_LocationChanged;
     }
     
     private void MainForm_Paint(object sender, PaintEventArgs e)
@@ -55,11 +56,7 @@ public partial class MainForm : Form
 
     private void MainForm_MouseMove(object sender, MouseEventArgs e)
     {
-        var x = e.X;
-        var y = e.Y;
         
-            MouseHelper.GetMouseX(x);
-            MouseHelper.GetMouseY(y);
     }
 
 
@@ -74,5 +71,18 @@ public partial class MainForm : Form
         
     }
 
+    private void MainForm_Resize(object sender, EventArgs e)
+    {
+        MouseHelper.SetWindow(Location.X, Location.Y, ClientSize.Width, ClientSize.Height);
+    }
 
+    private void MainForm_MouseUp(object sender, MouseEventArgs e)
+    {
+        MouseHelper.MouseUp(e.Button);
+    }
+
+    private void MainForm_LocationChanged(object sender, EventArgs e)
+    {
+        MouseHelper.SetWindow(Location.X, Location.Y, ClientSize.Width, ClientSize.Height);
+    }
 }

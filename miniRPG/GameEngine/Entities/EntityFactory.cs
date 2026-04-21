@@ -17,7 +17,8 @@ public static class EntityFactory
         e.AddComponent(new PlayerComponent { Stone = 100 });
         e.AddComponent(new TransformComponent { X = posX, Y = posY, Width = 150, Height = 150 });
         e.AddComponent(new VelocityComponent { X = 0, Y = 0 });
-        e.AddComponent(new Inventory());
+        e.AddComponent(new InventoryComponent());
+        e.AddComponent(new UiComponent());
         e.AddComponent(
             new AnimationComponent
             {
