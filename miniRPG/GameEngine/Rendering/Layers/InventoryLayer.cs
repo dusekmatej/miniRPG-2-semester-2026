@@ -3,6 +3,8 @@ using miniRPG.GameEngine.Entities;
 using miniRPG.GameEngine.System;
 using miniRPG.Helpers;
 
+using miniRPG.Environment;
+
 namespace miniRPG.GameEngine.Rendering.Layers;
 using Components;
 using Core;
@@ -18,6 +20,7 @@ public class InventoryLayer : IRenderLayer
 
         foreach (var e in world.Entities)
         {
+
             if (!e.HasComponent<InventoryComponent>() && !e.HasComponent<UiComponent>())
                 continue;
 

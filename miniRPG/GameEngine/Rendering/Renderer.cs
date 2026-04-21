@@ -1,6 +1,7 @@
+using miniRPG.Environment;
+
 namespace miniRPG.GameEngine.Rendering;
 
-using Other;
 using Components;
 using Core;
 

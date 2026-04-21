@@ -1,8 +1,9 @@
+using miniRPG.Environment;
+
 namespace miniRPG.GameEngine.Rendering;
 
 using Components;
 using Core;
-using Other;
 
 public interface IRenderLayer
 {

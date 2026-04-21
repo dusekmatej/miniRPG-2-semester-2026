@@ -1,3 +1,4 @@
+using miniRPG.Environment;
 using miniRPG.GameEngine.Components;
 using miniRPG.GameEngine.Core;
 
