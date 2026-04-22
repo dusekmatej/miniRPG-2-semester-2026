@@ -39,8 +39,8 @@ public class InventoryLayer : IRenderLayer
                     int ItemX = comp.X + inventoryComp.SlotOffsetX + (collum * inventoryComp.SlotSize);
                     int ItemY = comp.Y + inventoryComp.SlotOffsetY +  (row * inventoryComp.SlotSize);                    
                     
-                    context.Graphics.DrawImage(inventoryComp.Inventory.Slots[i].Item.Sprite.Image, ItemX, ItemY, inventoryComp.SlotSize, inventoryComp.SlotSize);
-                    Console.WriteLine("Rendering sprite for " + i);                    
+                    context.Graphics.DrawImage(inventoryComp.Inventory.Slots[i].Item.Sprite.Image, ItemX, ItemY - 30, inventoryComp.SlotSize - 10, inventoryComp.SlotSize - 10);
+                                      
                 }
             }
         }

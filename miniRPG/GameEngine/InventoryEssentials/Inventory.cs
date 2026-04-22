@@ -5,7 +5,7 @@ namespace miniRPG.GameEngine.InventoryEssentials;
 
 public class Inventory
 {
-    public InventorySlot[] Slots = new InventorySlot[15];
+    public InventorySlot[] Slots = new InventorySlot[16];
 
     public void Add(int id)
     {
@@ -13,7 +13,7 @@ public class Inventory
         // Slots[1] = new InventorySlot { Amount = 20, Item = ItemDatabase.Get(2) };
         // Slots[2] = new InventorySlot { Amount = 30, Item = ItemDatabase.Get(3) };
         // Slots[3] = new InventorySlot { Amount = 40, Item = ItemDatabase.Get(4) };
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < 16; i++)
         {
             if (Slots[i] == null)
             {
@@ -33,7 +33,7 @@ public class Inventory
 
     public void DisplayInventory()
     {
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < 16; i++)
         {
             Console.WriteLine($"Slot {i + 1}: {(Slots[i] != null ? $"{Slots[i].Item.Name} x{Slots[i].Amount}" : "Empty")}");
         }

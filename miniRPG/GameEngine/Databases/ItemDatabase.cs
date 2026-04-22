@@ -1,3 +1,4 @@
+using System.Configuration;
 using miniRPG.GameEngine.Databases;
 using miniRPG.GameEngine.InventoryEssentials;
 
@@ -44,7 +45,15 @@ public static class ItemDatabase
 
     public static Item Get(int id)
     {
-        return _items[id];
+        return id switch
+        {
+            1 => new Item(1, "Bronze Ore", "Bronze ore", ItemType.Ore, TextureDatabase.Get("bronze_ore")),
+            2 => new Item(2, "Coal Ore", "Coal ore", ItemType.Ore, TextureDatabase.Get("coal_ore")),
+            3 => new Item(3, "Iron Ore", "Iron ore", ItemType.Ore, TextureDatabase.Get("iron_ore")),
+            4 => new Item(4, "Gold Ore", "Gold ore", ItemType.Ore, TextureDatabase.Get("gold_ore")),
+            5 => new Item(5, "axe", "Basic axe", ItemType.Weapon, TextureDatabase.Get("axe")),
+        };
+
     }
 
     public static bool Contains(int id)
