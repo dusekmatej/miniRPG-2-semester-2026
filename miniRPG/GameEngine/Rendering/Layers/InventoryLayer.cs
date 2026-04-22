@@ -8,9 +8,6 @@ using Core;
 
 public class InventoryLayer : IRenderLayer
 {
-
-
-
     public void Render(World world, Terrain? terrain, RenderContext context)
     {
 
@@ -45,12 +42,8 @@ public class InventoryLayer : IRenderLayer
                     context.Graphics.DrawImage(inventoryComp.Inventory.Slots[i].Item.Sprite.Image, ItemX, ItemY, inventoryComp.SlotSize, inventoryComp.SlotSize);
                     Console.WriteLine("Rendering sprite for " + i);                    
                 }
-                else
-                    Console.WriteLine("Empty slot " + i);
             }
-    }
-
-
+        }
     }
 }
     

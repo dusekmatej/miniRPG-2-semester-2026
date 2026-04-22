@@ -17,6 +17,7 @@ public class Game
     private static readonly string APP_BASE = AppDomain.CurrentDomain.BaseDirectory;
     private static readonly string BASE_TERRAIN = Path.Join(APP_BASE, "Art/Terrain");
     private static readonly string BASE_CHARACTER = Path.Join(APP_BASE, "Art/Character");
+    private static readonly string BASE_TOOLS = Path.Join(APP_BASE, "Art/Terrain/Items/Tools");
     private static readonly string BASE_ORES =  Path.Join(BASE_TERRAIN, "Items/Ores");
     private static readonly string BASE_INGOTS = Path.Join(BASE_TERRAIN, "Items/Ingots");
     private static readonly string BASE_UI = Path.Join(BASE_TERRAIN, "Ui");
@@ -42,12 +43,18 @@ public class Game
         $"{BASE_INGOTS}/iron_ingot.png",
         $"{BASE_INGOTS}/coal_ingot.png",
         $"{BASE_INGOTS}/gold_ingot.png",
+        $"{BASE_TOOLS}/axe.png",
+        $"{BASE_TOOLS}/pickaxe.png",
+        $"{BASE_TOOLS}/shovel.png",
+        $"{BASE_TOOLS}/sword.png"
     ];
     
 
     public void Initialize(int clientWidth, int clientHeight)
     {
         DatabasePopulator.Populate(_imagePaths, _animationPaths);
+        ItemDatabase.Initialize();
+        
         _engine = new Engine();
 
         // Generate test terrain, now with perlin
