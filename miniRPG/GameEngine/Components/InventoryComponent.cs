@@ -5,7 +5,7 @@ namespace miniRPG.GameEngine.Components;
 
 public class InventoryComponent
 {
-    public Texture Sprite;
+    public Texture InventorySprite;
     public Inventory Inventory;
     public bool IsOpen = false;
     public int SlotSize = 40; 
@@ -17,7 +17,7 @@ public class InventoryComponent
     {
         if (TextureDatabase.Contains("inventory_open"))
         {
-            Sprite = TextureDatabase.Get("inventory_open");
+            InventorySprite = TextureDatabase.Get("inventory_open");
         }
 
         Inventory = new Inventory();
