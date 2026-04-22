@@ -715,3 +715,8 @@ C:\Users\frant\source\School\PRG\miniRPG-2-semester-2026\miniRPG\obj\Debug\net10
 C:\Users\frant\source\School\PRG\miniRPG-2-semester-2026\miniRPG\obj\Debug\net10.0-windows\miniRPG.pdb
 C:\Users\frant\source\School\PRG\miniRPG-2-semester-2026\miniRPG\obj\Debug\net10.0-windows\miniRPG.genruntimeconfig.cache
 C:\Users\frant\source\School\PRG\miniRPG-2-semester-2026\miniRPG\obj\Debug\net10.0-windows\ref\miniRPG.dll
+C:\Users\matdu\source\School\PRG\miniRPG-2-semester-2026\miniRPG\bin\Debug\net10.0-windows\Art\Terrain\Items\Tools\axe.png
+C:\Users\matdu\source\School\PRG\miniRPG-2-semester-2026\miniRPG\bin\Debug\net10.0-windows\Art\Terrain\Items\Tools\pickaxe.png
+C:\Users\matdu\source\School\PRG\miniRPG-2-semester-2026\miniRPG\bin\Debug\net10.0-windows\Art\Terrain\Items\Tools\shovel.png
+C:\Users\matdu\source\School\PRG\miniRPG-2-semester-2026\miniRPG\bin\Debug\net10.0-windows\Art\Terrain\Items\Tools\sword.png
+C:\Users\matdu\source\School\PRG\miniRPG-2-semester-2026\miniRPG\bin\Debug\net10.0-windows\Art\Terrain\Ui\Inventory\inventory_open.png

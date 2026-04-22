@@ -282,6 +282,18 @@
       <None Update="Art\Terrain\Ui\Inventory\inventory_open.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+      <None Update="Art\Terrain\Items\Tools\axe.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Art\Terrain\Items\Tools\pickaxe.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Art\Terrain\Items\Tools\shovel.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Art\Terrain\Items\Tools\sword.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
     <ItemGroup>
