@@ -5,7 +5,7 @@ namespace miniRPG.GameEngine.InventoryEssentials;
 
 public class Inventory
 {
-    public InventorySlot[] Slots = new InventorySlot[20];
+    public InventorySlot[] Slots = new InventorySlot[15];
 
     public void Add(int id)
     {

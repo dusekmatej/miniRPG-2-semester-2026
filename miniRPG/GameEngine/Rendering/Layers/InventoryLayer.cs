@@ -33,9 +33,16 @@ public class InventoryLayer : IRenderLayer
             {
                 var slot = inventoryComp.Inventory.Slots[i];
 
-                if (inventoryComp.Inventory.Slots[i].Item.Sprite.Image != null && inventoryComp.IsOpen)
+                if (inventoryComp.Inventory.Slots[i]?.Item.Sprite.Image != null && inventoryComp.IsOpen)
                 {
-                    context.Graphics.DrawImage(inventoryComp.Inventory.Slots[i].Item.Sprite.Image, comp.X, comp.Y, 200, 200);
+
+                    int row = i % 4;
+                    int collum = i /4;
+                    
+                    int ItemX = comp.X + inventoryComp.SlotOffsetX + (collum * inventoryComp.SlotSize);
+                    int ItemY = comp.Y + inventoryComp.SlotOffsetY +  (row * inventoryComp.SlotSize);                    
+                    
+                    context.Graphics.DrawImage(inventoryComp.Inventory.Slots[i].Item.Sprite.Image, ItemX, ItemY, inventoryComp.SlotSize, inventoryComp.SlotSize);
                     Console.WriteLine("Rendering sprite for " + i);                    
                 }
                 else

@@ -12,6 +12,9 @@ public class InventoryComponent
     public int SlotOffsetX = 30;
     public int SlotOffsetY = 55;
     
+    public int SlotPositionX = 0;
+    public int SlotPositionY = 0;
+    
     
     public InventoryComponent()
     {
