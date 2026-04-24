@@ -1,6 +1,7 @@
 using System.IO;
 using miniRPG.GameEngine.Components;
 using miniRPG.GameEngine.Databases;
+using miniRPG.GameEngine.Enums;
 using miniRPG.GameEngine.InventoryEssentials;
 
 namespace miniRPG.Helpers;

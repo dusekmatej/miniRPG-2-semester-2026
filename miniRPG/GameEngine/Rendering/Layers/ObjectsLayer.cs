@@ -1,4 +1,4 @@
-using miniRPG.Environment;
+using miniRPG.GameEngine.Core.WorldTerrain;
 
 namespace miniRPG.GameEngine.Rendering.Layers;
 

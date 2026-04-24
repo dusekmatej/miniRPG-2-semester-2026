@@ -1,6 +1,6 @@
 using System.Numerics;
 
-namespace miniRPG.Environment;
+namespace miniRPG.GameEngine.Core.WorldTerrain;
 
 public class PerlinNoise
 {

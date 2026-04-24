@@ -6,5 +6,4 @@ public class Tile
 {
     public TileType Type;
     public int Variation;
-    public VariationType VariationType;
 }

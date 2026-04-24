@@ -1,8 +1,8 @@
-using miniRPG.Environment;
-using miniRPG.GameEngine.Enums;
 
 namespace miniRPG.GameEngine.Rendering.Layers;
 
+using Core.WorldTerrain;
+using Enums;
 using Components;
 using Core;
 using Rendering;
@@ -66,13 +66,6 @@ public class TerrainLayer : IRenderLayer
                         context.Graphics.DrawImage(texture.Image, screenX, screenY, t.TileSize + t.TILE_MIXING + 5, t.TileSize + t.TILE_MIXING + 5);
                     else
                         context.Graphics.DrawImage(texture.Image, screenX, screenY, t.TileSize + t.TILE_MIXING, t.TileSize + t.TILE_MIXING);
-
-                if (tile.VariationType == VariationType.Bush)
-                {
-                    var variationTexture = TileLoader.GetVariation(tile);
-                    if (variationTexture != null)
-                        context.Graphics.DrawImage(variationTexture.Image, screenX, screenY, t.TileSize + t.TILE_MIXING, t.TileSize + t.TILE_MIXING);
-                }
             }
         }
     }

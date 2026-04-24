@@ -1,5 +1,5 @@
 using System.IO;
-using miniRPG.Environment;
+using miniRPG.GameEngine.Core.WorldTerrain;
 using miniRPG.Helpers;
 
 namespace miniRPG.Game;

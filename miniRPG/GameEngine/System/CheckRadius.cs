@@ -18,7 +18,7 @@ public class CheckRadius
         {
             if (!e.HasComponent<Interactable>())
                 continue;
-            
+
             if (!e.HasComponent<TransformComponent>() || !e.HasComponent<Interactable>())
                 continue;
 
@@ -27,8 +27,8 @@ public class CheckRadius
             if ((targetTransform.X > (transform.X - 100) && targetTransform.X < (transform.X + 100)) &&
                 (targetTransform.Y > (transform.Y - 100) && targetTransform.Y < (transform.Y + 100)))
             {
-               // Console.WriteLine("Player in range!");
+                // Console.WriteLine("Player in range!");
             }
-    }
+        }
     }
 }

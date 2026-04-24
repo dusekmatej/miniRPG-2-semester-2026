@@ -1,4 +1,4 @@
-namespace miniRPG.GameEngine.InventoryEssentials;
+namespace miniRPG.GameEngine.Enums;
 
 public enum ItemType
 {

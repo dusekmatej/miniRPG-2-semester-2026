@@ -17,6 +17,7 @@ public static class TileDatabase
         Load("mountain", $"{BASE_PATH}/Mountains/");
         Load("water", $"{BASE_PATH}/Water/");
         
+        LoadSingle("grassML", $"{BASE_PATH}/Grass/Transition/grassML.png");
         LoadSingle("bush", $"{BASE_PATH}/BackgroundObjects/bush0Shadow.png");
     }
 

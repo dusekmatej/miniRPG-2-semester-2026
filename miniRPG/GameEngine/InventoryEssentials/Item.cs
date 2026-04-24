@@ -1,4 +1,5 @@
 using miniRPG.GameEngine.Components;
+using miniRPG.GameEngine.Enums;
 
 namespace miniRPG.GameEngine.InventoryEssentials;
 
