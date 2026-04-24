@@ -1,3 +1,7 @@
+using Microsoft.VisualBasic;
+using miniRPG.GameEngine.System;
+using miniRPG.Helpers;
+
 namespace miniRPG.GameEngine.Rendering.Layers;
 using Components;
 using Core;
@@ -13,34 +17,34 @@ public class InventoryLayer : IRenderLayer
 
         foreach (var e in world.Entities)
         {
-
             if (!e.HasComponent<InventoryComponent>() && !e.HasComponent<UiComponent>())
                 continue;
 
             var inventoryComp = e.GetComponent<InventoryComponent>();
-            var comp = e.GetComponent<UiComponent>();
+            var uiComp = e.GetComponent<UiComponent>();
 
-            if (comp == null || inventoryComp == null)
+            if (uiComp == null || inventoryComp == null || !inventoryComp.IsOpen)
                 continue;
-
-            if (inventoryComp.InventorySprite?.Image != null && inventoryComp.IsOpen)
-                context.Graphics.DrawImage(inventoryComp.InventorySprite.Image, comp.X, comp.Y, 200, 200);
-
+            
+            if (inventoryComp.InventorySprite?.Image != null)
+                context.Graphics.DrawImage(inventoryComp.InventorySprite.Image, uiComp.X, uiComp.Y, 200, 200);
+            
             for (int i = 0; i < inventoryComp.Inventory.Slots.Length; i++)
             {
                 var slot = inventoryComp.Inventory.Slots[i];
 
-                if (inventoryComp.Inventory.Slots[i]?.Item.Sprite.Image != null && inventoryComp.IsOpen)
+                if (slot != null && slot.Item?.Sprite?.Image != null)
                 {
-
-                    int row = i % 4;
-                    int collum = i /4;
+                    // Calculate slot position
+                    int col = i % 4;
+                    int row = i / 4;
                     
-                    int ItemX = comp.X + inventoryComp.SlotOffsetX + (collum * inventoryComp.SlotSize);
-                    int ItemY = comp.Y + inventoryComp.SlotOffsetY +  (row * inventoryComp.SlotSize);                    
+                    int itemX = uiComp.X + inventoryComp.SlotOffsetX + (col * inventoryComp.SlotSize);
+                    int itemY = uiComp.Y + inventoryComp.SlotOffsetY + (row * inventoryComp.SlotSize);
                     
-                    context.Graphics.DrawImage(inventoryComp.Inventory.Slots[i].Item.Sprite.Image, ItemX, ItemY - 30, inventoryComp.SlotSize - 10, inventoryComp.SlotSize - 10);
-                                      
+                    context.Graphics.DrawImage(slot.Item.Sprite.Image, itemX , itemY - 25, 
+                        inventoryComp.SlotSize, inventoryComp.SlotSize);
+                    
                 }
             }
         }

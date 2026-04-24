@@ -7,12 +7,16 @@ namespace miniRPG.GameEngine.System;
 
 public class InventoryInteractionSystem
 {
+    private int selectedSlotIndex = -1;
+    
     public void Update(World world)
     {
-        int clickX = MouseHelper.GetMouseX();
-        int clickY = MouseHelper.GetMouseY();
+
+        int clickX;
+        int clickY;
         if (!MouseHelper.WasLeftClicked(out clickX, out clickY))
             return;
+        
 
         foreach (var e in world.Entities)
         {
@@ -24,6 +28,7 @@ public class InventoryInteractionSystem
 
             if (inventoryComp == null || uiComp == null || !inventoryComp.IsOpen)
                 continue;
+            
             int effectiveWidth = 4*inventoryComp.SlotSize;
             int effectiveHeight = 4*inventoryComp.SlotSize;
 
@@ -34,22 +39,45 @@ public class InventoryInteractionSystem
             {
                 int collum = ( clickX - uiComp.X - inventoryComp.SlotOffsetX) / inventoryComp.SlotSize;
                 int row = ( clickY - uiComp.Y - inventoryComp.SlotOffsetY) / inventoryComp.SlotSize;
-                int slotIndex = row * 4 + collum;
-                if (slotIndex >= 0 && slotIndex < 16)
+                int clickedSlot = row * 4 + collum;
+                if (clickedSlot >= 0 && clickedSlot < 16)
                 {
-                    var slot = inventoryComp.Inventory.Slots[slotIndex];
-                    if (slot != null)
+                    if (selectedSlotIndex == -1)
                     {
-                        Console.WriteLine($"clicked on slot {slotIndex} containing item {slot.Item.Name} with amount {slot.Amount}");
+                        var slot = inventoryComp.Inventory.Slots[clickedSlot];
+                        if (slot != null)
+                        {
+                            selectedSlotIndex = clickedSlot;
+                            Console.WriteLine($"Selected slot {selectedSlotIndex} containing {slot.Item.Name}");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"clicked on empty slot {clickedSlot}");
+                        }
                     }
-                    else
+                    else if (selectedSlotIndex != clickedSlot)
                     {
-                        Console.WriteLine($"clicked on empty slot {slotIndex}");
+                        SwapItems(inventoryComp, selectedSlotIndex, clickedSlot);
+                        Console.WriteLine($"Moved from slot {selectedSlotIndex} to slot {clickedSlot}");
+                        selectedSlotIndex = -1;
+                    }
+                    else if (selectedSlotIndex == clickedSlot)
+                    {
+                        Console.WriteLine($"Deselected slot {selectedSlotIndex}");
+                        selectedSlotIndex = -1;
                     }
                 }
+                
             }
 
         }
+        
 
+    } 
+    public void SwapItems(InventoryComponent inventoryComp, int fromSlot, int toSlot)
+    {
+        var temp = inventoryComp.Inventory.Slots[fromSlot];
+        inventoryComp.Inventory.Slots[fromSlot] = inventoryComp.Inventory.Slots[toSlot];
+        inventoryComp.Inventory.Slots[toSlot] = temp;
     }
 }
