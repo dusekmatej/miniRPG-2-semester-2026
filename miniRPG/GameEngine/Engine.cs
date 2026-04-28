@@ -24,6 +24,8 @@ public class Engine
     private readonly StatBarSystem _statBar = new();
     private readonly InventoryLayer _inventoryLayer = new();
     private readonly InventoryInteractionSystem _inventoryInteraction = new();
+   
+    private readonly HotbarInteractionSystem _hotbarInteractionSystem  = new();
 
     // Load layers into the renderer
     public Engine()
@@ -32,6 +34,7 @@ public class Engine
         Renderer.Add(new ObjectsLayer());
         Renderer.Add(new StatisticBarLayer());
         Renderer.Add(_inventoryLayer);
+       
     }
     
     public void Update()
@@ -45,5 +48,7 @@ public class Engine
         _directionDetection.Update(World);
         _statBar.Update(World);
         _inventoryInteraction.Update(World);
+        _hotbarInteractionSystem.Update(World);
+        
     }
 }

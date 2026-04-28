@@ -47,7 +47,10 @@ public static class ItemDatabase
     {
         return id switch
         {
-            1 => new Item(1, "Bronze Ore", "Bronze ore", ItemType.Ore, TextureDatabase.Get("bronze_ore")),
+            1 => new Item(1, "Axe", "Axe", ItemType.Ingot, TextureDatabase.Get("axe")),
+            2 => new Item(2, "Pickaxe", "Pickaxe", ItemType.Ingot, TextureDatabase.Get("pickaxe")),
+            3 => new Item(3, "Shovel", "Shovel", ItemType.Ingot, TextureDatabase.Get("shovel")),
+            4 => new Item(4, "Sword", "Sword", ItemType.Ingot, TextureDatabase.Get("sword")),
             
         };
 

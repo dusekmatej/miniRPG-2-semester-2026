@@ -1,4 +1,5 @@
 using System.IO;
+using miniRPG.GameEngine.Rendering.Layers;
 using miniRPG.Helpers;
 
 namespace miniRPG.Game;
@@ -33,6 +34,7 @@ public class Game
 
     private string[]? _imagePaths =
     [
+        $"{BASE_UI}/Inventory/inventory_hotbar.png",
         $"{BASE_UI}/Inventory/inventory_open.png",
         $"{BASE_TERRAIN}/Objects/Rocks/bronze_rock.png",
         $"{BASE_ORES}/bronze_ore.png",
@@ -77,6 +79,7 @@ public class Game
         var testInteractable = EntityFactory.TestInteractable(mapCenterX + 98, mapCenterY + 98);
         var HealthBar = EntityFactory.HealthBar(clientWidth, clientHeight);
         var Inventory = EntityFactory.Inventory(clientWidth, clientHeight);
+        var Hotbar = EntityFactory.Hotbar(clientWidth, clientHeight);
 
         if (_engine == null)
             throw new NullReferenceException("Engine is not initialized!");
@@ -87,6 +90,9 @@ public class Game
         _engine.World.Entities.Add(testInteractable);
         _engine.World.Entities.Add(HealthBar);
         _engine.World.Entities.Add(Inventory);
+        _engine.World.Entities.Add(Hotbar);
+        
+        
     }
 
     public void Update()

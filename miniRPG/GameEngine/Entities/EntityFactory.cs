@@ -19,6 +19,7 @@ public static class EntityFactory
         e.AddComponent(new VelocityComponent { X = 0, Y = 0 });
         e.AddComponent(new InventoryComponent());
         e.AddComponent(new UiComponent());
+        e.AddComponent(new HotbarComponent());
         e.AddComponent(
             new AnimationComponent
             {
@@ -72,12 +73,18 @@ public static class EntityFactory
     public static Entity Inventory(int windowWidth, int windowHeight)
     {
         var e = new Entity();
-
-        var invWidth = 30;
-        var invHeight = 400;
-
+        
         e.AddComponent(new UiComponent {X = 20, Y = 20, Width = 200, Height = 160});
         e.AddComponent(new InventoryComponent());
+        return e;
+    }
+
+    public static Entity Hotbar(int windowWidth, int windowHeight)
+    {
+        var e = new Entity();
+        
+        e.AddComponent(new HotbarComponent());
+        e.AddComponent(new UiComponent { X = windowWidth -300, Y = windowHeight - 300, Width = 250, Height = 50}); 
         return e;
     }
 }
