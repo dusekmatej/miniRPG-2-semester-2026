@@ -7,5 +7,5 @@ using Core;
 
 public interface IRenderLayer
 {
-    public void Render(World world, Terrain? terrain, RenderContext context);
+    public void Render(World world, RenderContext context);
 }

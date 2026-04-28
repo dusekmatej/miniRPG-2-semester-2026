@@ -5,47 +5,73 @@ namespace miniRPG.GameEngine.Core.WorldTerrain;
 
 public class Terrain
 {
-    public int Width { get; private set; }
-    public int Height { get; private set; }
-    public int TileSize { get; private set; } = 100;
-    public float TILE_MIXING { get; private set;} = 2f;
-    private Random _random;
+    private int Width { get; set; }
+    private int Height { get; set; }
     
     public Tile[,] Map { get; private set; }
     private readonly Dictionary<(int chunkX, int chunkY), Chunk> _chunks = new();
 
-    public Terrain(int width, int height)
+    private readonly PerlinNoise _noise;
+    private readonly float _noiseScale = 0.02f;
+    private readonly float _detailScale = 0.15f;
+
+    public Terrain(int seed, int width = 1000, int height = 1000)
     {
         Width = width;
         Height = height;
-        _random = new Random();
+        _noise = new PerlinNoise(seed);
 
         Map = new Tile[width, height];
     }
 
-    public Chunk FillChunkPerlin(Chunk chunk, int seed, int offsetX, int offsetY)
+    public void FillChunkPerlin(Chunk chunk)
     {
-        PerlinNoise noise = new PerlinNoise(seed);
+        int offsetX = chunk.ChunkX * Chunk.Size;
+        int offsetY = chunk.ChunkY * Chunk.Size;
 
-        float biomeSize = 0.02f;
-        float detailSize = 0.2f;
-
-        int variant = 0;
-        
         for (int x = 0; x < Chunk.Size; x++)
         {
             for (int y = 0; y < Chunk.Size; y++)
             {
-                var calculatedSizeX = (offsetX + x) * biomeSize;
-                var calculatedSizeY = (offsetY + y) * detailSize;
-                Console.WriteLine(calculatedSizeX);
-                Console.WriteLine(calculatedSizeY);
-                
-                float biomeValue = noise.Sample(calculatedSizeX, calculatedSizeY);
+                var biome = _noise.Sample(
+                    (offsetX + x) * _detailScale, 
+                    (offsetY + y) * _detailScale);
+                var detail = _noise.Sample(
+                    (offsetX + x) * _detailScale,
+                    (offsetY + y) * _detailScale);
+
+                chunk.Map[x, y] = GenerateTile(biome, detail);
             }
         }
+    }
 
-        return chunk;
+    private Tile GenerateTile(float biome, float detail)
+    {
+        var newTile = new Tile();
+        TileType type = TileType.Water;
+
+        if (biome < 0.33f)
+        {
+            newTile.Type = TileType.Water;
+        }
+        else if (biome < 0.66f)
+        {
+            newTile.Type = TileType.Grass;
+
+            newTile.Variation = detail switch
+            {
+                < 0.17f => 0,
+                < 0.33f => 1,
+                < 0.50f => 2,
+                < 0.67f => 3,
+                < 0.83f => 4,
+                _ => 5
+            };
+        } 
+        else
+            newTile.Type = TileType.Mountain;
+        
+        return newTile;
     }
 
     public void GeneratePerlinMap(int seed)

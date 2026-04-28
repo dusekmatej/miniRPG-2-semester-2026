@@ -8,7 +8,7 @@ using Rendering;
 
 public class ObjectsLayer : IRenderLayer
 {
-    public void Render(World world, Terrain? terrain, RenderContext context)
+    public void Render(World world, RenderContext context)
     {
         var cameraEntity = world.Entities.FirstOrDefault(e => e.HasComponent<Camera>());
 

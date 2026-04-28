@@ -5,6 +5,7 @@ namespace miniRPG.GameEngine.Databases;
 
 public static class TileDatabase
 {
+    public static int TileSize = 101;
     private static readonly Dictionary<string, Texture[]> _database = new();
     private static readonly Dictionary<string, Texture> _databaseSingle = new();
     

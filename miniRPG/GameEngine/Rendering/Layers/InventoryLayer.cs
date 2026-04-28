@@ -1,9 +1,8 @@
 using Microsoft.VisualBasic;
+using miniRPG.GameEngine.Core.WorldTerrain;
 using miniRPG.GameEngine.Entities;
 using miniRPG.GameEngine.System;
 using miniRPG.Helpers;
-
-using miniRPG.Environment;
 
 namespace miniRPG.GameEngine.Rendering.Layers;
 using Components;

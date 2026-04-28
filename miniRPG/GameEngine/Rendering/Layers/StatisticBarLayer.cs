@@ -6,7 +6,7 @@ namespace miniRPG.GameEngine.Rendering.Layers;
 
 public class StatisticBarLayer : IRenderLayer
 {
-    public void Render(World world, Terrain? terrain, RenderContext context)
+    public void Render(World world, RenderContext context)
     {
         // There is a possibility to improve performance trough creating new list for UI
         // so it doesn't cycle all the entities, but for now we can leave it like this

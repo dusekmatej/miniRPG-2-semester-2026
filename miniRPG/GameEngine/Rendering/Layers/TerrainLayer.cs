@@ -1,71 +1,59 @@
+using miniRPG.GameEngine.Components;
+using miniRPG.GameEngine.Core;
+using miniRPG.GameEngine.Core.WorldTerrain;
+using miniRPG.GameEngine.Databases;
 
 namespace miniRPG.GameEngine.Rendering.Layers;
 
-using Core.WorldTerrain;
-using Enums;
-using Components;
-using Core;
-using Rendering;
-using Helpers;
-
-
 public class TerrainLayer : IRenderLayer
 {
-    public void Render(World world, Terrain? t, RenderContext context)
+    private readonly ChunkBaker _baker = new();
+
+    public void Render(World world, RenderContext context)
     {
-        var cameraEntity = world.Entities.FirstOrDefault(e => e.HasComponent<Camera>());
-        
-        if (cameraEntity == null)
-            throw new Exception("Camera entity was not found! In TerrainRender!");
-        
-        var camera = cameraEntity.GetComponent<Camera>();
-        
-        if (camera == null)
-            throw new Exception("Camera component was not found! In TerrainRender!");
-        
-        if (t == null)
-            throw new Exception("Terrain is null in TerrainLayer!");
+        var cameraEntity = world.Entities.FirstOrDefault(e => e.HasComponent<Camera>())
+                           ?? throw new Exception("Camera entity not found!");
+        var camera = cameraEntity.GetComponent<Camera>()
+                     ?? throw new Exception("Camera component not found!");
 
-        var halfW = context.ScreenWidth / 2f;
-        var halfH = context.ScreenHeight / 2f;
+        var visibleChunks = world.ChunkManager.GetVisibleChunks(
+            (int)(camera.X - context.ScreenWidth  / 2f),
+            (int)(camera.Y - context.ScreenHeight / 2f),
+            context.ScreenWidth,
+            context.ScreenHeight,
+            Chunk.TileSize
+        );
 
-        var worldLeft = camera.X - halfW;
-        var worldTop = camera.Y - halfH;
-        var worldRight = camera.X + halfW;
-        var worldBottom = camera.Y + halfH;
-
-        var startX = (int)MathF.Floor(worldLeft / t.TileSize);
-        var startY = (int)MathF.Floor(worldTop / t.TileSize);
-        var endX = (int)MathF.Ceiling(worldRight / t.TileSize);
-        var endY = (int)MathF.Ceiling(worldBottom / t.TileSize);
-
-        startX = Math.Clamp(startX, 0, t.Width);
-        startY = Math.Clamp(startY, 0, t.Height);
-        endX = Math.Clamp(endX, 0, t.Width);
-        endY = Math.Clamp(endY, 0, t.Height);
-                        
-        for (int x = startX; x < endX; x++)
+        int baked = 0, cached = 0;
+        
+        foreach (var chunk in visibleChunks)
         {
-            for (int y = startY; y < endY; y++)
+            // Bake once, reuse until dirty
+            if (chunk.IsDirty || chunk.Bitmap == null)
             {
-                Tile tile = t.Map[x, y];
+                _baker.Bake(chunk);
+                baked++;
+            }
+            else cached++;
 
-                var texture = TileLoader.GetTexture(tile);
+            
+            // Console.WriteLine($"Baked: {baked}, Cached {cached}");
+            var chunkPixelX = chunk.ChunkX * Chunk.Size * Chunk.TileSize;
+            var chunkPixelY = chunk.ChunkY * Chunk.Size * Chunk.TileSize;
 
-                if (texture == null)
-                    Console.WriteLine(@"TerrainLayer: Texture not found!");
+            // Important: draw at integer pixels to avoid seams between adjacent chunk bitmaps
+            var screenX = (int)MathF.Round(chunkPixelX - camera.X + context.ScreenWidth / 2f);
+            var screenY = (int)MathF.Round(chunkPixelY - camera.Y + context.ScreenHeight / 2f);
 
-                var posX = x * t.TileSize;
-                var posY = y * t.TileSize;
+            context.Graphics.DrawImage(chunk.Bitmap!, screenX, screenY);
 
-                var screenX = posX - camera.X + (context.ScreenWidth / 2f);
-                var screenY = posY - camera.Y + (context.ScreenHeight / 2f);
-                
-                if (texture != null)
-                    if (tile.Type == TileType.Mountain) // Remake numbers or make textures in the same width/height
-                        context.Graphics.DrawImage(texture.Image, screenX, screenY, t.TileSize + t.TILE_MIXING + 5, t.TileSize + t.TILE_MIXING + 5);
-                    else
-                        context.Graphics.DrawImage(texture.Image, screenX, screenY, t.TileSize + t.TILE_MIXING, t.TileSize + t.TILE_MIXING);
+            if (Flags.IsGraphicDebug)
+            {
+                context.Graphics.DrawRectangle(Pens.Red, screenX, screenY,
+                    Chunk.Size * TileDatabase.TileSize,
+                    Chunk.Size * TileDatabase.TileSize);
+                context.Graphics.DrawString($"{chunk.ChunkX},{chunk.ChunkY}",
+                    SystemFonts.DefaultFont, Brushes.Red, screenX + 4, screenY + 4);
             }
         }
     }

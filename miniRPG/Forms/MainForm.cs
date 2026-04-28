@@ -1,5 +1,5 @@
-using System.Windows.Input;
-using Microsoft.VisualBasic.Devices;
+using System.Diagnostics;
+using System.Drawing.Drawing2D;
 using KeyEventArgs = System.Windows.Forms.KeyEventArgs;
 using MouseEventArgs = System.Windows.Forms.MouseEventArgs;
 
@@ -11,20 +11,65 @@ using GameEngine.Rendering;
 
 public partial class MainForm : Form
 {
+    private readonly Stopwatch _stopwatch = Stopwatch.StartNew();
+    private float _lastTime = 0f;
     private Game.Game _game = new();
-    
+
+    private const float TargetFps = 400f;
+    private readonly float _targetFrameTime = 1f / TargetFps;
+
     public MainForm()
     {
         InitializeComponent();
-        
         _game.Initialize(ClientSize.Width, ClientSize.Height);
         MouseHelper.SetWindow(Location.X, Location.Y, ClientSize.Width, ClientSize.Height);
         this.LocationChanged += MainForm_LocationChanged;
+        
+        Application.Idle += OnIdle;
     }
+
+    private int _frameCount = 0;
+    private float _fpsTimer = 0f;
+    private float _lastFps = 0f;
     
+    private void OnIdle(object? sender, EventArgs e)
+    {
+        if (!IsIdle()) return;
+
+        float now = (float)_stopwatch.Elapsed.TotalSeconds;
+        float deltaTime = now - _lastTime;
+        if (deltaTime < 0f) deltaTime = 0f;
+        if (deltaTime > 0.1f) deltaTime = 0.1f;
+        if (deltaTime < _targetFrameTime) return;
+
+        _lastTime = now;
+        _fpsTimer += deltaTime;
+        _frameCount++;
+        if (_fpsTimer >= 1f)
+        {
+            _lastFps = _frameCount / _fpsTimer;
+            _frameCount = 0;
+            _fpsTimer = 0f;
+            Console.WriteLine($"FPS: {_lastFps:F0}");
+        }
+
+        _game.Update(deltaTime);
+        Invalidate();
+        Update();
+    }
+
+    private bool IsIdle()
+    {
+        return !NativeMethods.PeekMessage(out _, IntPtr.Zero, 0, 0, 0);
+    }
+
     private void MainForm_Paint(object sender, PaintEventArgs e)
     {
-        var g = e.Graphics;
+        e.Graphics.SmoothingMode = SmoothingMode.None;
+        e.Graphics.CompositingQuality = CompositingQuality.HighSpeed;
+        e.Graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
+        e.Graphics.PixelOffsetMode = PixelOffsetMode.Half;
+
         var context = new RenderContext
         {
             Graphics = e.Graphics,
@@ -35,25 +80,15 @@ public partial class MainForm : Form
         _game.Render(context);
     }
 
-    private void Update(object? sender, EventArgs e)
+    protected override void OnFormClosed(FormClosedEventArgs e)
     {
-        Task.Run(() => _game.Update());
-        Invalidate();
-    }
-    
-    #region Helpers
-    // These methods provide information for my helper classes
-    private void MainForm_KeyDown(object sender, KeyEventArgs e) 
-    {
-        Keyboard.KeyDown(e.KeyCode);
+        Application.Idle -= OnIdle;
+        base.OnFormClosed(e);
     }
 
-    private void MainForm_KeyUp(object sender, KeyEventArgs e) 
-    {
-        Keyboard.KeyUp(e.KeyCode);
-    }
-    #endregion
-
+    #region Input
+    private void MainForm_KeyDown(object sender, KeyEventArgs e) => Keyboard.KeyDown(e.KeyCode);
+    private void MainForm_KeyUp(object sender, KeyEventArgs e) => Keyboard.KeyUp(e.KeyCode);
     private void MainForm_MouseMove(object sender, MouseEventArgs e)
     {
         
