@@ -1,6 +1,7 @@
+using miniRPG.GameEngine.Core.WorldTerrain;
+
 namespace miniRPG.GameEngine.Rendering;
 
-using Other;
 using Components;
 using Core;
 
@@ -11,7 +12,7 @@ public class Renderer
     public void Render(World world, Terrain? terrain, RenderContext context)
     {
         foreach (var layer in _renderLayers)
-            layer.Render(world, terrain, context);
+            layer.Render(world, context);
     }
 
     public void Add(IRenderLayer layer)

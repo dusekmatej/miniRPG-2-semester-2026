@@ -1,5 +1,5 @@
 using System.IO;
-using miniRPG.GameEngine.Rendering.Layers;
+using miniRPG.GameEngine.Core.WorldTerrain;
 using miniRPG.Helpers;
 
 namespace miniRPG.Game;
@@ -12,6 +12,7 @@ using miniRPG.GameEngine.Databases;
 
 public class Game
 {
+    // ReSharper disable InconsistentNaming
     private Engine? _engine;
     private Terrain? _terrain;
     
@@ -23,7 +24,7 @@ public class Game
     private static readonly string BASE_INGOTS = Path.Join(BASE_TERRAIN, "Items/Ingots");
     private static readonly string BASE_UI = Path.Join(BASE_TERRAIN, "Ui");
     
-    private string[]? _animationPaths =
+    private readonly string[] _animationPaths =
     [
         $"{BASE_CHARACTER}/idle",
         $"{BASE_CHARACTER}/run_down",
@@ -32,7 +33,7 @@ public class Game
         $"{BASE_CHARACTER}/run_up"
     ];
 
-    private string[]? _imagePaths =
+    private readonly string[] _imagePaths =
     [
         $"{BASE_UI}/Inventory/inventory_hotbar.png",
         $"{BASE_UI}/Inventory/inventory_open.png",
@@ -54,24 +55,25 @@ public class Game
 
     public void Initialize(int clientWidth, int clientHeight)
     {
+        TileLoader.ResetCache();
         DatabasePopulator.Populate(_imagePaths, _animationPaths);
         ItemDatabase.Initialize();
+        TileDatabase.Initialize();
         
-        _engine = new Engine();
+        const int seed = 19985566;
+        _engine = new Engine(seed);
 
-        // Generate test terrain, now with perlin
-        _terrain = new Terrain(1000, 1000);
-
-        _terrain.GeneratePerlinMap(19985566);
+        // Terrain is still passed through the renderer/layers (even if chunks are generated via ChunkManager).
+        // If this stays null, TerrainLayer will crash when it reads TileSize.
+        _terrain = new Terrain(seed);
 
         CreateEntities(clientWidth, clientHeight);
     }
 
     public void CreateEntities(int clientWidth, int clientHeight)
     {
-        // Calculate the center of the map
-        var mapCenterX = (_terrain.Width / 2f) * _terrain.TileSize;
-        var mapCenterY = (_terrain.Height / 2f) * _terrain.TileSize;
+        var mapCenterX = 0;
+        var mapCenterY = 0;
 
         // Create entities
         var player = EntityFactory.CreatePlayer(mapCenterX, mapCenterY);
@@ -85,8 +87,8 @@ public class Game
             throw new NullReferenceException("Engine is not initialized!");
 
         // Imprt them to the world
-        _engine.World.Entities.Add(camera);
-        _engine.World.Entities.Add(player);
+        _engine.World.CacheEntities(camera);
+        _engine.World.CacheEntities(player);
         _engine.World.Entities.Add(testInteractable);
         _engine.World.Entities.Add(HealthBar);
         _engine.World.Entities.Add(Inventory);
@@ -95,9 +97,12 @@ public class Game
         
     }
 
-    public void Update()
+    public void Update(float deltaTime)
     {
-        _engine.Update();
+        if (_engine == null)
+            return;
+
+        _engine.Update(deltaTime);
     }
 
     public void Render(RenderContext renderContext)

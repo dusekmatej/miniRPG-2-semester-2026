@@ -11,11 +11,12 @@ public class Engine
 {
     // ### World & Camera ###
     private readonly CameraSystem _cameraSystem = new();
-    public readonly World World = new();
+    public readonly World World;
 
     // ### Systems ###
     public readonly Renderer Renderer = new();
     private readonly PlayerInputSystem _input = new();
+    private readonly DebugSystem _debug = new();
     private readonly MovementSystem _movement = new();
     private readonly AnimationSystem _animation = new();
     private readonly InventorySystem _inventory = new();
@@ -28,8 +29,11 @@ public class Engine
     private readonly HotbarInteractionSystem _hotbarInteractionSystem  = new();
 
     // Load layers into the renderer
-    public Engine()
+    public Engine(int seed)
     {
+        // World must exist before any systems/layers use it.
+        World = new World(seed);
+
         Renderer.Add(new TerrainLayer());
         Renderer.Add(new ObjectsLayer());
         Renderer.Add(new StatisticBarLayer());
@@ -37,9 +41,11 @@ public class Engine
        
     }
     
-    public void Update()
+    public void Update(float deltaTime)
     {
-        _input.Update(World);
+        World.Update(deltaTime);
+        _debug.Update();
+        _input.Update(World, deltaTime);
         _checkRadius.Update(World);
         _movement.Update(World);
         _cameraSystem.Update(World);

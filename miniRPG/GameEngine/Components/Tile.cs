@@ -1,3 +1,5 @@
+using miniRPG.GameEngine.Enums;
+
 namespace miniRPG.GameEngine.Components;
 
 public class Tile

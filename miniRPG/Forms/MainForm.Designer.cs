@@ -40,30 +40,34 @@ partial class MainForm
         // _tmrGameLoop
         // 
         _tmrGameLoop.Enabled = true;
-        _tmrGameLoop.Interval = 16;
-        _tmrGameLoop.Tick += Update;
+        _tmrGameLoop.Interval = 17;
+        //
+        // _stopwatch
+        //
         // 
         // MainForm
         // 
         AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         ClientSize = new System.Drawing.Size(800, 450);
-        DoubleBuffered = true;
+        this.DoubleBuffered = true;
+        this.SetStyle(
+            ControlStyles.OptimizedDoubleBuffer | 
+                ControlStyles.AllPaintingInWmPaint | 
+                ControlStyles.UserPaint, true);
+        this.UpdateStyles();
         KeyPreview = true;
-        Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-        Text = "Mainform";
+        Text = "miniRPG";
+
         Paint += MainForm_Paint;
         KeyDown += MainForm_KeyDown;
         KeyUp += MainForm_KeyUp;
-        MouseClick += MainForm_MouseClick;
-        MouseEnter += MainForm_MouseEnter;
         MouseMove += MainForm_MouseMove;
         MouseDown += (s, e) => MouseHelper.ProcessClick(e.Button);
+        
         ResumeLayout(false);
     }
 
     private System.Windows.Forms.Timer _tmrGameLoop;
-    private System.Diagnostics.Stopwatch _stopwatch;
-
     #endregion
 }

@@ -1,4 +1,5 @@
 using Microsoft.VisualBasic;
+using miniRPG.GameEngine.Core.WorldTerrain;
 using miniRPG.GameEngine.Entities;
 using miniRPG.GameEngine.System;
 using miniRPG.Helpers;
@@ -18,6 +19,7 @@ public class InventoryLayer : IRenderLayer
 
         foreach (var e in world.Entities)
         {
+
             if (!e.HasComponent<InventoryComponent>() && !e.HasComponent<UiComponent>())
                 continue;
 
