@@ -115,3 +115,4 @@ C:\Users\matdu\source\School\PRG\miniRPG-2-semester-2026\miniRPG\obj\Debug\net10
 C:\Users\matdu\source\School\PRG\miniRPG-2-semester-2026\miniRPG\obj\Debug\net10.0-windows\miniRPG.genruntimeconfig.cache
 C:\Users\matdu\source\School\PRG\miniRPG-2-semester-2026\miniRPG\obj\Debug\net10.0-windows\ref\miniRPG.dll
 C:\Users\matdu\source\School\PRG\miniRPG-2-semester-2026\miniRPG\bin\Debug\net10.0-windows\Art\Terrain\Tiles\Grass\grass5.png
+C:\Users\matdu\source\School\PRG\miniRPG-2-semester-2026\miniRPG\bin\Debug\net10.0-windows\Art\Terrain\Ui\Inventory\inventory_hotbar.png

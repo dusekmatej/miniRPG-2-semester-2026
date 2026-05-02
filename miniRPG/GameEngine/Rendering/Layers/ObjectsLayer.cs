@@ -17,15 +17,12 @@ public class ObjectsLayer : IRenderLayer
             var transform = entity.GetComponent<TransformComponent>();
 
             // Get the correct coords for rendering based on the camera position and screen center
-            var screenX = transform.X - camera.X + context.ScreenWidth / 2f;
-            var screenY = transform.Y - camera.Y + context.ScreenHeight / 2f;
+            var screenX = transform!.X - camera.X + context.ScreenWidth / 2f;
+            var screenY = transform!.Y - camera.Y + context.ScreenHeight / 2f;
 
             var animationComponent = entity.GetComponent<AnimationComponent>();
             if (animationComponent?.CurrentFrame != null)
-            {
-                context.Graphics.DrawImage(animationComponent.CurrentFrame.Image, screenX, screenY, transform.Width,
-                    transform.Height);
-            }
+                context.Graphics.DrawImage(animationComponent.CurrentFrame.Image, screenX, screenY, transform.Width, transform.Height);
             else
             {
                 var textureComponent = entity.GetComponent<Texture>();

@@ -14,7 +14,7 @@ using Core;
 
 public class InventoryLayer : IRenderLayer
 {
-    public void Render(World world, Terrain? terrain, RenderContext context)
+    public void Render(World world, RenderContext context)
     {
 
         foreach (var e in world.Entities)

@@ -1,5 +1,4 @@
 using System.IO;
-using miniRPG.GameEngine.Content;
 using miniRPG.GameEngine.Databases;
 using miniRPG.GameEngine.Enums;
 using miniRPG.GameEngine.InventoryEssentials;

@@ -47,24 +47,24 @@ partial class MainForm
         // 
         // MainForm
         // 
+        SetStyle(
+            ControlStyles.OptimizedDoubleBuffer | 
+            ControlStyles.AllPaintingInWmPaint | 
+            ControlStyles.UserPaint, true);
+        UpdateStyles();
         AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         ClientSize = new System.Drawing.Size(800, 450);
-        this.DoubleBuffered = true;
-        this.SetStyle(
-            ControlStyles.OptimizedDoubleBuffer | 
-                ControlStyles.AllPaintingInWmPaint | 
-                ControlStyles.UserPaint, true);
-        this.UpdateStyles();
+        DoubleBuffered = true;
         KeyPreview = true;
+        Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
         Text = "miniRPG";
 
         Paint += MainForm_Paint;
         KeyDown += MainForm_KeyDown;
         KeyUp += MainForm_KeyUp;
-        MouseMove += MainForm_MouseMove;
+        Resize += MainForm_Resize;
         MouseDown += (s, e) => MouseHelper.ProcessClick(e.Button);
-        
         ResumeLayout(false);
     }
 

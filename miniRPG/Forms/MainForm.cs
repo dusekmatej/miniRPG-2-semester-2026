@@ -93,22 +93,6 @@ public partial class MainForm : Form
     #region Input
     private void MainForm_KeyDown(object sender, KeyEventArgs e) => Keyboard.KeyDown(e.KeyCode);
     private void MainForm_KeyUp(object sender, KeyEventArgs e) => Keyboard.KeyUp(e.KeyCode);
-    private void MainForm_MouseMove(object sender, MouseEventArgs e)
-    {
-        
-    }
-
-
-    private void MainForm_MouseEnter(object sender, EventArgs e)
-    {
-        
-    }
-
-    private void MainForm_MouseClick(object sender, MouseEventArgs e)
-    {
-        
-        
-    }
 
     private void MainForm_Resize(object sender, EventArgs e)
     {
@@ -124,4 +108,6 @@ public partial class MainForm : Form
     {
         MouseHelper.SetWindow(Location.X, Location.Y, ClientSize.Width, ClientSize.Height);
     }
+    
+    #endregion
 }
