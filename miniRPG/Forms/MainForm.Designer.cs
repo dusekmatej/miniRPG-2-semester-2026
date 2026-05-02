@@ -58,7 +58,7 @@ partial class MainForm
         this.UpdateStyles();
         KeyPreview = true;
         Text = "miniRPG";
-        
+
         Paint += MainForm_Paint;
         KeyDown += MainForm_KeyDown;
         KeyUp += MainForm_KeyUp;

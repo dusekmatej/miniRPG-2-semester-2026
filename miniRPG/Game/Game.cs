@@ -12,6 +12,7 @@ using miniRPG.GameEngine.Databases;
 
 public class Game
 {
+    // ReSharper disable InconsistentNaming
     private Engine? _engine;
     private Terrain? _terrain;
     
@@ -54,6 +55,7 @@ public class Game
 
     public void Initialize(int clientWidth, int clientHeight)
     {
+        TileLoader.ResetCache();
         DatabasePopulator.Populate(_imagePaths, _animationPaths);
         ItemDatabase.Initialize();
         TileDatabase.Initialize();
@@ -65,23 +67,11 @@ public class Game
         // If this stays null, TerrainLayer will crash when it reads TileSize.
         _terrain = new Terrain(seed);
 
-        // Generate test terrain, now with perlin
-        // _terrain = new Terrain(1000, 1000);
-
-        // _terrain.GeneratePerlinMap(19985566);
-
         CreateEntities(clientWidth, clientHeight);
     }
 
     public void CreateEntities(int clientWidth, int clientHeight)
     {
-        // Calculate the center of the map
-        float spawnX = 0;
-        float spawnY = 0;
-        
-        // var mapCenterX = (_terrain.Width / 2f) * _terrain.TileSize;
-        // var mapCenterY = (_terrain.Height / 2f) * _terrain.TileSize;
-
         var mapCenterX = 0;
         var mapCenterY = 0;
 

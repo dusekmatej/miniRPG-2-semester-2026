@@ -15,7 +15,7 @@ public partial class MainForm : Form
     private float _lastTime = 0f;
     private Game.Game _game = new();
 
-    private const float TargetFps = 400f;
+    private const float TargetFps = 600f;
     private readonly float _targetFrameTime = 1f / TargetFps;
 
     public MainForm()
@@ -37,21 +37,26 @@ public partial class MainForm : Form
         if (!IsIdle()) return;
 
         float now = (float)_stopwatch.Elapsed.TotalSeconds;
-        float deltaTime = now - _lastTime;
+        float rawDelta = now - _lastTime;
+        _lastTime = now;
+
+        float deltaTime = rawDelta;
         if (deltaTime < 0f) deltaTime = 0f;
         if (deltaTime > 0.1f) deltaTime = 0.1f;
-        if (deltaTime < _targetFrameTime) return;
 
-        _lastTime = now;
-        _fpsTimer += deltaTime;
+        if (rawDelta < _targetFrameTime) return;
+        
+        _fpsTimer += rawDelta;
         _frameCount++;
+
         if (_fpsTimer >= 1f)
         {
             _lastFps = _frameCount / _fpsTimer;
             _frameCount = 0;
             _fpsTimer = 0f;
-            Console.WriteLine($"FPS: {_lastFps:F0}");
+            Console.WriteLine($"FPS: {_lastFps}, delta: {deltaTime}");
         }
+        
 
         _game.Update(deltaTime);
         Invalidate();
@@ -68,7 +73,6 @@ public partial class MainForm : Form
         e.Graphics.SmoothingMode = SmoothingMode.None;
         e.Graphics.CompositingQuality = CompositingQuality.HighSpeed;
         e.Graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
-        e.Graphics.PixelOffsetMode = PixelOffsetMode.Half;
 
         var context = new RenderContext
         {

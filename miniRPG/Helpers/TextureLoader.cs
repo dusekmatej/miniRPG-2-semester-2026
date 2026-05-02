@@ -23,7 +23,7 @@ public static class TextureLoader
                 return null;
 
             byte[] bytes = File.ReadAllBytes(filePath);
-            using var memoryStream = new MemoryStream(bytes);
+            var memoryStream = new MemoryStream(bytes);
 
             return Image.FromStream(memoryStream);
         }
@@ -39,6 +39,7 @@ public static class TextureLoader
         {
             if (string.IsNullOrWhiteSpace(dirPath))
                 return null;
+            Console.WriteLine($"TextureLoader: {dirPath}");
 
             var currentTextures = Directory.EnumerateFiles(dirPath)
                 .Where(f => Allowed.Contains(Path.GetExtension(f))).Select(SafeLoad).ToArray();
@@ -62,7 +63,7 @@ public static class TextureLoader
                 return null;
 
             byte[] bytes = File.ReadAllBytes(filePath);
-            using var memoryStream = new MemoryStream(bytes);
+            var memoryStream = new MemoryStream(bytes);
 
             return ToTexture(Image.FromStream(memoryStream));
         }
@@ -90,7 +91,7 @@ public static class TextureLoader
     // Helper for performance improvement, prevents "File in use" error
     private static Texture SafeLoad(string filePath)
     {
-        using var bytes = new MemoryStream(File.ReadAllBytes(filePath));
+        var bytes = new MemoryStream(File.ReadAllBytes(filePath));
         return ToTexture(Image.FromStream(bytes));
     }
 }

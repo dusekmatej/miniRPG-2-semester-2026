@@ -13,7 +13,7 @@ public class ChunkManager
     private const int RenderDistance = 2;
     private readonly Entity _cameraEntity;
     private Camera _camera;
-
+    
     private int _lastChunkX = int.MinValue;
     private int _lastChunkY = int.MinValue;
 
@@ -65,6 +65,7 @@ public class ChunkManager
         for (int cx = minCX; cx <= maxCX; cx++)
         for (int cy = minCY; cy <= maxCY; cy++)
             yield return GetChunk(cx, cy);
+            //yield return Task.Run(() => GetChunk(cx, cy)).Result; // Test to run on different thread
     }
     
     public void UnloadChunks(int centerChunkX, int centerChunkY)

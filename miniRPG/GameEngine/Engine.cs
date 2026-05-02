@@ -37,7 +37,6 @@ public class Engine
         Renderer.Add(new TerrainLayer());
         Renderer.Add(new ObjectsLayer());
         Renderer.Add(new StatisticBarLayer());
-        Renderer.Add(new DebugLayer());
         Renderer.Add(_inventoryLayer);
        
     }

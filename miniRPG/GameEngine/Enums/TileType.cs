@@ -7,5 +7,5 @@ public enum TileType
     Grass,
     GrassML,
     Forest,
-    Mountain,
+    Mountain
 }

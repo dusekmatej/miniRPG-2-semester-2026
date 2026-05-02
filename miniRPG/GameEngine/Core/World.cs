@@ -29,7 +29,6 @@ public class World
 
         int centerCX = (int)camera.X / (Chunk.Size * Chunk.TileSize);
         int centerCY = (int)camera.Y / (Chunk.Size * Chunk.TileSize);
-        
-        ChunkManager.UpdateChunks(centerCX, centerCY);
+        Task.Run(() => ChunkManager.UpdateChunks(centerCX, centerCY));
     }
 }

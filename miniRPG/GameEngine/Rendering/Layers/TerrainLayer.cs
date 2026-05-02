@@ -11,18 +11,15 @@ public class TerrainLayer : IRenderLayer
 
     public void Render(World world, RenderContext context)
     {
-        var cameraEntity = world.Entities.FirstOrDefault(e => e.HasComponent<Camera>())
-                           ?? throw new Exception("Camera entity not found!");
-        var camera = cameraEntity.GetComponent<Camera>()
-                     ?? throw new Exception("Camera component not found!");
+        var camera = world.CameraEntity.GetComponent<Camera>() ?? throw new Exception("Camera component not found!");
 
         var visibleChunks = world.ChunkManager.GetVisibleChunks(
-            (int)(camera.X - context.ScreenWidth  / 2f),
+            (int)(camera.X - context.ScreenWidth / 2f),
             (int)(camera.Y - context.ScreenHeight / 2f),
             context.ScreenWidth,
             context.ScreenHeight,
             Chunk.TileSize
-        );
+            );
 
         int baked = 0, cached = 0;
         
@@ -37,7 +34,6 @@ public class TerrainLayer : IRenderLayer
             else cached++;
 
             
-            // Console.WriteLine($"Baked: {baked}, Cached {cached}");
             var chunkPixelX = chunk.ChunkX * Chunk.Size * Chunk.TileSize;
             var chunkPixelY = chunk.ChunkY * Chunk.Size * Chunk.TileSize;
 
