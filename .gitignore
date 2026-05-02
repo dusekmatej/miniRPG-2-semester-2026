@@ -1,64 +1,23 @@
-# Build results
-
+# Build
 bin/
 obj/
 
-# Visual Studio / VS Code
-
+# Visual Studio
 .vs/
-.vscode/
-
-# User-specific files
-
 *.user
 *.suo
 *.userosscache
 *.sln.docstates
 
-# Build logs
-
-*.log
-
-# .NET Core
-
-project.lock.json
-project.fragment.lock.json
-artifacts/
-
-# Rider / JetBrains
-
+# Rider / IntelliJ
 .idea/
 
-# OS files
+# Rider / ReSharper
+*.DotSettings.user
 
+# Logs
+*.log
+
+# OS
 .DS_Store
 Thumbs.db
-
-# Debug / Release folders anywhere
-
-**/bin/
-**/obj/
-
-# Executables
-
-*.exe
-*.dll
-*.pdb
-
-# NuGet
-
-*.nupkg
-packages/
-.nuget/
-
-# Test results
-
-TestResults/
-
-# Publish output
-
-publish/
-
-# Local settings
-
-appsettings.Development.json
