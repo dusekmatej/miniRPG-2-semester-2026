@@ -28,17 +28,6 @@ public class HotbarInteractionSystem
             else if (Keyboard.IsKeyDown(Keys.NumPad7)) selectedSlotIndex = 6;
             
             var slot = hotbarComponent.Slots[selectedSlotIndex];
-            if (slot != null)
-            {
-               Console.WriteLine($"Selected hotbar slot {selectedSlotIndex + 1}: {slot.Item?.Name ?? "Empty"}");
-                
-            }
-            else
-            {
-               Console.WriteLine($"Selected hotbar slot {selectedSlotIndex + 1}: null");
-            }
-            
         }
-        
     }
 }

@@ -1,9 +1,9 @@
-using miniRPG.Helpers;
-using miniRPG.GameEngine.Components;
-
 namespace miniRPG.GameEngine.Databases;
 
-public class TextureDatabase
+using Helpers;
+using Components;
+
+public static class TextureDatabase
 {       
         private static readonly Dictionary<string, Texture> _database = new();
         private static readonly Dictionary<string, Texture[]> _animationDatabase = new();

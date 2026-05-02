@@ -72,9 +72,9 @@ public class InventoryInteractionSystem
             selectedFromHotbar = true;
             var slot = hotbarComp.Slots[clickedSlot];
             
-            Console.WriteLine(slot != null ? 
-                $"Selected hotbar slot {clickedSlot}: {slot.Item.Name}" :
-                $"Selected empty hotbar slot {clickedSlot}");
+            // Console.WriteLine(slot != null ? 
+            //     $"Selected hotbar slot {clickedSlot}: {slot.Item.Name}" :
+            //     $"Selected empty hotbar slot {clickedSlot}");
         }
         
         
@@ -96,11 +96,6 @@ public class InventoryInteractionSystem
             Console.WriteLine($"Moved hotbar slot {selectedSlotIndex} to inventory slot {clickedSlot}");
             selectedSlotIndex = -1;
         }
-        
-        
-        
-        
-        
     }
     
     
