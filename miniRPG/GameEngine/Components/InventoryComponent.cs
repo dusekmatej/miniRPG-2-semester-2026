@@ -12,6 +12,11 @@ public class InventoryComponent
     public int SlotOffsetX = 30;
     public int SlotOffsetY = 55;
     
+    public int selectedSlotIndex = -1;
+    public bool selectedFromHotbar = false;
+    public bool selectedFromInventory = false;
+
+    
     
     
     public InventoryComponent()

@@ -13,6 +13,7 @@ public class HotbarComponent
     public int SlotOffsetY = 50;
     public int X = 0;
     public int Y = 5;
+    public int SelectedSlotIndex = 0;
 
     public HotbarComponent()
     {

@@ -8,9 +8,6 @@ namespace miniRPG.GameEngine.System;
 
 public class InventoryInteractionSystem
 {
-    private int selectedSlotIndex = -1;
-    private bool selectedFromHotbar = false;
-    private bool selectedFromInventory = false;
     
     public void Update(World world)
     {
@@ -64,37 +61,33 @@ public class InventoryInteractionSystem
 
         if (clickedSlot < 0 || clickedSlot >= 7)
             return;
-
         
-        if (selectedSlotIndex == -1)
+        
+        if (inventoryComp.selectedSlotIndex == -1)
         {
-            selectedSlotIndex = clickedSlot;
-            selectedFromHotbar = true;
+            inventoryComp.selectedSlotIndex = clickedSlot;
+            inventoryComp.selectedFromHotbar = true;
+            inventoryComp.selectedFromInventory = false;
             var slot = hotbarComp.Slots[clickedSlot];
-            
-            // Console.WriteLine(slot != null ? 
-            //     $"Selected hotbar slot {clickedSlot}: {slot.Item.Name}" :
-            //     $"Selected empty hotbar slot {clickedSlot}");
         }
         
-        
-        else if (selectedFromHotbar && selectedSlotIndex != clickedSlot)
+        else if (inventoryComp.selectedFromHotbar && inventoryComp.selectedSlotIndex != clickedSlot)
         {
-            SwapHotbarItems(hotbarComp, selectedSlotIndex, clickedSlot);
-            Console.WriteLine($"Swapped hotbar slot {selectedSlotIndex} with {clickedSlot}");
-            selectedSlotIndex = -1;
+            SwapHotbarItems(hotbarComp, inventoryComp.selectedSlotIndex, clickedSlot);
+            Console.WriteLine($"Swapped hotbar slot {inventoryComp.selectedSlotIndex} with {clickedSlot}");
+            inventoryComp.selectedSlotIndex = -1;
         }
-        else if (selectedSlotIndex == clickedSlot && selectedFromHotbar)
+        else if (inventoryComp.selectedSlotIndex == clickedSlot && inventoryComp.selectedFromHotbar)
         {
-            Console.WriteLine($"Deselected hotbar slot {selectedSlotIndex}");
-            selectedSlotIndex = -1;
+            Console.WriteLine($"Deselected hotbar slot {inventoryComp.selectedSlotIndex}");
+            inventoryComp.selectedSlotIndex = -1;
         }
         
-        else if (selectedFromInventory)
+        else if (inventoryComp.selectedFromInventory)
         {
-            MoveInventoryToHotbar(inventoryComp, hotbarComp, selectedSlotIndex, clickedSlot);
-            Console.WriteLine($"Moved hotbar slot {selectedSlotIndex} to inventory slot {clickedSlot}");
-            selectedSlotIndex = -1;
+            MoveInventoryToHotbar(inventoryComp, hotbarComp, inventoryComp.selectedSlotIndex, clickedSlot);
+            Console.WriteLine($"Moved hotbar slot {inventoryComp.selectedSlotIndex} to inventory slot {clickedSlot}");
+            inventoryComp.selectedSlotIndex = -1;
         }
     }
     
@@ -112,41 +105,41 @@ public class InventoryInteractionSystem
         
         
         
-        if (selectedSlotIndex == -1)
+        if (inventoryComp.selectedSlotIndex == -1)
         {
-            selectedSlotIndex = clickedSlot;
-            selectedFromHotbar = false;
-            selectedFromInventory = true;
+            inventoryComp.selectedSlotIndex = clickedSlot;
+            inventoryComp.selectedFromHotbar = false;
+            inventoryComp.selectedFromInventory = true;
             var slot = inventoryComp.Inventory.Slots[clickedSlot];
-            Console.WriteLine(slot != null ? 
-                $"Selected inventory slot {clickedSlot}: {slot.Item.Name}" :
-                $"Selected empty inventory slot {clickedSlot}");
+           // Console.WriteLine(slot != null ? 
+             //   $"Selected inventory slot {clickedSlot}: {slot.Item.Name}" :
+               // $"Selected empty inventory slot {clickedSlot}");
         }
         
         
         
         
-        else if (selectedFromHotbar)
+        else if (inventoryComp.selectedFromHotbar)
         {
-            MoveHotbarToInventory(hotbarComp, inventoryComp, selectedSlotIndex, clickedSlot);
-            Console.WriteLine($"Moved hotbar slot {selectedSlotIndex} to inventory slot {clickedSlot}");
-            selectedSlotIndex = -1;
+            MoveHotbarToInventory(hotbarComp, inventoryComp, inventoryComp.selectedSlotIndex, clickedSlot);
+            Console.WriteLine($"Moved hotbar slot {inventoryComp.selectedSlotIndex} to inventory slot {clickedSlot}");
+            inventoryComp.selectedSlotIndex = -1;
         }
                 
         
         
-        else if (selectedSlotIndex != clickedSlot)
+        else if (inventoryComp.selectedSlotIndex != clickedSlot)
         {
-            SwapInventoryItems(inventoryComp, selectedSlotIndex, clickedSlot);
-            Console.WriteLine($"Swapped inventory slot {selectedSlotIndex} with {clickedSlot}");
-            selectedSlotIndex = -1;
+            SwapInventoryItems(inventoryComp, inventoryComp.selectedSlotIndex, clickedSlot);
+            Console.WriteLine($"Swapped inventory slot {inventoryComp.selectedSlotIndex} with {clickedSlot}");
+            inventoryComp.selectedSlotIndex = -1;
         }
         
         
         else
         {
-            Console.WriteLine($"Deselected inventory slot {selectedSlotIndex}");
-            selectedSlotIndex = -1;
+            Console.WriteLine($"Deselected inventory slot {inventoryComp.selectedSlotIndex}");
+            inventoryComp.selectedSlotIndex = -1;
         }
     }
     

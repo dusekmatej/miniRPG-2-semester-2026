@@ -7,7 +7,7 @@ namespace miniRPG.GameEngine.System;
 
 public class HotbarInteractionSystem
 {
-    private int selectedSlotIndex = 0;
+  
 
     public void Update(World world)
     {
@@ -19,15 +19,15 @@ public class HotbarInteractionSystem
             var hotbarComponent = e.GetComponent<HotbarComponent>();
 
             
-            if (Keyboard.IsKeyDown(Keys.NumPad1)) selectedSlotIndex = 0;
-            else if (Keyboard.IsKeyDown(Keys.NumPad2)) selectedSlotIndex = 1;
-            else if (Keyboard.IsKeyDown(Keys.NumPad3)) selectedSlotIndex = 2;
-            else if (Keyboard.IsKeyDown(Keys.NumPad4)) selectedSlotIndex = 3;
-            else if (Keyboard.IsKeyDown(Keys.NumPad5)) selectedSlotIndex = 4;
-            else if (Keyboard.IsKeyDown(Keys.NumPad6)) selectedSlotIndex = 5;
-            else if (Keyboard.IsKeyDown(Keys.NumPad7)) selectedSlotIndex = 6;
+            if (Keyboard.IsKeyDown(Keys.NumPad1)) hotbarComponent.SelectedSlotIndex = 0;
+            else if (Keyboard.IsKeyDown(Keys.NumPad2)) hotbarComponent.SelectedSlotIndex = 1;
+            else if (Keyboard.IsKeyDown(Keys.NumPad3)) hotbarComponent.SelectedSlotIndex = 2;
+            else if (Keyboard.IsKeyDown(Keys.NumPad4)) hotbarComponent.SelectedSlotIndex = 3;
+            else if (Keyboard.IsKeyDown(Keys.NumPad5)) hotbarComponent.SelectedSlotIndex = 4;
+            else if (Keyboard.IsKeyDown(Keys.NumPad6)) hotbarComponent.SelectedSlotIndex = 5;
+            else if (Keyboard.IsKeyDown(Keys.NumPad7)) hotbarComponent.SelectedSlotIndex = 6;
             
-            var slot = hotbarComponent.Slots[selectedSlotIndex];
+            var slot = hotbarComponent.Slots[hotbarComponent.SelectedSlotIndex];
         }
     }
 }
