@@ -9,7 +9,14 @@ namespace miniRPG.GameEngine.Entities;
 
 public static class EntityFactory
 {
-    public static Entity CreatePlayer(float posX = 0, float posY = 0)
+    private static Inventory MainInventory;
+    
+    static EntityFactory()
+    {
+        MainInventory = new Inventory();
+    }
+    
+    public static Entity CreatePlayer(float posX = 0, float posY = 0, int windowWidth = 0, int windowHeight = 0)
     {
         var e = new Entity();
         
@@ -17,9 +24,25 @@ public static class EntityFactory
         e.AddComponent(new PlayerComponent { Stone = 100 });
         e.AddComponent(new TransformComponent { X = posX, Y = posY, Width = 150, Height = 150 });
         e.AddComponent(new VelocityComponent { X = 0, Y = 0 });
-        e.AddComponent(new InventoryComponent());
         e.AddComponent(new UiComponent());
-        e.AddComponent(new HotbarComponent());
+
+        e.AddComponent(new InventoryComponent
+        {
+            Inventory = MainInventory,
+            X = 20, Y = 20, Width = 200, Height = 160, 
+            InventorySprite = TextureDatabase.Get("inventory_open"),
+        } );
+        
+        e.AddComponent(new HotbarComponent
+        {
+            Inventory = MainInventory,
+            X = 0, Y = 0, 
+            Width = 250, Height = 50,
+            SlotOffsetX = 40,
+            SlotOffsetY = 50,
+            HotbarSprite = TextureDatabase.Get("inventory_hotbar"),
+        });
+        
         e.AddComponent(
             new AnimationComponent
             {
@@ -65,21 +88,6 @@ public static class EntityFactory
 
         var e = new Entity();
         e.AddComponent(new StatisticBarComponent { StatBarColor = Brushes.Red, CurrentValue = 100, X = windowWidth - 150, Y = windowHeight - (windowHeight / 2) - 200, Width = 100, Height = 30  });
-        return e;
-    }
-
-    public static Entity Inventory(int windowWidth, int windowHeight)
-    {
-        var e = new Entity();
-        e.AddComponent(new InventoryComponent{X = 20, Y = 20, Width = 200, Height = 160});
-        return e;
-    }
-
-    public static Entity Hotbar(int windowWidth, int windowHeight)
-    {
-        var e = new Entity();
-        
-        e.AddComponent(new HotbarComponent{ X = windowWidth -300, Y = windowHeight - 300, Width = 250, Height = 50});
         return e;
     }
 }

@@ -23,7 +23,6 @@ public class Engine
     private readonly CheckRadius _checkRadius = new();
     private readonly DirectionDetectionSystem _directionDetection = new();
     private readonly StatBarSystem _statBar = new();
-    private readonly InventoryLayer _inventoryLayer = new();
     private readonly InventoryInteractionSystem _inventoryInteraction = new();
    
     private readonly HotbarInteractionSystem _hotbarInteractionSystem  = new();
@@ -37,7 +36,7 @@ public class Engine
         Renderer.Add(new TerrainLayer());
         Renderer.Add(new ObjectsLayer());
         Renderer.Add(new StatisticBarLayer());
-        Renderer.Add(_inventoryLayer);
+        Renderer.Add(new InventoryLayer());
        
     }
     

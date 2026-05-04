@@ -28,8 +28,6 @@ public class InventoryInteractionSystem
             var uiComp = e.GetComponent<UiComponent>();
             var hotbarComp = e.GetComponent<HotbarComponent>();
 
-            
-            
             if (inventoryComp == null || uiComp == null || hotbarComp == null)
                 continue;
             
@@ -39,6 +37,7 @@ public class InventoryInteractionSystem
                 clickY >= hotbarComp.Y + hotbarComp.SlotOffsetY &&
                 clickY < hotbarComp.Y + hotbarComp.SlotOffsetY + hotbarComp.SlotSize)
             {
+                Console.WriteLine("HANDLE HOTBAR");
                 HandleHotbarClick(clickX, clickY, hotbarComp, inventoryComp, uiComp);
             }
             
@@ -57,8 +56,11 @@ public class InventoryInteractionSystem
     } 
     private void HandleHotbarClick(int clickX, int clickY, HotbarComponent hotbarComp, InventoryComponent inventoryComp, UiComponent uiComp)
     {
-        int clickedSlot = (clickX - hotbarComp.X +10- hotbarComp.SlotOffsetX) / hotbarComp.SlotSize;
+        //                  MousePos - hotbarComponent
+        int clickedSlot = (clickX - hotbarComp.X + 10 - hotbarComp.SlotOffsetX) / hotbarComp.SlotSize;
 
+        Console.WriteLine($"Clicked slot {clickedSlot} ClickX: {clickX}");
+        
         if (clickedSlot < 0 || clickedSlot >= 7)
             return;
         

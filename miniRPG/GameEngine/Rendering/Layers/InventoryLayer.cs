@@ -1,9 +1,3 @@
-using Microsoft.VisualBasic;
-using miniRPG.GameEngine.Core.WorldTerrain;
-using miniRPG.GameEngine.Entities;
-using miniRPG.GameEngine.System;
-using miniRPG.Helpers;
-
 namespace miniRPG.GameEngine.Rendering.Layers;
 using Components;
 using Core;
@@ -53,18 +47,15 @@ public class InventoryLayer : IRenderLayer
                             context.Graphics.FillRectangle(highlightBrush, itemX, itemY +25,
                                 inventoryComp.SlotSize, inventoryComp.SlotSize);
                         }
-
                         
-                            context.Graphics.DrawImage(slot.Item.Sprite.Image, itemX, itemY +25,
-                                inventoryComp.SlotSize, inventoryComp.SlotSize);
-                       
+                        context.Graphics.DrawImage(slot.Item.Sprite.Image, itemX, itemY +25, inventoryComp.SlotSize, inventoryComp.SlotSize);
                     }
                 }
             }
 
 
             if (hotbarComponent.HotbarSprite?.Image != null)
-                context.Graphics.DrawImage(hotbarComponent.HotbarSprite.Image, hotbarComponent.X, 0, 250, 50);
+                context.Graphics.DrawImage(hotbarComponent.HotbarSprite.Image, hotbarComponent.X, hotbarComponent.Y + 5, hotbarComponent.Width, hotbarComponent.Height);
             
             for (int i = 0; i < 7; i++)
             {

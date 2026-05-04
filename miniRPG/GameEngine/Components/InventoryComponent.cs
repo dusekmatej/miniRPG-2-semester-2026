@@ -19,17 +19,4 @@ public class InventoryComponent
     public int selectedSlotIndex = -1;
     public bool selectedFromHotbar = false;
     public bool selectedFromInventory = false;
-
-    
-    
-    
-    public InventoryComponent()
-    {
-        if (TextureDatabase.Contains("inventory_open"))
-        {
-            InventorySprite = TextureDatabase.Get("inventory_open");
-        }
-
-        Inventory = new Inventory();
-    }
 }

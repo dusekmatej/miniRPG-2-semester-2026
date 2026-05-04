@@ -76,12 +76,10 @@ public class Game
         var mapCenterY = 0;
 
         // Create entities
-        var player = EntityFactory.CreatePlayer(mapCenterX, mapCenterY);
+        var player = EntityFactory.CreatePlayer(mapCenterX, mapCenterY, clientWidth, clientHeight);
         var camera = EntityFactory.CreateCamera(mapCenterX, mapCenterY);
         var testInteractable = EntityFactory.TestInteractable(mapCenterX + 98, mapCenterY + 98);
         var HealthBar = EntityFactory.HealthBar(clientWidth, clientHeight);
-        var Inventory = EntityFactory.Inventory(clientWidth, clientHeight);
-        var Hotbar = EntityFactory.Hotbar(clientWidth, clientHeight);
 
         if (_engine == null)
             throw new NullReferenceException("Engine is not initialized!");
@@ -91,8 +89,6 @@ public class Game
         _engine.World.CacheEntities(player);
         _engine.World.Entities.Add(testInteractable);
         _engine.World.Entities.Add(HealthBar);
-        _engine.World.Entities.Add(Inventory);
-        _engine.World.Entities.Add(Hotbar);
         
         
     }
