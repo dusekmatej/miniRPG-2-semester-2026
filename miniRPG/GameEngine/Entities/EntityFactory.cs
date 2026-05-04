@@ -64,18 +64,14 @@ public static class EntityFactory
     {
 
         var e = new Entity();
-        e.AddComponent(new UiComponent { X = windowWidth - 150, Y = windowHeight - (windowHeight / 2) - 200, Width = 100, Height = 30 });
-        e.AddComponent(new StatisticBarComponent { StatBarColor = Brushes.Red, CurrentValue = 100 });
-        
+        e.AddComponent(new StatisticBarComponent { StatBarColor = Brushes.Red, CurrentValue = 100, X = windowWidth - 150, Y = windowHeight - (windowHeight / 2) - 200, Width = 100, Height = 30  });
         return e;
     }
 
     public static Entity Inventory(int windowWidth, int windowHeight)
     {
         var e = new Entity();
-        
-        e.AddComponent(new UiComponent {X = 20, Y = 20, Width = 200, Height = 160});
-        e.AddComponent(new InventoryComponent());
+        e.AddComponent(new InventoryComponent{X = 20, Y = 20, Width = 200, Height = 160});
         return e;
     }
 
@@ -83,8 +79,7 @@ public static class EntityFactory
     {
         var e = new Entity();
         
-        e.AddComponent(new HotbarComponent());
-        e.AddComponent(new UiComponent { X = windowWidth -300, Y = windowHeight - 300, Width = 250, Height = 50}); 
+        e.AddComponent(new HotbarComponent{ X = windowWidth -300, Y = windowHeight - 300, Width = 250, Height = 50});
         return e;
     }
 }

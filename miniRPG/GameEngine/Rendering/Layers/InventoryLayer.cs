@@ -64,7 +64,7 @@ public class InventoryLayer : IRenderLayer
 
 
             if (hotbarComponent.HotbarSprite?.Image != null)
-                context.Graphics.DrawImage(hotbarComponent.HotbarSprite.Image, hotbarComponent.X, 5, 250, 50);
+                context.Graphics.DrawImage(hotbarComponent.HotbarSprite.Image, hotbarComponent.X, 0, 250, 50);
             
             for (int i = 0; i < 7; i++)
             {
@@ -77,17 +77,17 @@ public class InventoryLayer : IRenderLayer
                     if (hotbarComponent.SelectedSlotIndex == i)
                     {
                         using var highlightBrush = new SolidBrush(Color.FromArgb(100, 255, 255, 255));
-                        context.Graphics.FillRectangle(highlightBrush, itemX - 25, itemY - 45,
+                        context.Graphics.FillRectangle(highlightBrush, itemX - 25, itemY - 40,
                             hotbarComponent.SlotSize, hotbarComponent.SlotSize);
                     }
                     if (inventoryComp.selectedFromHotbar && inventoryComp.selectedSlotIndex == i)
                     {
                         using var highlightBrush = new SolidBrush(Color.FromArgb(100, 255, 215, 0));
-                        context.Graphics.FillRectangle(highlightBrush, itemX - 25, itemY - 45,
+                        context.Graphics.FillRectangle(highlightBrush, itemX - 25, itemY - 40,
                             hotbarComponent.SlotSize, hotbarComponent.SlotSize);
                     }
                     
-                        context.Graphics.DrawImage(slot.Item.Sprite.Image, itemX - 25, itemY - 45,
+                        context.Graphics.DrawImage(slot.Item.Sprite.Image, itemX - 25, itemY - 40,
                             hotbarComponent.SlotSize, hotbarComponent.SlotSize);
                    
                 }

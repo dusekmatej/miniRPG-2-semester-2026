@@ -11,8 +11,10 @@ public class HotbarComponent
     public int SlotSize = 32;
     public int SlotOffsetX = 40;
     public int SlotOffsetY = 50;
-    public int X = 0;
-    public int Y = 5;
+    public int X;
+    public int Y;
+    public int Width;
+    public int Height;
     public int SelectedSlotIndex = 0;
 
     public HotbarComponent()
