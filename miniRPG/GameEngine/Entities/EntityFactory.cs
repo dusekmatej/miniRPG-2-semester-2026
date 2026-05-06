@@ -75,7 +75,7 @@ public static class EntityFactory
         return e;
     }
 
-    public static Entity CreateRock(float posX, float posY)
+    public static Entity CreateBronzeRock(float posX, float posY)
     {
         var e = new Entity();
         e.AddComponent(new TransformComponent { X = posX, Y = posY, Width = 98, Height = 98 });
