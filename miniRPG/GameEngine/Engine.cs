@@ -15,7 +15,7 @@ public class Engine
 
     // ### Systems ###
     public readonly Renderer Renderer = new();
-    private readonly PlayerInputSystem _input = new();
+    private readonly PlayerInputSystem _input;
     private readonly DebugSystem _debug = new();
     private readonly MovementSystem _movement = new();
     private readonly AnimationSystem _animation = new();
@@ -24,7 +24,8 @@ public class Engine
     private readonly DirectionDetectionSystem _directionDetection = new();
     private readonly StatBarSystem _statBar = new();
     private readonly InventoryInteractionSystem _inventoryInteraction = new();
-   
+
+    
     private readonly HotbarInteractionSystem _hotbarInteractionSystem  = new();
 
     // Load layers into the renderer
@@ -37,7 +38,8 @@ public class Engine
         Renderer.Add(new ObjectsLayer());
         Renderer.Add(new StatisticBarLayer());
         Renderer.Add(new InventoryLayer());
-       
+
+        _input = new PlayerInputSystem(_checkRadius);
     }
     
     public void Update(float deltaTime)

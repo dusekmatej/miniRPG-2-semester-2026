@@ -1,5 +1,5 @@
+using miniRPG.Enums;
 using miniRPG.GameEngine.Components;
-using miniRPG.GameEngine.Enums;
 
 namespace miniRPG.GameEngine.Core.WorldTerrain;
 

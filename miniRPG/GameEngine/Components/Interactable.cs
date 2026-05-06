@@ -1,7 +1,10 @@
+using miniRPG.GameEngine.Core;
+
 namespace miniRPG.GameEngine.Components;
 
 public class Interactable
 {
-    public bool IsActive;
-    public bool isPlayerInRange;
+    public int Radius;
+    public bool IsInRange;
+    public Action<World, Entity>? OnInteract;
 }

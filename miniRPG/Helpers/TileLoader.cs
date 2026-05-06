@@ -1,8 +1,9 @@
+using miniRPG.Enums;
+
 namespace miniRPG.Helpers;
 
 using GameEngine.Components;
 using GameEngine.Databases;
-using GameEngine.Enums;
 
 // ReSharper disable InconsistentNaming
 #pragma warning disable CS8602 // Possible null reference on line 22

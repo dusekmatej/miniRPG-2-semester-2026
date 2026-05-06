@@ -1,11 +1,10 @@
-namespace miniRPG.GameEngine.Enums;
+namespace miniRPG.Enums;
 
 public enum TileType
 {
     Water,
     Sand,
     Grass,
-    GrassML,
     Forest,
     Mountain
 }

@@ -1,6 +1,8 @@
+using miniRPG.Enums;
 using miniRPG.GameEngine.Components;
 using miniRPG.GameEngine.Core;
 using miniRPG.GameEngine.Databases;
+using miniRPG.GameEngine.Interactions;
 using miniRPG.GameEngine.InventoryEssentials;
 
 // ReSharper disable InconsistentNaming
@@ -9,7 +11,7 @@ namespace miniRPG.GameEngine.Entities;
 
 public static class EntityFactory
 {
-    private static Inventory MainInventory;
+    private static readonly Inventory MainInventory;
     
     static EntityFactory()
     {
@@ -73,12 +75,20 @@ public static class EntityFactory
         return e;
     }
 
-    public static Entity TestInteractable(float posX, float posY)
+    public static Entity CreateRock(float posX, float posY)
     {
         var e = new Entity();
         e.AddComponent(new TransformComponent { X = posX, Y = posY, Width = 98, Height = 98 });
         e.AddComponent(TextureDatabase.Get("bronze_rock"));
-        e.AddComponent(new Interactable());
+        e.AddComponent(new Interactable
+        {
+            OnInteract = RockInteraction.BreakRock,
+            Radius = 100,
+        });
+        e.AddComponent(new OreComponent
+        {
+            Type = OreType.Bronze,
+        });
         
         return e;
     }

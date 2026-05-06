@@ -7,9 +7,18 @@ namespace miniRPG.GameEngine.System;
 public class PlayerInputSystem
 {
     private bool _isAnimated;
+    private CheckRadius _checkRadius;
+
+    public PlayerInputSystem(CheckRadius checkRadius)
+    {
+        _checkRadius = checkRadius;
+    }
     
     public void Update(World world, float deltaTime)
     {
+        if (_checkRadius == null)
+            throw new Exception("CheckRadius is null!");
+        
         foreach (var entity in world.Entities)
         {
             if (!entity.HasComponent<PlayerComponent>())
@@ -21,6 +30,18 @@ public class PlayerInputSystem
             {
                 velocity.X = 0;
                 velocity.Y = 0;
+            }
+
+            if (Keyboard.GetPressedKey() == Keys.E)
+            {
+                var nearest = _checkRadius.GetNearestInteractable();
+                if (nearest == null) return;
+
+                var interactable = nearest.GetComponent<Interactable>();
+                if (interactable == null) return;
+
+                if (interactable.IsInRange)
+                    interactable.OnInteract?.Invoke(world, nearest);
             }
             
             switch (Keyboard.GetPressedKey())

@@ -1,9 +1,9 @@
-namespace miniRPG.GameEngine.Components;
+namespace miniRPG.Enums;
 
 public enum OreType
 {
     Bronze,
     Iron,
-    Silver,
+    Coal,
     Gold,
 }

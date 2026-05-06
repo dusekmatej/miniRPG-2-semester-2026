@@ -6,29 +6,44 @@ namespace miniRPG.GameEngine.System;
 
 public class CheckRadius
 {
+    private Entity? _nearestEntity;
+    
     public void Update(World World)
     {
-        var target = World.Entities.FirstOrDefault(e => e.HasComponent<PlayerComponent>());
-        if (target == null) return;
+        var player = World.PlayerEntity;
+        var playerTransform = player.GetComponent<TransformComponent>();
 
-        var targetTransform = target.GetComponent<TransformComponent>();
-        if (targetTransform == null) return;
+        _nearestEntity = null;
+        var nearestDistance = float.MaxValue;
 
         foreach (var e in World.Entities)
         {
-            if (!e.HasComponent<Interactable>())
-                continue;
+            if (!e.HasComponent<Interactable>()) continue;
 
-            if (!e.HasComponent<TransformComponent>() || !e.HasComponent<Interactable>())
-                continue;
-
-            var transform = e.GetComponent<TransformComponent>();
-
-            if ((targetTransform.X > (transform.X - 100) && targetTransform.X < (transform.X + 100)) &&
-                (targetTransform.Y > (transform.Y - 100) && targetTransform.Y < (transform.Y + 100)))
+            var entityTransform = e.GetComponent<TransformComponent>();
+            if (entityTransform == null) continue;
+            
+            var interactable = e.GetComponent<Interactable>();
+            
+            var distance = GetDistance(playerTransform!, entityTransform);
+            float radiusSquared = interactable!.Radius * interactable.Radius;
+            
+            interactable.IsInRange = distance < radiusSquared;
+            
+            if (interactable.IsInRange && distance <= nearestDistance)
             {
-                // Console.WriteLine("Player in range!");
+                nearestDistance = distance;
+                _nearestEntity = e;
             }
         }
+    }
+
+    public Entity? GetNearestInteractable() => _nearestEntity;  
+    
+    private float GetDistance(TransformComponent self, TransformComponent other)
+    {
+        var distanceX = self.X - other.X;
+        var distanceY = self.Y - other.Y;
+        return distanceX * distanceX + distanceY * distanceY; // Use pythagoras to get straight line to it
     }
 }
