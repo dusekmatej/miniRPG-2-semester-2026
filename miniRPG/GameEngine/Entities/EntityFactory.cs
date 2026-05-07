@@ -24,12 +24,12 @@ public static class EntityFactory
         e.AddComponent(new PlayerComponent { Stone = 100 });
         e.AddComponent(new TransformComponent { X = posX, Y = posY, Width = 150, Height = 150 });
         e.AddComponent(new VelocityComponent { X = 0, Y = 0 });
-        e.AddComponent(new UiComponent());
+        
 
         e.AddComponent(new InventoryComponent
         {
             Inventory = MainInventory,
-            X = 20, Y = 20, Width = 200, Height = 160, 
+            X = 20, Y = 20, Width = 200, Height = 200, 
             InventorySprite = TextureDatabase.Get("inventory_open"),
         } );
         
@@ -42,6 +42,12 @@ public static class EntityFactory
             SlotOffsetY = 50,
             HotbarSprite = TextureDatabase.Get("inventory_hotbar"),
         });
+        e.AddComponent(
+            new StatisticBarComponent 
+                { StatBarColor = Brushes.Red,
+                    CurrentValue = 100, X = windowWidth - 150,
+                    Y = windowHeight - (windowHeight / 2) - 200,
+                    Width = 100, Height = 30  });
         
         e.AddComponent(
             new AnimationComponent
@@ -87,7 +93,7 @@ public static class EntityFactory
     {
 
         var e = new Entity();
-        e.AddComponent(new StatisticBarComponent { StatBarColor = Brushes.Red, CurrentValue = 100, X = windowWidth - 150, Y = windowHeight - (windowHeight / 2) - 200, Width = 100, Height = 30  });
+        
         return e;
     }
 }

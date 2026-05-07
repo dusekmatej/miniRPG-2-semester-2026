@@ -20,15 +20,15 @@ public class InventoryInteractionSystem
 
         foreach (var e in world.Entities)
         {
-            if (!e.HasComponent<InventoryComponent>() && !e.HasComponent<UiComponent>())
+            if (!e.HasComponent<InventoryComponent>() )
                 continue;
             
 
             var inventoryComp = e.GetComponent<InventoryComponent>();
-            var uiComp = e.GetComponent<UiComponent>();
+            
             var hotbarComp = e.GetComponent<HotbarComponent>();
 
-            if (inventoryComp == null || uiComp == null || hotbarComp == null)
+            if (inventoryComp == null || hotbarComp == null)
                 continue;
             
             
@@ -38,26 +38,27 @@ public class InventoryInteractionSystem
                 clickY < hotbarComp.Y + hotbarComp.SlotOffsetY + hotbarComp.SlotSize)
             {
                 Console.WriteLine("HANDLE HOTBAR");
-                HandleHotbarClick(clickX, clickY, hotbarComp, inventoryComp, uiComp);
+                HandleHotbarClick(clickX, clickY, hotbarComp, inventoryComp);
             }
             
             else if (inventoryComp.IsOpen &&
-                     clickX >= uiComp.X + inventoryComp.SlotOffsetX &&
-                     clickX < uiComp.X + inventoryComp.SlotOffsetX + (4 * inventoryComp.SlotSize) &&
-                     clickY >= uiComp.Y + 50 + inventoryComp.SlotOffsetY &&
-                     clickY < uiComp.Y + 50 + inventoryComp.SlotOffsetY + (4 * inventoryComp.SlotSize))
+                     clickX >= inventoryComp.X  + inventoryComp.SlotOffsetX &&
+                     clickX < inventoryComp.X  + inventoryComp.SlotOffsetX + (4 * inventoryComp.SlotSize) &&
+                     clickY >= inventoryComp.Y + 35 + inventoryComp.SlotOffsetY &&
+                     clickY < inventoryComp.Y + 35 + inventoryComp.SlotOffsetY + (4 * inventoryComp.SlotSize))
             {
-                HandleInventoryClick(clickX, clickY, inventoryComp, uiComp, hotbarComp);
+                HandleInventoryClick(clickX, clickY, inventoryComp, hotbarComp);
             }
 
         }
         
 
     } 
-    private void HandleHotbarClick(int clickX, int clickY, HotbarComponent hotbarComp, InventoryComponent inventoryComp, UiComponent uiComp)
+    private void HandleHotbarClick(int clickX, int clickY, HotbarComponent hotbarComp, InventoryComponent inventoryComp)
     {
         //                  MousePos - hotbarComponent
-        int clickedSlot = (clickX - hotbarComp.X + 10 - hotbarComp.SlotOffsetX) / hotbarComp.SlotSize;
+        int clickedSlot = (clickX - hotbarComp.X +15 - hotbarComp.SlotOffsetX) / hotbarComp.SlotSize;
+        
 
         Console.WriteLine($"Clicked slot {clickedSlot} ClickX: {clickX}");
         
@@ -94,10 +95,10 @@ public class InventoryInteractionSystem
     }
     
     
-    private void HandleInventoryClick(int clickX, int clickY, InventoryComponent inventoryComp, UiComponent uiComp, HotbarComponent hotbarComp)
+    private void HandleInventoryClick(int clickX, int clickY, InventoryComponent inventoryComp, HotbarComponent hotbarComp)
     {
-        int collum = ( clickX - uiComp.X - inventoryComp.SlotOffsetX) / inventoryComp.SlotSize;
-        int row = ( clickY - uiComp.Y - 50 - inventoryComp.SlotOffsetY) / inventoryComp.SlotSize;
+        int collum = ( clickX - inventoryComp.X + 10 - inventoryComp.SlotOffsetX) / inventoryComp.SlotSize;
+        int row = ( clickY - inventoryComp.Y - 35 - inventoryComp.SlotOffsetY) / inventoryComp.SlotSize;
         int clickedSlot = row * 4 + collum;
 
         if (clickedSlot < 0 || clickedSlot >= 16)

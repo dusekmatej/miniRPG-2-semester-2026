@@ -14,19 +14,19 @@ public class InventoryLayer : IRenderLayer
         foreach (var e in world.Entities)
         {
 
-            if (!e.HasComponent<InventoryComponent>() && !e.HasComponent<UiComponent>())
+            if (!e.HasComponent<InventoryComponent>())
                 continue;
 
             var inventoryComp = e.GetComponent<InventoryComponent>();
-            var uiComp = e.GetComponent<UiComponent>();
+           
             var hotbarComponent = e.GetComponent<HotbarComponent>();
 
-            if (uiComp == null || inventoryComp == null ||  hotbarComponent == null)
+            if ( inventoryComp == null ||  hotbarComponent == null)
                 continue;
             if (inventoryComp.IsOpen)
             {
                 if (inventoryComp.InventorySprite?.Image != null)
-                    context.Graphics.DrawImage(inventoryComp.InventorySprite.Image, uiComp.X, uiComp.Y + 50, 200, 200);
+                    context.Graphics.DrawImage(inventoryComp.InventorySprite.Image, inventoryComp.X - 20, inventoryComp.Y + 30, inventoryComp.Width, inventoryComp.Height);
 
                 for (int i = 0; i < inventoryComp.Inventory.Slots.Length; i++)
                 {
@@ -38,8 +38,8 @@ public class InventoryLayer : IRenderLayer
                         int col = i % 4;
                         int row = i / 4;
 
-                        int itemX = uiComp.X + inventoryComp.SlotOffsetX + (col * inventoryComp.SlotSize);
-                        int itemY = uiComp.Y + inventoryComp.SlotOffsetY + (row * inventoryComp.SlotSize);
+                        int itemX = inventoryComp.X - 20  + inventoryComp.SlotOffsetX + (col * inventoryComp.SlotSize);
+                        int itemY = inventoryComp.Y - 20 + inventoryComp.SlotOffsetY + (row * inventoryComp.SlotSize);
                         
                         if (inventoryComp.selectedFromInventory && inventoryComp.selectedSlotIndex == i)
                         {
@@ -57,7 +57,7 @@ public class InventoryLayer : IRenderLayer
             if (hotbarComponent.HotbarSprite?.Image != null)
                 context.Graphics.DrawImage(hotbarComponent.HotbarSprite.Image, hotbarComponent.X, hotbarComponent.Y + 5, hotbarComponent.Width, hotbarComponent.Height);
             
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < hotbarComponent.Slots.Length; i++)
             {
                 var slot = hotbarComponent.Slots[i];
 
