@@ -32,22 +32,28 @@ public class ChunkManager
         UnloadChunks(centerChunkX, centerChunkY);
     }
 
-    private Chunk GetChunk(int chunkX, int chunkY)
+    private Chunk GetChunk(World world, int chunkX, int chunkY)
     {
         if (!_chunks.TryGetValue((chunkX, chunkY), out var chunk))
         {
+            Console.WriteLine($"X: {chunkX} Y: {chunkY}");
             chunk = new Chunk(chunkX, chunkY);
             _terrain.FillChunkPerlin(chunk);
             _chunks[(chunkX, chunkY)] = chunk;
         }
 
+        // Spawn ores inside the chunk
+        if (chunk.OresSpawned) return chunk;
+        _terrain.SpawnChunkOres(world, chunk);
+        chunk.OresSpawned = true;
+        
         return chunk;
     }
     
     // Explanation IEnumerable: Practically conveyor belt, it goes trough the loop
     // amd when the loop reaches the yield return, it pauses and returns the value,
     // then waits for the render layer to draw it and goes again
-    public IEnumerable<Chunk> GetVisibleChunks(int camX, int camY, int screenW, int screenH, int tileSize)
+    public IEnumerable<Chunk> GetVisibleChunks(World world, int camX, int camY, int screenW, int screenH, int tileSize)
     {
         int chunkPixels = Chunk.Size * tileSize;
 
@@ -64,7 +70,7 @@ public class ChunkManager
 
         for (int cx = minCX; cx <= maxCX; cx++)
         for (int cy = minCY; cy <= maxCY; cy++)
-            yield return GetChunk(cx, cy);
+            yield return GetChunk(world, cx, cy);
             //yield return Task.Run(() => GetChunk(cx, cy)).Result; // Test to run on different thread
     }
     

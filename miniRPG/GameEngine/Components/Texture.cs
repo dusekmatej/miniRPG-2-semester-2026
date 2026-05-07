@@ -1,3 +1,4 @@
+using miniRPG.Enums;
 using miniRPG.GameEngine.Entities;
 
 namespace miniRPG.GameEngine.Components;

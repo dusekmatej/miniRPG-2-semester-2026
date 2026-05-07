@@ -14,6 +14,7 @@ public class TerrainLayer : IRenderLayer
         var camera = world.CameraEntity.GetComponent<Camera>() ?? throw new Exception("Camera component not found!");
 
         var visibleChunks = world.ChunkManager.GetVisibleChunks(
+            world,
             (int)(camera.X - context.ScreenWidth / 2f),
             (int)(camera.Y - context.ScreenHeight / 2f),
             context.ScreenWidth,

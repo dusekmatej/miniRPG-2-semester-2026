@@ -1,5 +1,6 @@
 using miniRPG.GameEngine.Components;
 using miniRPG.GameEngine.Core;
+using miniRPG.GameEngine.Databases;
 
 namespace miniRPG.GameEngine.System;
 
@@ -21,7 +22,7 @@ public class InventorySystem
                 throw new Exception("Inventory is null!");
 
             if (Helpers.Keyboard.IsKeyDown(Keys.T))
-                inventory.Inventory.Add(_rand.Next(0, 8));
+                inventory.Inventory.Add(ItemDatabase.GetRandom().DatabaseName);
 
             bool isKeyCurrentlyDown = Helpers.Keyboard.IsKeyDown(Keys.I);
             if (isKeyCurrentlyDown && !_wasPressed)

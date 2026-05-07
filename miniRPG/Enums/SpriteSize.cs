@@ -1,4 +1,4 @@
-namespace miniRPG.GameEngine.Entities;
+namespace miniRPG.Enums;
 
 public enum SpriteSize
 {
