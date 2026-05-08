@@ -8,6 +8,7 @@ public class PlayerInputSystem
 {
     private bool _isAnimated;
     private CheckRadius _checkRadius;
+    private EventBus _eventBus;
 
     public PlayerInputSystem(CheckRadius checkRadius)
     {
