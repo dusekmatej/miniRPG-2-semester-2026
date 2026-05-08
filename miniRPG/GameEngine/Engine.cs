@@ -56,6 +56,5 @@ public class Engine
         _statBar.Update(World);
         _inventoryInteraction.Update(World);
         _hotbarInteractionSystem.Update(World);
-        
     }
 }

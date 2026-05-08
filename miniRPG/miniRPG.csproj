@@ -366,6 +366,7 @@
         <Folder Include="Art\Character\"/>
         <Folder Include="Art\Terrain\16x16\"/>
         <Folder Include="Art\Terrain\Items\"/>
+        <Folder Include="GameEngine\Core\Events\" />
     </ItemGroup>
 
 </Project>

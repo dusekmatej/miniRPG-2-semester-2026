@@ -12,6 +12,7 @@ public static class RockInteraction
         {
             var ore = entity.GetComponent<OreComponent>();
             var inventory = world.PlayerEntity.GetComponent<InventoryComponent>();
+            var levelComponent = world.PlayerEntity.GetComponent<LevelComponent>();
 
             if (inventory == null) throw new Exception("Inventory component is null!");
             if (ore == null) throw new Exception("No ore component found!");
