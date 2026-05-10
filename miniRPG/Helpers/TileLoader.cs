@@ -12,8 +12,9 @@ public class TileLoader
 {
     private static bool _isInitialized = false;
 
-    private static  Texture?[]? _grassTextures;
+    private static Texture? _deepWaterTexture;
     private static Texture?[]? _waterTextures;
+    private static  Texture?[]? _grassTextures;
     private static Texture?[]? _mountainTextures;
 
     public static void ResetCache()
@@ -30,9 +31,9 @@ public class TileLoader
         if (!_isInitialized)
         {
             _grassTextures = TileDatabase.Get("grass");
-            Console.WriteLine($"TileLoader: Loaded grass textures! {_grassTextures.Length} variations.");
             _mountainTextures = TileDatabase.Get("mountain");
             _waterTextures = TileDatabase.Get("water");
+            _deepWaterTexture = TileDatabase.GetSingle("deepwater");
             
             if (_grassTextures.Length == 0 || _waterTextures.Length == 0 || _mountainTextures.Length == 0)
                 throw new NullReferenceException("Textures are null inside of TileLoader!");
@@ -43,6 +44,8 @@ public class TileLoader
         // Pick which texture return
         switch (tile.Type)
         {
+            case TileType.DeepWater:
+                return _deepWaterTexture;
             case TileType.Water:
                 return _waterTextures[tile.Variation];
             case TileType.Grass:

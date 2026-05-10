@@ -4,79 +4,86 @@ namespace miniRPG.GameEngine.Core.WorldTerrain;
 
 public class PerlinNoise
 {
-    private int[] perm;
+    private readonly int[] _perm;
+
+    private static readonly Vector2[] Gradients =
+    {
+        new( 1f,      0f     ),
+        new(-1f,      0f     ),
+        new( 0f,      1f     ),
+        new( 0f,     -1f     ),
+        new( 0.7071f,  0.7071f),
+        new(-0.7071f,  0.7071f),
+        new( 0.7071f, -0.7071f),
+        new(-0.7071f, -0.7071f),
+    };
 
     public PerlinNoise(int seed)
     {
-        perm = new int[512];
-        int[] basePerm = GeneratePermutation(seed);
-
+        _perm = new int[512];
+        int[] base256 = GeneratePermutation(seed);
         for (int i = 0; i < 512; i++)
-            perm[i] = basePerm[i % 256];
+            _perm[i] = base256[i % 256];
     }
 
     public float Sample(float x, float y)
     {
-        // Floor once (optimization)
         int xi = (int)MathF.Floor(x) & 255;
         int yi = (int)MathF.Floor(y) & 255;
 
         float xf = x - MathF.Floor(x);
         float yf = y - MathF.Floor(y);
 
-        // Hash corners
-        int A = (perm[xi] + yi) & 255;
-        int B = (perm[xi + 1] + yi) & 255;
+        int A  = (_perm[xi]     + yi) & 255;
+        int B  = (_perm[xi + 1] + yi) & 255;
+        int AA = _perm[A];
+        int AB = _perm[(A + 1) & 255];
+        int BA = _perm[B];
+        int BB = _perm[(B + 1) & 255];
 
-        int AA = perm[A];
-        int AB = perm[(A + 1) & 255];
-        int BA = perm[B];
-        int BB = perm[(B + 1) & 255];
+        float dotAA = Dot(Gradients[AA & 7], xf,     yf    );
+        float dotBA = Dot(Gradients[BA & 7], xf - 1, yf    );
+        float dotAB = Dot(Gradients[AB & 7], xf,     yf - 1);
+        float dotBB = Dot(Gradients[BB & 7], xf - 1, yf - 1);
 
-        // Gradients
-        Vector2 gradAA = GetGradient(AA);
-        Vector2 gradAB = GetGradient(AB);
-        Vector2 gradBA = GetGradient(BA);
-        Vector2 gradBB = GetGradient(BB);
-
-        // Dot products
-        float dotAA = Dot(gradAA, xf, yf);
-        float dotBA = Dot(gradBA, xf - 1, yf);
-        float dotAB = Dot(gradAB, xf, yf - 1);
-        float dotBB = Dot(gradBB, xf - 1, yf - 1);
-
-        // Fade curves
         float u = Fade(xf);
         float v = Fade(yf);
 
-        // Interpolate
-        float lerpBottom = Lerp(dotAA, dotBA, u);
-        float lerpTop = Lerp(dotAB, dotBB, u);
-        float result = Lerp(lerpBottom, lerpTop, v);
+        float result = Lerp(
+            Lerp(dotAA, dotBA, u),
+            Lerp(dotAB, dotBB, u),
+            v
+        );
 
-        // Normalize to 0–1
-        return (result + 1f) / 2f;
+        return Math.Clamp((result + 0.7f) / 1.4f, 0f, 1f);
     }
 
-    private float Dot(Vector2 grad, float x, float y)
+    // Octaves = více vrstev šumu přes sebe → přirozenější terén
+    public float SampleOctaves(float x, float y, int octaves, float persistence, float lacunarity)
     {
-        return grad.X * x + grad.Y * y;
+        float value     = 0f;
+        float amplitude = 1f;
+        float frequency = 1f;
+        float maxValue  = 0f;
+
+        for (int i = 0; i < octaves; i++)
+        {
+            value     += Sample(x * frequency, y * frequency) * amplitude;
+            maxValue  += amplitude;
+            amplitude *= persistence;
+            frequency *= lacunarity;
+        }
+
+        return value / maxValue;
     }
 
-    private float Fade(float t)
-    {
-        return t * t * t * (t * (t * 6 - 15) + 10);
-    }
+    private static float Dot(Vector2 g, float x, float y) => g.X * x + g.Y * y;
+    private static float Fade(float t) => t * t * t * (t * (t * 6 - 15) + 10);
+    private static float Lerp(float a, float b, float t) => a + t * (b - a);
 
-    private float Lerp(float a, float b, float t)
-    {
-        return a + t * (b - a);
-    }
-
-    private int[] GeneratePermutation(int seed)
+    private static int[] GeneratePermutation(int seed)
     {
         Random rand = new Random(seed);
-
         int[] p = new int[256];
 
         for (int i = 0; i < 256; i++)
@@ -84,24 +91,12 @@ public class PerlinNoise
 
         for (int i = 255; i > 0; i--)
         {
-            int swapIndex = rand.Next(i + 1);
-
+            int j    = rand.Next(i + 1);
             int temp = p[i];
-            p[i] = p[swapIndex];
-            p[swapIndex] = temp;
+            p[i]     = p[j];
+            p[j]     = temp;
         }
 
         return p;
-    }
-
-    private Vector2 GetGradient(int hash)
-    {
-        switch (hash & 3)
-        {
-            case 0: return new Vector2(1, 1);
-            case 1: return new Vector2(-1, 1);
-            case 2: return new Vector2(1, -1);
-            default: return new Vector2(-1, -1);
-        }
     }
 }

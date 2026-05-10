@@ -2,8 +2,15 @@ namespace miniRPG.Helpers;
 
 public static class Keyboard
 {
+    private static HashSet<Keys> _previousKeys = new();
+    
     private static HashSet<Keys> keyPress = new HashSet<Keys>();
     private static Keys currentlyPressedKey = Keys.None;
+
+    public static void Update()
+    {
+        
+    }
     
     public static void KeyDown(Keys key)
     {

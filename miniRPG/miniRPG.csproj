@@ -306,7 +306,7 @@
         <None Update="Art\Terrain\Objects\Rocks\bronze_rock3.png">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
-        <None Update="Art\Terrain\Objects\Rocks\coal_ore.png">
+        <None Update="Art\Terrain\Objects\Rocks\coal_rock.png">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
         <None Update="Art\Terrain\Objects\Rocks\coal_ore3.png">
@@ -351,6 +351,9 @@
         <None Update="Art\Terrain\Ui\Inventory\inventory_hotbar.png">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
+        <None Update="Art\Terrain\Tiles\DeepWater\deepwater.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
 
     <ItemGroup>
@@ -366,7 +369,6 @@
         <Folder Include="Art\Character\"/>
         <Folder Include="Art\Terrain\16x16\"/>
         <Folder Include="Art\Terrain\Items\"/>
-        <Folder Include="GameEngine\Core\Events\" />
     </ItemGroup>
 
 </Project>

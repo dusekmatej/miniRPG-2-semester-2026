@@ -6,5 +6,4 @@ public class Interactable
 {
     public int Radius;
     public bool IsInRange;
-    public Action<World, Entity>? OnInteract;
 }

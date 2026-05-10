@@ -28,6 +28,7 @@ public static class TileDatabase
         Load("grass", $"{BASE_PATH}/Grass/");
         Load("mountain", $"{BASE_PATH}/Mountains/");
         Load("water", $"{BASE_PATH}/Water/");
+        LoadSingle("deepwater", $"{BASE_PATH}/DeepWater/deepwater.png");
     }
 
     private static void Load(string name, string path) => _database[name] = TextureLoader.LoadTiles(path)!;
