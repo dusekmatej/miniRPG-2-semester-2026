@@ -11,6 +11,7 @@ public class World
     public Entity CameraEntity { get; private set; }
     
     public ChunkManager ChunkManager { get; }
+    public EventBus EventBus { get; } = new();
     
     public World(int seed)
     {

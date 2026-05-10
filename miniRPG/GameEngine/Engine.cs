@@ -19,11 +19,15 @@ public class Engine
     private readonly DebugSystem _debug = new();
     private readonly MovementSystem _movement = new();
     private readonly AnimationSystem _animation = new();
-    private readonly InventorySystem _inventory = new();
+    private readonly InventorySystem _inventory;
     private readonly CheckRadius _checkRadius = new();
     private readonly DirectionDetectionSystem _directionDetection = new();
     private readonly StatBarSystem _statBar = new();
     private readonly InventoryInteractionSystem _inventoryInteraction = new();
+    
+    // ### Test Systems ###
+    private readonly MiningSystem _mining;
+    private readonly InteractionSystem _interactions;
 
     
     private readonly HotbarInteractionSystem _hotbarInteractionSystem  = new();
@@ -40,6 +44,11 @@ public class Engine
         Renderer.Add(new InventoryLayer());
 
         _input = new PlayerInputSystem(_checkRadius);
+        _inventory = new InventorySystem(World);
+        
+        // ### Test ###
+        _interactions = new InteractionSystem(World);
+        _mining = new MiningSystem(World);
     }
     
     public void Update(float deltaTime)

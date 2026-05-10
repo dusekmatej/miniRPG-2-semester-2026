@@ -14,13 +14,14 @@ public class EventBus
     {
         Type eventType = typeof(T);
 
-        if (_subscribers.TryGetValue(eventType, out var listeners))
+        if (!_subscribers.TryGetValue(eventType, out var listeners))
         {
             listeners = new List<Delegate>();
             _subscribers[eventType] = listeners;
         }
         
         listeners.Add(listener);
+        Console.WriteLine($"Subscribed {eventType}");
     }
 
     public void Unsubscribe<T>(Action<T> listener)
@@ -38,5 +39,7 @@ public class EventBus
         if (_subscribers.TryGetValue(eventType, out var listeners))
             foreach (var listener in listeners)
                 ((Action<T>)listener).Invoke(eventData);
+        
+        Console.WriteLine($"Posted {eventType}");
     }
 }

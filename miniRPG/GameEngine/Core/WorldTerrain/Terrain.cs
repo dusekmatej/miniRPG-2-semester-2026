@@ -7,117 +7,210 @@ namespace miniRPG.GameEngine.Core.WorldTerrain;
 
 public class Terrain
 {
-    private int Width { get; set; }
+    private int Width  { get; set; }
     private int Height { get; set; }
-    
+
     public Tile[,] Map { get; private set; }
     private readonly Dictionary<(int chunkX, int chunkY), Chunk> _chunks = new();
 
-    private Random _rand = new Random();
+    private readonly PerlinNoise _biomeNoise;
+    private readonly PerlinNoise _detailNoise;
+    private readonly PerlinNoise _oreNoise;
+    private readonly PerlinNoise _forestNoise;
+    private readonly Random     _rand;
 
-    private readonly PerlinNoise _noise;
-    private readonly float _biomeScale = 0.02f;
-    private readonly float _detailScale = 0.15f;
+    // Škály — čím menší číslo, tím "rozmazanější" a větší oblasti
+    private const float BiomeScale  = 0.008f;  // velké biomy
+    private const float DetailScale = 0.12f;   // variace textury
+    private const float OreScale    = 0.18f;   // žíly rudy
+    private const float ForestScale = 0.09f;   // lesy
 
     public Terrain(int seed, int width = 1000, int height = 1000)
     {
-        Width = width;
+        Width  = width;
         Height = height;
-        _noise = new PerlinNoise(seed);
+        _rand  = new Random(seed);
+
+        // Každý noise má jiný seed → nezávislé vzory
+        _biomeNoise  = new PerlinNoise(seed);
+        _detailNoise = new PerlinNoise(seed + 1);
+        _oreNoise    = new PerlinNoise(seed + 2);
+        _forestNoise = new PerlinNoise(seed + 3);
 
         Map = new Tile[width, height];
     }
 
     public void FillChunkPerlin(Chunk chunk)
     {
-        var offsetX = chunk.ChunkX * Chunk.Size;
-        var offsetY = chunk.ChunkY * Chunk.Size;
-        Console.WriteLine($"OffsetX: {offsetX} Y: {offsetY}");
+        int offsetX = chunk.ChunkX * Chunk.Size;
+        int offsetY = chunk.ChunkY * Chunk.Size;
 
         for (int x = 0; x < Chunk.Size; x++)
         {
             for (int y = 0; y < Chunk.Size; y++)
             {
-                var calcX = (offsetX + x);
-                var calcY = (offsetY + y);
+                int worldX = offsetX + x;
+                int worldY = offsetY + y;
 
-                var biome = _noise.Sample(calcX * _biomeScale, calcY * _biomeScale);
-                var detail = _noise.Sample(calcX * _detailScale, calcY * _detailScale);
+                float biome  = _biomeNoise.SampleOctaves(worldX * BiomeScale,  worldY * BiomeScale,  octaves: 4, persistence: 0.5f, lacunarity: 2f);
+                float detail = _detailNoise.SampleOctaves(worldX * DetailScale, worldY * DetailScale, octaves: 2, persistence: 0.5f, lacunarity: 2f);
+                float ore    = _oreNoise.SampleOctaves(   worldX * OreScale,    worldY * OreScale,    octaves: 3, persistence: 0.6f, lacunarity: 2f);
+                float forest = _forestNoise.SampleOctaves(worldX * ForestScale, worldY * ForestScale, octaves: 3, persistence: 0.5f, lacunarity: 2f);
 
-                chunk.Map[x, y] = GenerateTile(biome, detail);
-                chunk.Ores[(calcX, calcY)] = GetOreType(chunk.Map[x, y]); 
+                chunk.Map[x, y] = GenerateTile(biome, detail, forest);
+                chunk.Ores[(worldX, worldY)] = GetOreType(chunk.Map[x, y], ore);
             }
         }
     }
 
-    private OreType GetOreType(Tile currentTile)
-    {
-        if (currentTile.Type == TileType.Mountain)
-        {
-            var random = _rand.Next(0, 100);
+    // ------------------------------------------------------------------ //
+    //  Tile generace                                                       //
+    // ------------------------------------------------------------------ //
 
-            if (random <= 3)
-                return OreType.Bronze;
+    private Tile GenerateTile(float biome, float detail, float forest)
+    {
+        var tile = new Tile();
+
+        if (biome < 0.25f)
+        {
+            tile.Type = TileType.DeepWater;
         }
+        else if (biome < 0.38f)
+        {
+            tile.Type = TileType.Water;
+        }
+        else if (biome < 0.65f)
+        {
+            tile.Type = TileType.Grass;
+
+            tile.Variation = detail switch
+            {
+                < 0.35f => 0,
+                < 0.50f => 1,
+                < 0.62f => 2,
+                < 0.75f => 3,
+                _       => 4
+            };
+        }
+        else if (biome < 0.80f)
+        {
+            tile.Type = TileType.Mountain; // Hill až budeš mít
+        }
+        else
+        {
+            tile.Type = TileType.Mountain;
+        }
+
+        return tile;
+    }
+
+    // ------------------------------------------------------------------ //
+    //  Ore generace                                                        //
+    // ------------------------------------------------------------------ //
+
+    // Ore noise tvoří přirozené "žíly" — vysoká hodnota = střed žíly
+    // Každý ore má svůj práh + omezení na biom kde se může spawnnout
+    //
+    //  Ore       | Biom          | Noise práh | Šance (po prahu)
+    //  --------- | ------------- | ---------- | ----------------
+    //  Coal      | Hill+Mountain | > 0.60     | 35 %
+    //  Iron      | Hill+Mountain | > 0.68     | 20 %
+    //  Bronze    | Mountain      | > 0.72     | 12 %
+    //  Gold      | Mountain      | > 0.80     |  5 %
+
+    private OreType GetOreType(Tile tile, float oreNoise)
+    {
+        // bool isHill     = tile.Type == TileType.Hill;
+        bool isMountain = tile.Type == TileType.Mountain;
+
+        if (!isMountain)
+            return OreType.None;
+        
+        // if (!isHill && !isMountain)
+        //     return OreType.None;
+
+        // Gold — pouze hora, vzácný
+        if (isMountain && oreNoise > 0.80f && Roll(5))
+            return OreType.Gold;
+
+        // Bronze — pouze hora
+        if (isMountain && oreNoise > 0.72f && Roll(12))
+            return OreType.Bronze;
+
+        // Iron — hora i kopec
+        if (oreNoise > 0.68f && Roll(20))
+            return OreType.Iron;
+
+        // Coal — nejběžnější, hora i kopec
+        if (oreNoise > 0.60f && Roll(35))
+            return OreType.Coal;
 
         return OreType.None;
     }
 
+    // ------------------------------------------------------------------ //
+    //  Entity spawn                                                        //
+    // ------------------------------------------------------------------ //
+
     public void SpawnChunkOres(World world, Chunk chunk)
     {
-        foreach (var oreEntry in chunk.Ores)
+        foreach (var (pos, oreType) in chunk.Ores)
         {
-            var (worldX, worldY) = oreEntry.Key;
-            var oreType = oreEntry.Value;
-
             if (oreType == OreType.None)
                 continue;
 
-            Console.WriteLine($"X: {worldX * TileDatabase.TileSize} Y: {worldY  * TileDatabase.TileSize}");
-            var e = EntityFactory.CreateBronzeRock(
-                worldX * TileDatabase.TileSize, worldY * TileDatabase.TileSize
-                );
-            
-            world.Entities.Add(e);
-        }
-    }
+            var (worldX, worldY) = pos;
 
-    private Tile GenerateTile(float biome, float detail)
-    {
-        var newTile = new Tile();
-        TileType type = TileType.Water;
-
-        if (biome < 0.33f)
-        {
-            newTile.Type = TileType.Water;
-        }
-        else if (biome < 0.66f)
-        {
-            newTile.Type = TileType.Grass;
-
-            newTile.Variation = detail switch
+            var entity = oreType switch
             {
-                < 0.4f => 0,
-                < 0.5f => 1,
-                < 0.55f => 2,
-                < 0.65f => 3,
-                _ => 4
+                OreType.Coal   => Prefabs.CreateCoalRock(  worldX * TileDatabase.TileSize, worldY * TileDatabase.TileSize),
+                OreType.Iron   => Prefabs.CreateIronRock(  worldX * TileDatabase.TileSize, worldY * TileDatabase.TileSize),
+                OreType.Bronze => Prefabs.CreateBronzeRock(worldX * TileDatabase.TileSize, worldY * TileDatabase.TileSize),
+                OreType.Gold   => Prefabs.CreateGoldRock(  worldX * TileDatabase.TileSize, worldY * TileDatabase.TileSize),
+                _              => null
             };
-        }
-        else
-            newTile.Type = TileType.Mountain;
 
-        return newTile;
+            if (entity != null)
+                world.Entities.Add(entity);
+        }
     }
+
+    /*public void SpawnChunkForest(World world, Chunk chunk)
+    {
+        int offsetX = chunk.ChunkX * Chunk.Size;
+        int offsetY = chunk.ChunkY * Chunk.Size;
+
+        for (int x = 0; x < Chunk.Size; x++)
+        {
+            for (int y = 0; y < Chunk.Size; y++)
+            {
+                if (chunk.Map[x, y].Type != TileType.Forest)
+                    continue;
+
+                // Ne každý Forest tile dostane strom — 60% šance
+                if (!Roll(60))
+                    continue;
+
+                int worldX = (offsetX + x) * TileDatabase.TileSize;
+                int worldY = (offsetY + y) * TileDatabase.TileSize;
+
+                world.Entities.Add(EntityFactory.CreateTree(worldX, worldY));
+            }
+        }
+    }*/
+
+    // ------------------------------------------------------------------ //
+    //  Helpers                                                             //
+    // ------------------------------------------------------------------ //
+
+    // Vrátí true s pravděpodobností 'percent' procent (0–100)
+    private bool Roll(int percent) => _rand.Next(100) < percent;
 
     private bool IsDifferent(int x, int y, TileType type)
     {
         if (x < 0 || y < 0 || x >= Width || y >= Height)
             return false;
 
-        if (Map[x, y].Type != type)
-            return true;
-        else
-            return false;
+        return Map[x, y].Type != type;
     }
 }
