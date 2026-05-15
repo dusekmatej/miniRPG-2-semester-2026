@@ -49,6 +49,19 @@ public class InventoryLayer : IRenderLayer
                         }
                         
                         context.Graphics.DrawImage(slot.Item.Sprite.Image, itemX, itemY +25, inventoryComp.SlotSize, inventoryComp.SlotSize);
+                        if (slot.Amount > 0)
+                        {
+                            string amountText = slot.Amount.ToString();
+                            using var font = new Font("Arial", 8, FontStyle.Bold);
+                            using var brush = new SolidBrush(Color.White);
+                        
+                            SizeF textSize = context.Graphics.MeasureString(amountText, font);
+                            int textX = (int)(itemX + inventoryComp.SlotSize - textSize.Width - 2);
+                            int textY = (int)(itemY + 25 + inventoryComp.SlotSize - textSize.Height - 2);
+                        
+                            context.Graphics.DrawString(amountText, font, brush, textX, textY);
+                        }
+
                     }
                 }
             }
@@ -78,9 +91,20 @@ public class InventoryLayer : IRenderLayer
                             hotbarComponent.SlotSize, hotbarComponent.SlotSize);
                     }
                     
-                        context.Graphics.DrawImage(slot.Item.Sprite.Image, itemX - 25, itemY - 40,
-                            hotbarComponent.SlotSize, hotbarComponent.SlotSize);
-                   
+                    context.Graphics.DrawImage(slot.Item.Sprite.Image, itemX - 25, itemY - 40,hotbarComponent.SlotSize, hotbarComponent.SlotSize);
+                    if (slot.Amount > 0)
+                    {
+                        string amountText = slot.Amount.ToString();
+                        using var font = new Font("Arial", 7, FontStyle.Bold);
+                        using var brush = new SolidBrush(Color.White);
+                    
+                        SizeF textSize = context.Graphics.MeasureString(amountText, font);
+                        int textX = (int)(itemX - 25 + hotbarComponent.SlotSize - textSize.Width - 1);
+                        int textY = (int)(itemY - 40 + hotbarComponent.SlotSize - textSize.Height - 1);
+                    
+                        context.Graphics.DrawString(amountText, font, brush, textX, textY);
+                    }
+
                 }
             }
             
