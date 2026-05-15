@@ -7,6 +7,7 @@ namespace miniRPG.GameEngine.System;
 public class InteractionSystem
 {
     private World _world;
+    private int _calledTimes = 0;
     
     public InteractionSystem(World world)
     {
@@ -17,10 +18,12 @@ public class InteractionSystem
 
     private void OnInteract(InteractEvent e)
     {
+        _calledTimes++;
+        Console.WriteLine($"On interact called {_calledTimes}");
         Entity target = e.Target;
-
+        
         if (target.HasComponent<OreComponent>())
-            _world.EventBus.Post(new RockHitEvent(e.Source, e.Target, 10));
+            _world.EventBus.Post(new RockHitEvent(e.Source, e.Target, 100));
         else
             throw new Exception("Event not implemented!");
     }

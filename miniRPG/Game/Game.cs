@@ -81,7 +81,7 @@ public class Game
         // Create entities
         var player = EntityFactory.CreatePlayer(mapCenterX, mapCenterY, clientWidth, clientHeight);
         var camera = EntityFactory.CreateCamera(mapCenterX, mapCenterY);
-        var testInteractable = EntityFactory.CreateBronzeRock(mapCenterX + 98, mapCenterY + 98);
+        var testInteractable = Prefabs.CreateBronzeRock(mapCenterX + 98, mapCenterY + 98);
         var HealthBar = EntityFactory.HealthBar(clientWidth, clientHeight);
 
         if (_engine == null)

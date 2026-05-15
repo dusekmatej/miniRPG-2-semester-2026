@@ -28,16 +28,6 @@ public static class MouseHelper
         }
     }
 
-    public static void MouseUp(MouseButtons button)
-    {
-        pressedButtons.Remove(button);
-    }
-
-    public static bool IsMouseDown(MouseButtons button)
-    {
-        return pressedButtons.Contains(button);
-    }
-
     public static int GetMouseX()
     {
         return Cursor.Position.X - windowX;

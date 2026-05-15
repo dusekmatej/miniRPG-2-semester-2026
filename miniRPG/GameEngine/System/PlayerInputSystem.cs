@@ -9,6 +9,7 @@ public class PlayerInputSystem
 {
     private bool _isAnimated;
     private CheckRadius _checkRadius;
+    private bool _isInteractionAllowed = true;
 
     public PlayerInputSystem(CheckRadius checkRadius)
     {
@@ -17,6 +18,7 @@ public class PlayerInputSystem
     
     public void Update(World world, float deltaTime)
     {
+        _isInteractionAllowed = true;
         if (_checkRadius == null)
             throw new Exception("CheckRadius is null!");
         
@@ -34,17 +36,19 @@ public class PlayerInputSystem
             }
 
             // Interactions handling
-            if (Keyboard.GetPressedKey() == Keys.E)
+            if (Keyboard.IsKeyDown(Keys.E) && _isInteractionAllowed)
             {
+                Console.WriteLine("Just pressed E");
                 var nearest = _checkRadius.GetNearestInteractable();
                 if (nearest == null) return;
 
                 var interactable = nearest.GetComponent<Interactable>();
                 if (interactable == null && !interactable!.IsInRange) return;
-                
+
                 world.EventBus.Post(new InteractEvent(entity, nearest));
+                _isInteractionAllowed = false;
             }
-            
+
             switch (Keyboard.GetPressedKey())
             {
                 case Keys.W:
