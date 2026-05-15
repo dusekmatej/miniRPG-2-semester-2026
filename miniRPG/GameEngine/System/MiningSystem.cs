@@ -14,8 +14,10 @@ public class MiningSystem
     private void OnRockInteract(RockHitEvent e)
     {
         var oreComponent = e.Target.GetComponent<OreComponent>();
-
-        oreComponent.CurrentHealth -= e.Damage;
-        Console.WriteLine($"Rock hit! Current health: {oreComponent.CurrentHealth}/{oreComponent.MaxHealth}");
+     
+        Console.WriteLine($"Health {oreComponent.CurrentHealth} Damage: {e.Damage} CurrentHealth - Damage {oreComponent.CurrentHealth - e.Damage}");
+        
+        oreComponent.CurrentHealth = oreComponent.CurrentHealth - e.Damage;
+        // oreComponent.CurrentHealth -= e.Damage;
     }
 }

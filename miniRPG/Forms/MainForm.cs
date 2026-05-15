@@ -1,5 +1,7 @@
 using System.Diagnostics;
 using System.Drawing.Drawing2D;
+using System.Windows.Forms.VisualStyles;
+using Application = System.Windows.Forms.Application;
 using KeyEventArgs = System.Windows.Forms.KeyEventArgs;
 using MouseEventArgs = System.Windows.Forms.MouseEventArgs;
 
@@ -23,7 +25,7 @@ public partial class MainForm : Form
         InitializeComponent();
         _game.Initialize(ClientSize.Width, ClientSize.Height);
         MouseHelper.SetWindow(Location.X, Location.Y, ClientSize.Width, ClientSize.Height);
-        this.LocationChanged += MainForm_LocationChanged;
+        LocationChanged += MainForm_LocationChanged;
         
         Application.Idle += OnIdle;
     }
@@ -93,21 +95,7 @@ public partial class MainForm : Form
     #region Input
     private void MainForm_KeyDown(object sender, KeyEventArgs e) => Keyboard.KeyDown(e.KeyCode);
     private void MainForm_KeyUp(object sender, KeyEventArgs e) => Keyboard.KeyUp(e.KeyCode);
-
-    private void MainForm_Resize(object sender, EventArgs e)
-    {
-        MouseHelper.SetWindow(Location.X, Location.Y, ClientSize.Width, ClientSize.Height);
-    }
-
-    private void MainForm_MouseUp(object sender, MouseEventArgs e)
-    {
-        MouseHelper.MouseUp(e.Button);
-    }
-
-    private void MainForm_LocationChanged(object sender, EventArgs e)
-    {
-        MouseHelper.SetWindow(Location.X, Location.Y, ClientSize.Width, ClientSize.Height);
-    }
-    
+    private void MainForm_Resize(object sender, EventArgs e) => MouseHelper.SetWindow(Location.X, Location.Y, ClientSize.Width, ClientSize.Height);
+    private void MainForm_LocationChanged(object sender, EventArgs e) => MouseHelper.SetWindow(Location.X, Location.Y, ClientSize.Width, ClientSize.Height);
     #endregion
 }

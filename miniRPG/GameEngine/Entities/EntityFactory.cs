@@ -74,18 +74,6 @@ public static class EntityFactory
         return e;
     }
 
-    public static Entity CreateBronzeRock(float posX, float posY)
-    {
-        var e = new Entity();
-        
-        e.AddComponent(new OreComponent { MaxHealth = 100,Type = OreType.Bronze });
-        e.AddComponent(new TransformComponent { X = posX, Y = posY, Width = 98, Height = 98 });
-        e.AddComponent(TextureDatabase.Get("bronze_rock"));
-        e.AddComponent(new Interactable { Radius = 100 });
-        
-        return e;
-    }
-
     public static Entity HealthBar(int windowWidth, int windowHeight)
     {
         var e = new Entity();

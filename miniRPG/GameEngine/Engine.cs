@@ -53,6 +53,8 @@ public class Engine
     
     public void Update(float deltaTime)
     {
+        Helpers.Keyboard.Update();
+        
         World.Update(deltaTime);
         _debug.Update();
         _input.Update(World, deltaTime);
