@@ -26,7 +26,7 @@ public class Engine
     private readonly InventoryInteractionSystem _inventoryInteraction = new();
     
     // ### Test Systems ###
-    private readonly MiningSystem _mining;
+    private readonly HitHandleSystem _hitHandle;
     private readonly InteractionSystem _interactions;
 
     
@@ -38,23 +38,23 @@ public class Engine
         // World must exist before any systems/layers use it.
         World = new World(seed);
 
+        // Add render layers to the Renderer
         Renderer.Add(new TerrainLayer());
         Renderer.Add(new ObjectsLayer());
         Renderer.Add(new StatisticBarLayer());
         Renderer.Add(new InventoryLayer());
 
+        // Initialize Event Based systems be aware of the order in which they are initialized, 
+        // it matters when there is more listeners and the order in which they "fire"
         _input = new PlayerInputSystem(_checkRadius);
-        _inventory = new InventorySystem(World);
+        _interactions = new InteractionSystem(World); // Interactions order doesn't matter because there is only one listener
         
-        // ### Test ###
-        _interactions = new InteractionSystem(World);
-        _mining = new MiningSystem(World);
+        _hitHandle = new HitHandleSystem(World); // damage subtraction - must be first
+        _inventory = new InventorySystem(World); // Then check for health subtractions etc. - must be last
     }
     
     public void Update(float deltaTime)
     {
-        Helpers.Keyboard.Update();
-        
         World.Update(deltaTime);
         _debug.Update();
         _input.Update(World, deltaTime);

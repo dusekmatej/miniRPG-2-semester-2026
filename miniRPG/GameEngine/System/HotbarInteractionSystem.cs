@@ -17,8 +17,8 @@ public class HotbarInteractionSystem
                 continue;
 
             var hotbarComponent = e.GetComponent<HotbarComponent>();
-
             
+            // franto vazne numpad urcuje jakej hotbar mas?
             if (Keyboard.IsKeyDown(Keys.NumPad1)) hotbarComponent.SelectedSlotIndex = 0;
             else if (Keyboard.IsKeyDown(Keys.NumPad2)) hotbarComponent.SelectedSlotIndex = 1;
             else if (Keyboard.IsKeyDown(Keys.NumPad3)) hotbarComponent.SelectedSlotIndex = 2;

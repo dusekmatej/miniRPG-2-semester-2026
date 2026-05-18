@@ -4,9 +4,9 @@ using miniRPG.GameEngine.Core.Events;
 
 namespace miniRPG.GameEngine.System;
 
-public class MiningSystem
+public class HitHandleSystem
 {
-    public MiningSystem(World world)
+    public HitHandleSystem(World world)
     {
         world.EventBus.Subscribe<RockHitEvent>(OnRockInteract);
     }
