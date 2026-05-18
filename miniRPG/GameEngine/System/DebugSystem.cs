@@ -8,7 +8,6 @@ public class DebugSystem
     {
         if (Keyboard.GetPressedKey() == Keys.F3)
         {
-            Console.WriteLine("F3");
             Flags.IsGraphicDebug = !Flags.IsGraphicDebug;
         }
     }

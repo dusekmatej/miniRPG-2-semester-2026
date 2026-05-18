@@ -21,7 +21,6 @@ public class EventBus
         }
         
         listeners.Add(listener);
-        Console.WriteLine($"Subscribed {eventType}");
     }
 
     public void Unsubscribe<T>(Action<T> listener)
@@ -39,7 +38,5 @@ public class EventBus
         if (_subscribers.TryGetValue(eventType, out var listeners))
             foreach (var listener in listeners)
                 ((Action<T>)listener).Invoke(eventData);
-        
-        Console.WriteLine($"Posted {eventType}");
     }
 }

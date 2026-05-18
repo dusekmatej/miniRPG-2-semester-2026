@@ -19,11 +19,10 @@ public class InteractionSystem
     private void OnInteract(InteractEvent e)
     {
         _calledTimes++;
-        Console.WriteLine($"On interact called {_calledTimes}");
-        Entity target = e.Target;
+        var target = e.Target;
         
         if (target.HasComponent<OreComponent>())
-            _world.EventBus.Post(new RockHitEvent(e.Source, e.Target, 100));
+            _world.EventBus.Post(new RockHitEvent(e.Source, e.Target, 21));
         else
             throw new Exception("Event not implemented!");
     }

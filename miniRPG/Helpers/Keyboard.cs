@@ -2,55 +2,50 @@ namespace miniRPG.Helpers;
 
 public static class Keyboard
 {
-    private static HashSet<Keys> _currentKeys = new HashSet<Keys>();
-    private static HashSet<Keys> _previousKeys = new HashSet<Keys>();
-    private static Keys _currentlyPressedKey = Keys.None;
-
-    private static List<Keys> _rework = new();
-    private static List<Keys> _reworkPrev = new();
-
-    // Call this at the START of every Update() frame
-    public static void Update()
-    {
-        _previousKeys = new HashSet<Keys>(_currentKeys);
-        _reworkPrev.Clear();
-    }
+    private static readonly List<Keys> _heldKeys = new List<Keys>();
+    private static readonly List<Keys> _justPressedKeys = new List<Keys>();
+    private static readonly List<Keys> _usedKeys = new List<Keys>();
 
     public static void KeyDown(Keys key)
     {
-        _currentKeys.Add(key);
-        _currentlyPressedKey = key;
-        
-        _rework.Add(key);
+        if (!_heldKeys.Contains(key))
+        {
+            _heldKeys.Add(key);
+            _justPressedKeys.Add(key);
+        }
     }
 
     public static void KeyUp(Keys key)
     {
-        _currentKeys.Remove(key);
-        _currentlyPressedKey = Keys.None;
-
-        _rework.Remove(key);
+        _heldKeys.Remove(key);
+        _justPressedKeys.Remove(key);
+        _usedKeys.Remove(key);
     }
 
-    // Held down (good for movement)
+    public static bool WasKeyPressed(Keys key)
+    {
+        if (_usedKeys.Contains(key))
+            return false;
+
+        if (_justPressedKeys.Contains(key))
+        {
+            _usedKeys.Add(key);
+            return true;
+        }
+
+        return false;
+    }
+
     public static bool IsKeyDown(Keys key)
     {
-        return _currentKeys.Contains(key);
-    }
-
-    public static bool IsPressed(Keys key)
-    {
-        return _rework.Contains(key) && !_reworkPrev.Contains(key);
-    }
-
-    // Fires exactly once when first pressed (good for interact, open menu, etc.)
-    public static bool IsKeyJustPressed(Keys key)
-    {
-        return _currentKeys.Contains(key) && !_previousKeys.Contains(key);
+        return _heldKeys.Contains(key);
     }
 
     public static Keys GetPressedKey()
     {
-        return _currentlyPressedKey;
+        if (_heldKeys.Count == 0)
+            return Keys.None;
+
+        return _heldKeys[_heldKeys.Count - 1];
     }
 }
