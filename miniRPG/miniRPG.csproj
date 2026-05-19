@@ -255,9 +255,6 @@
         <None Update="Art\Terrain\Tiles\Grass\grass05.png">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
-        <None Update="Art\Terrain\Objects\Rocks\bronze_rock.png">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
         <None Update="Art\Terrain\Items\Ores\coal_ore.png">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
@@ -297,51 +294,6 @@
         <None Update="Art\Terrain\Tiles\Grass\Transition\grassML.png">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
-        <None Update="Art\Terrain\Objects\Rocks\bronze_rock1.png">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
-        <None Update="Art\Terrain\Objects\Rocks\bronze_rock2.png">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
-        <None Update="Art\Terrain\Objects\Rocks\bronze_rock3.png">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
-        <None Update="Art\Terrain\Objects\Rocks\coal_rock.png">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
-        <None Update="Art\Terrain\Objects\Rocks\coal_ore3.png">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
-        <None Update="Art\Terrain\Objects\Rocks\coal_rock1.png">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
-        <None Update="Art\Terrain\Objects\Rocks\coal_rock2.png">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
-        <None Update="Art\Terrain\Objects\Rocks\gold_ore3.png">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
-        <None Update="Art\Terrain\Objects\Rocks\gold_rock.png">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
-        <None Update="Art\Terrain\Objects\Rocks\gold_rock1.png">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
-        <None Update="Art\Terrain\Objects\Rocks\gold_rock2.png">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
-        <None Update="Art\Terrain\Objects\Rocks\iron_ore3.png">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
-        <None Update="Art\Terrain\Objects\Rocks\iron_rock.png">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
-        <None Update="Art\Terrain\Objects\Rocks\iron_rock1.png">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
-        <None Update="Art\Terrain\Objects\Rocks\iron_rock2.png">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
         <None Update="Art\Terrain\Tiles\Grass\grass0.png">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
@@ -352,6 +304,54 @@
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
         <None Update="Art\Terrain\Tiles\DeepWater\deepwater.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="Art\Terrain\Objects\Rocks\bronze_rock\bronze_rock.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="Art\Terrain\Objects\Rocks\bronze_rock\bronze_rock1.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="Art\Terrain\Objects\Rocks\bronze_rock\bronze_rock2.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="Art\Terrain\Objects\Rocks\bronze_rock\bronze_rock3.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="Art\Terrain\Objects\Rocks\coal_rock\coal_rock.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="Art\Terrain\Objects\Rocks\coal_rock\coal_rock1.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="Art\Terrain\Objects\Rocks\coal_rock\coal_rock2.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="Art\Terrain\Objects\Rocks\coal_rock\coal_rock3.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="Art\Terrain\Objects\Rocks\gold_rock\gold_rock3.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="Art\Terrain\Objects\Rocks\gold_rock\gold_rock.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="Art\Terrain\Objects\Rocks\gold_rock\gold_rock1.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="Art\Terrain\Objects\Rocks\gold_rock\gold_rock2.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="Art\Terrain\Objects\Rocks\iron_rock\iron_rock3.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="Art\Terrain\Objects\Rocks\iron_rock\iron_rock.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="Art\Terrain\Objects\Rocks\iron_rock\iron_rock1.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="Art\Terrain\Objects\Rocks\iron_rock\iron_rock2.png">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
     </ItemGroup>

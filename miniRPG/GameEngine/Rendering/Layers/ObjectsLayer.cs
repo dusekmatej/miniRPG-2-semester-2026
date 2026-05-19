@@ -5,6 +5,9 @@ namespace miniRPG.GameEngine.Rendering.Layers;
 
 public class ObjectsLayer : IRenderLayer
 {
+    private Brush _oreHealthBar = new SolidBrush(Color.FromArgb(255, 255, 0, 0));
+    private float _healthbarHeight = 10f;
+    
     public void Render(World world, RenderContext context)
     {
         // Get cached camera
@@ -25,10 +28,19 @@ public class ObjectsLayer : IRenderLayer
                 context.Graphics.DrawImage(animationComponent.CurrentFrame.Image, screenX, screenY, transform.Width, transform.Height);
             else
             {
+                var textureMultipleComponent = entity.GetComponent<TextureMultipleComponent>();
+                if (textureMultipleComponent != null)
+                {
+                    var currentTexture = textureMultipleComponent.Textures![textureMultipleComponent.CurrentTextureIndex];
+                    context.Graphics.DrawImage(currentTexture.Image, screenX, screenY, transform.Width, transform.Height);
+                    continue;
+                }
+                
                 var textureComponent = entity.GetComponent<Texture>();
                 if (textureComponent != null)
-                    context.Graphics.DrawImage(textureComponent.Image, screenX, screenY, transform.Width,
-                        transform.Height);
+                {
+                    context.Graphics.DrawImage(textureComponent.Image, screenX, screenY, transform.Width, transform.Height);
+                }
                 else
                     context.Graphics.FillRectangle(Brushes.Red, screenX, screenY, transform.Width, transform.Height);
             }

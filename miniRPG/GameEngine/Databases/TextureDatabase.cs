@@ -1,12 +1,35 @@
+using System.IO;
+
 namespace miniRPG.GameEngine.Databases;
 
 using Helpers;
 using Components;
 
+// ReSharper disable InconsistentNaming
+// ReSharper disable StaticMemberInitializerReferesToMemberBelow
+
 public static class TextureDatabase
 {       
         private static readonly Dictionary<string, Texture> _database = new();
         private static readonly Dictionary<string, Texture[]> _animationDatabase = new();
+
+        public static void Initialize()
+        {
+                foreach (var path in _imagePaths)
+                {
+                        var name = Path.GetFileNameWithoutExtension(path);
+                        Console.WriteLine($"Populated texture database: {name} from {path}");
+                        Load(name, path);
+                }
+
+                foreach (var path in _animationPaths)
+                {
+                        var name = Path.GetFileNameWithoutExtension(path);
+                        Console.WriteLine($"Populated animation database: {name} from {path}");
+                        Load(name, path, true);
+                }
+        }
+        
         
         public static void Load(string name, string path, bool isAnimation = false)
         {
@@ -23,4 +46,52 @@ public static class TextureDatabase
         // Check if exist
         public static bool Contains(string name) => _database.ContainsKey(name);
         public static bool AnimationContains(string name) => _animationDatabase.ContainsKey(name);
+        
+        #region BASE PATHS
+        private static readonly string APP_BASE = AppDomain.CurrentDomain.BaseDirectory;
+        private static readonly string BASE_TERRAIN = Path.Join(APP_BASE, "Art/Terrain");
+        private static readonly string BASE_ROCKS = Path.Join(BASE_TERRAIN, "Objects/Rocks");
+        private static readonly string BASE_CHARACTER = Path.Join(APP_BASE, "Art/Character");
+        private static readonly string BASE_TOOLS = Path.Join(APP_BASE, "Art/Terrain/Items/Tools");
+        private static readonly string BASE_ORES =  Path.Join(BASE_TERRAIN, "Items/Ores");
+        private static readonly string BASE_INGOTS = Path.Join(BASE_TERRAIN, "Items/Ingots");
+        private static readonly string BASE_UI = Path.Join(BASE_TERRAIN, "Ui");
+        #endregion
+        
+        #region ADD TEXTURES ONLY HERE!
+        private static readonly string[] _animationPaths =
+        {
+                $"{BASE_CHARACTER}/idle",
+                $"{BASE_CHARACTER}/run_down",
+                $"{BASE_CHARACTER}/run_left",
+                $"{BASE_CHARACTER}/run_right",
+                $"{BASE_CHARACTER}/run_up",
+                $"{BASE_ROCKS}/coal_rock",
+                $"{BASE_ROCKS}/bronze_rock",
+                $"{BASE_ROCKS}/iron_rock",
+                $"{BASE_ROCKS}/gold_rock"
+        };
+
+        private static readonly string[] _imagePaths =
+        {
+                $"{BASE_UI}/Inventory/inventory_hotbar.png",
+                $"{BASE_UI}/Inventory/inventory_open.png",
+                
+                $"{BASE_ORES}/bronze_ore.png",
+                $"{BASE_ORES}/iron_ore.png",
+                $"{BASE_ORES}/coal_ore.png",
+                $"{BASE_ORES}/gold_ore.png",
+                
+                $"{BASE_INGOTS}/bronze_ingot.png",
+                $"{BASE_INGOTS}/iron_ingot.png",
+                $"{BASE_INGOTS}/coal_ingot.png",
+                $"{BASE_INGOTS}/gold_ingot.png",
+                
+                $"{BASE_TOOLS}/axe.png",
+                $"{BASE_TOOLS}/pickaxe.png",
+                $"{BASE_TOOLS}/shovel.png",
+                $"{BASE_TOOLS}/sword.png"
+        };
+        
+        #endregion
 }
