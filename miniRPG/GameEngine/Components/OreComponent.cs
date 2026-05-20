@@ -7,7 +7,8 @@ public class OreComponent
     public int CurrentHealth;
     public int MaxHealth;
     public OreType Type;
-
+    public int XpAward;
+    
     public OreComponent(int maxHealth)
     {
         MaxHealth = maxHealth;

@@ -81,6 +81,7 @@ public partial class MainForm : Form
             Graphics = e.Graphics,
             ScreenWidth = ClientSize.Width,
             ScreenHeight = ClientSize.Height,
+            DeltaTime = (float)_stopwatch.Elapsed.TotalSeconds - _lastTime
         };
 
         _game.Render(context);

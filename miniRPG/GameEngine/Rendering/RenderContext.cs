@@ -6,4 +6,5 @@ public class RenderContext
     
     public int ScreenWidth;
     public int ScreenHeight;
+    public float DeltaTime;
 }

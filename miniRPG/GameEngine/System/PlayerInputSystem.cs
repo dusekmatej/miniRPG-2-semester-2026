@@ -7,9 +7,9 @@ namespace miniRPG.GameEngine.System;
 
 public class PlayerInputSystem
 {
-    private bool _isAnimated;
-    private CheckRadius _checkRadius;
+    private readonly CheckRadius _checkRadius;
 
+    // ReSharper disable project ConvertToPrimaryConstructor
     public PlayerInputSystem(CheckRadius checkRadius)
     {
         _checkRadius = checkRadius;
@@ -33,7 +33,7 @@ public class PlayerInputSystem
                 velocity.Y = 0;
             }
 
-            // Interactions handling
+            // Interaction with object handle
             if (Keyboard.WasKeyPressed(Keys.E))
             {
                 var nearest = _checkRadius.GetNearestInteractable();
@@ -44,7 +44,16 @@ public class PlayerInputSystem
 
                 world.EventBus.Post(new InteractEvent(entity, nearest));
             }
-
+            
+            // Toggle inventory
+            if (Keyboard.WasKeyPressed(Keys.I))
+                world.EventBus.Post(new InventoryToggleEvent());
+            
+            // Add random inventory item (for testing purposes only)
+            if (Keyboard.WasKeyPressed(Keys.R))
+                world.EventBus.Post(new RandomInventoryEvent());
+            
+            // Movement handling
             switch (Keyboard.GetPressedKey())
             {
                 case Keys.W:

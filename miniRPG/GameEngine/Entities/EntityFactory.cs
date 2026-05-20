@@ -2,6 +2,7 @@ using miniRPG.Enums;
 using miniRPG.GameEngine.Components;
 using miniRPG.GameEngine.Core;
 using miniRPG.GameEngine.Databases;
+using miniRPG.GameEngine.DataObjects;
 using miniRPG.GameEngine.InventoryEssentials;
 
 // ReSharper disable InconsistentNaming
@@ -25,6 +26,17 @@ public static class EntityFactory
         e.AddComponent(new PlayerComponent { Stone = 100 });
         e.AddComponent(new TransformComponent { X = posX, Y = posY, Width = 150, Height = 150 });
         e.AddComponent(new VelocityComponent { X = 0, Y = 0 });
+        e.AddComponent(new SkillsComponent
+        {
+            Skills = new Dictionary<SkillType, SkillObject>
+            {
+                { SkillType.Mining, new SkillObject() },
+                { SkillType.Foraging, new SkillObject() },
+                { SkillType.Combat, new SkillObject() },
+                { SkillType.Fishing, new SkillObject() }
+            },
+            CharacterLevel = 1,
+        });
         
 
         e.AddComponent(new InventoryComponent
