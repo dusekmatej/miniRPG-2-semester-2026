@@ -1,6 +1,7 @@
 // ReSharper disable InconsistentNaming
 
 using miniRPG.Enums;
+using miniRPG.GameEngine.DataObjects;
 
 namespace miniRPG.GameEngine.Databases;
 
@@ -16,6 +17,13 @@ public static class ItemDatabase
     public static void Load(Item item) => _items[item.DatabaseName] = item;
     public static Item Get(string dbName) => _items[dbName];
     public static Item GetRandom() => _items.ElementAt(_rand.Next(0, _items.Count)).Value;
+
+    // public static Item GetRandom()
+    // {
+    //     var randItem = _items.ElementAt(_rand.Next(0, _items.Count)).Value;
+    //     Console.WriteLine($"ITEM-DB: Getting random item... {randItem.DatabaseName}");
+    //     return randItem;
+    // }
     
     private static void LoadMultiple(Item[] items)
     {
@@ -41,10 +49,10 @@ public static class ItemDatabase
         new Item("gold_ingot", "Gold Ingot", "Gold ingot", ItemType.Ingot, TextureDatabase.Get("gold_ingot")),
         
         // Tools
-        new Item("default_axe", "Axe", "Basic axe", ItemType.Ingot, TextureDatabase.Get("axe")),
-        new Item("default_pickaxe", "Pickaxe", "Basic pickaxe", ItemType.Ingot, TextureDatabase.Get("pickaxe")),
-        new Item("default_shovel", "Shovel", "Basic shovel", ItemType.Ingot, TextureDatabase.Get("shovel")),
-        new Item("default_sword", "Sword", "Basic sword", ItemType.Ingot, TextureDatabase.Get("sword"))
+        new Item("default_axe", "Axe", "Basic axe", ItemType.Ingot, TextureDatabase.Get("axe"), false),
+        new Item("default_pickaxe", "Pickaxe", "Basic pickaxe", ItemType.Ingot, TextureDatabase.Get("pickaxe"), false),
+        new Item("default_shovel", "Shovel", "Basic shovel", ItemType.Ingot, TextureDatabase.Get("shovel"), false) ,
+        new Item("default_sword", "Sword", "Basic sword", ItemType.Ingot, TextureDatabase.Get("sword"), false)
     };
     #endregion
 }

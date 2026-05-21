@@ -1,4 +1,3 @@
-using miniRPG.GameEngine.Databases;
 using miniRPG.GameEngine.InventoryEssentials;
 
 namespace miniRPG.GameEngine.Components;

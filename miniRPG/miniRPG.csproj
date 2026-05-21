@@ -354,6 +354,18 @@
         <None Update="Art\Terrain\Objects\Rocks\iron_rock\iron_rock2.png">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
+        <None Update="Art\Terrain\Items\Tools\pickaxe.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="Art\Terrain\Items\Tools\axe.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="Art\Terrain\Items\Tools\shovel.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="Art\Terrain\Items\Tools\sword.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
 
     <ItemGroup>
@@ -367,7 +379,6 @@
 
     <ItemGroup>
         <Folder Include="Art\Character\"/>
-        <Folder Include="Art\Terrain\16x16\"/>
         <Folder Include="Art\Terrain\Items\"/>
     </ItemGroup>
 

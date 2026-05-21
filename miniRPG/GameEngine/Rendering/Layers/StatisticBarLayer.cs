@@ -13,7 +13,6 @@ public class StatisticBarLayer : IRenderLayer
         {
             if (!e.HasComponent<StatisticBarComponent>())
                 continue;
-
             
             var statComp = e.GetComponent<StatisticBarComponent>();
 

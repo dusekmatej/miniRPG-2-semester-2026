@@ -91,4 +91,14 @@ public static class EntityFactory
 
         return e;
     }
+
+    public static Entity CreateGhost(float posX = 0, float posY = 0, int windowWidth = 0, int windowHeight = 0)
+    {
+        var e = new Entity();
+
+        e.AddComponent(new TransformComponent { X = posX, Y = posY, Width = 150, Height = 150 });
+        e.AddComponent(new VelocityComponent { X = 0, Y = 0 });
+
+        return e;
+    }
 }
