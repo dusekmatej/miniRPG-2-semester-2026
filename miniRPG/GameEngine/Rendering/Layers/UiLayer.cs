@@ -79,7 +79,7 @@ public class UiLayer : IRenderLayer
                 _levelUpMessageAlpha = 1f;
             
             // Simple bounce-in animation
-            _levelUpMessageScale = MathHelper.Lerp(_levelUpMessageScale, 1f, deltaTime * 10f);
+            _levelUpMessageScale = OtherHelpers.Lerp(_levelUpMessageScale, 1f, deltaTime * 10f);
         }
         else
         {
@@ -89,7 +89,7 @@ public class UiLayer : IRenderLayer
 
         // --- Animate Experience Bar ---
         if (_isExperienceBarVisible)
-            _animatedExperience = MathHelper.Lerp(_animatedExperience, _targetExperience, deltaTime * AnimationSpeed);
+            _animatedExperience = OtherHelpers.Lerp(_animatedExperience, _targetExperience, deltaTime * AnimationSpeed);
     }
     
     public void Render(World world, RenderContext context)
