@@ -25,6 +25,7 @@ public class Engine
     private readonly StatBarSystem _statBar = new();
     private readonly InventoryInteractionSystem _inventoryInteraction = new();
     private readonly HotbarInteractionSystem _hotbarInteractionSystem  = new();
+    private readonly EnemySystem _enemySystem = new();
     
     // ### Event Based Systems ###
     private readonly HitHandleSystem _hitHandle;
@@ -74,5 +75,6 @@ public class Engine
         _inventoryInteraction.Update(World);
         _hotbarInteractionSystem.Update(World);
         _uiLayer.Update(deltaTime);
+        _enemySystem.Update(World);
     }
 }

@@ -46,7 +46,8 @@ public class Game
         var playerEntity = EntityFactory.CreatePlayer(mapCenterX, mapCenterY, clientWidth, clientHeight);
         var cameraEntity = EntityFactory.CreateCamera(mapCenterX, mapCenterY);
         var testInteractable = Prefabs.CreateBronzeRock(mapCenterX + 98, mapCenterY + 98);
-
+        var testEnemy = EntityFactory.CreateGhost(mapCenterX + 200, mapCenterY + 200);
+        
         if (_engine == null)
             throw new NullReferenceException("Engine is not initialized!");
 
@@ -54,6 +55,7 @@ public class Game
         _engine.World.CacheEntities(cameraEntity);
         _engine.World.CacheEntities(playerEntity);
         _engine.World.Entities.Add(testInteractable);
+        _engine.World.Entities.Add(testEnemy);
     }
 
     public void Update(float deltaTime)

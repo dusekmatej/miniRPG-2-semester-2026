@@ -98,6 +98,7 @@ public static class EntityFactory
 
         e.AddComponent(new TransformComponent { X = posX, Y = posY, Width = 150, Height = 150 });
         e.AddComponent(new VelocityComponent { X = 0, Y = 0 });
+        e.AddComponent(new EnemyComponent());
 
         return e;
     }

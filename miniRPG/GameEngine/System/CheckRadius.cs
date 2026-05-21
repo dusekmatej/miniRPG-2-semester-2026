@@ -1,6 +1,7 @@
 
 using miniRPG.GameEngine.Components;
 using miniRPG.GameEngine.Core;
+using miniRPG.Helpers;
 
 namespace miniRPG.GameEngine.System;
 
@@ -25,7 +26,7 @@ public class CheckRadius
             
             var interactable = e.GetComponent<Interactable>();
             
-            var distance = GetDistance(playerTransform!, entityTransform);
+            var distance = OtherHelpers.GetDistance(playerTransform!, entityTransform);
             float radiusSquared = interactable!.Radius * interactable.Radius;
             
             interactable.IsInRange = distance < radiusSquared;
@@ -39,11 +40,4 @@ public class CheckRadius
     }
 
     public Entity? GetNearestInteractable() => _nearestEntity;  
-    
-    private float GetDistance(TransformComponent self, TransformComponent other)
-    {
-        var distanceX = self.X - other.X;
-        var distanceY = self.Y - other.Y;
-        return distanceX * distanceX + distanceY * distanceY; // Use pythagoras to get straight line to it
-    }
 }
