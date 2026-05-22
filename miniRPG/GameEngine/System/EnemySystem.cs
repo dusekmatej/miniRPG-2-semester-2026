@@ -1,4 +1,8 @@
-﻿namespace miniRPG.GameEngine.System;
+﻿using miniRPG.GameEngine.Components;
+using miniRPG.GameEngine.Core;
+using miniRPG.Helpers;
+
+namespace miniRPG.GameEngine.System;
 
 public class EnemySystem
 {
