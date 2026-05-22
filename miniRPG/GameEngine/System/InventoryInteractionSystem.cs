@@ -8,6 +8,7 @@ namespace miniRPG.GameEngine.System;
 
 public class InventoryInteractionSystem
 {
+    World world;
     
     public void Update(World world)
     {
@@ -114,9 +115,7 @@ public class InventoryInteractionSystem
             inventoryComp.selectedFromHotbar = false;
             inventoryComp.selectedFromInventory = true;
             var slot = inventoryComp.Inventory.Slots[clickedSlot];
-           // Console.WriteLine(slot != null ? 
-             //   $"Selected inventory slot {clickedSlot}: {slot.Item.Name}" :
-               // $"Selected empty inventory slot {clickedSlot}");
+            
         }
         
         

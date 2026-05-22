@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Drawing.Drawing2D;
 using miniRPG.Enums;
+using miniRPG.GameEngine.Components;
 using miniRPG.GameEngine.Core;
 using miniRPG.GameEngine.Core.Events;
 using miniRPG.Helpers;
@@ -102,6 +103,9 @@ public class UiLayer : IRenderLayer
         {
             RenderExperienceBar(context);
         }
+        
+        RenderHealthBar(world, context);
+        
     }
 
     private void RenderLevelUpMessage(RenderContext context)
@@ -237,4 +241,42 @@ public class UiLayer : IRenderLayer
         path.CloseFigure();
         return path;
     }
+    
+    private void RenderHealthBar(World world, RenderContext context)
+    {
+        foreach (var e in world.Entities)
+        {
+            if (!e.HasComponent<HealthBarComponent>())
+                continue;
+
+            var healthBar = e.GetComponent<HealthBarComponent>();
+            if (healthBar == null)
+                continue;
+
+            // Calculate the filled width based on health percentage
+            float healthPercent = (float)healthBar.CurrentHealth / healthBar.MaxHealth;
+            int filledWidth = (int)(healthPercent * healthBar.Width);
+
+            // Draw background 
+            context.Graphics.FillRectangle(Brushes.Red, healthBar.X, healthBar.Y, healthBar.Width, healthBar.Height);
+
+            // Draw foreground (
+            context.Graphics.FillRectangle(Brushes.Green, healthBar.X, healthBar.Y, filledWidth, healthBar.Height);
+
+            // Draw border
+            context.Graphics.DrawRectangle(Pens.Black, healthBar.X, healthBar.Y, healthBar.Width, healthBar.Height);
+
+            // Draw health text
+            string healthText = $"{healthBar.CurrentHealth}/{healthBar.MaxHealth}";
+            using (var font = new Font("Arial", 10, FontStyle.Bold))
+            {
+                var textSize = context.Graphics.MeasureString(healthText, font);
+                float textX = healthBar.X + (healthBar.Width - textSize.Width) / 2;
+                float textY = healthBar.Y + (healthBar.Height - textSize.Height) / 2;
+            
+                context.Graphics.DrawString(healthText, font, Brushes.White, textX, textY);
+            }
+        }
+    }
+    
 }

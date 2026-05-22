@@ -366,6 +366,18 @@
         <None Update="Art\Terrain\Items\Tools\sword.png">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
+        <None Update="Art\Terrain\Objects\Chests\small_iron_chest.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="Art\Terrain\Items\Potions\small_health_potion.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="Art\Terrain\Items\Food\light_meat.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="Art\Terrain\Items\Food\brown_meat.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
 
     <ItemGroup>
@@ -379,7 +391,8 @@
 
     <ItemGroup>
         <Folder Include="Art\Character\"/>
-        <Folder Include="Art\Terrain\Items\"/>
+        <Folder Include="Art\Terrain\Items\Potions\" />
+        <Folder Include="Art\Terrain\Objects\Chests\" />
     </ItemGroup>
 
 </Project>

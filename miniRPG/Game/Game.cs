@@ -46,6 +46,9 @@ public class Game
         var playerEntity = EntityFactory.CreatePlayer(mapCenterX, mapCenterY, clientWidth, clientHeight);
         var cameraEntity = EntityFactory.CreateCamera(mapCenterX, mapCenterY);
         var testInteractable = Prefabs.CreateBronzeRock(mapCenterX + 98, mapCenterY + 98);
+        
+        var chest = Prefabs.CreateChest(mapCenterX + 200, mapCenterY + 200);
+        var smallHealingPotion = Prefabs.CreateHealingItem(mapCenterX + 250, mapCenterY + 250, "small_health_potion");
 
         if (_engine == null)
             throw new NullReferenceException("Engine is not initialized!");
@@ -54,6 +57,8 @@ public class Game
         _engine.World.CacheEntities(cameraEntity);
         _engine.World.CacheEntities(playerEntity);
         _engine.World.Entities.Add(testInteractable);
+        _engine.World.Entities.Add(chest);
+        _engine.World.Entities.Add(smallHealingPotion);
     }
 
     public void Update(float deltaTime)

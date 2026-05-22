@@ -52,7 +52,12 @@ public static class ItemDatabase
         new Item("default_axe", "Axe", "Basic axe", ItemType.Ingot, TextureDatabase.Get("axe"), false),
         new Item("default_pickaxe", "Pickaxe", "Basic pickaxe", ItemType.Ingot, TextureDatabase.Get("pickaxe"), false),
         new Item("default_shovel", "Shovel", "Basic shovel", ItemType.Ingot, TextureDatabase.Get("shovel"), false) ,
-        new Item("default_sword", "Sword", "Basic sword", ItemType.Ingot, TextureDatabase.Get("sword"), false)
+        new Item("default_sword", "Sword", "Basic sword", ItemType.Ingot, TextureDatabase.Get("sword"), false),
+        
+        // Food
+        
+        new Item("small_health_potion", "Small Health Potion", "A magical potion that heals 20 HP", ItemType.Potion, TextureDatabase.Get("small_health_potion"), true),
+        new Item("brown_meat", "Brown Meat", "Brown cooked meat that heals 10 HP", ItemType.Food, TextureDatabase.Get("brown_meat"), true)
     };
     #endregion
 }

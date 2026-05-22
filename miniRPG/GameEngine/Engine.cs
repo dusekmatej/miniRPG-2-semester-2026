@@ -1,4 +1,5 @@
 using miniRPG.GameEngine.Core;
+using miniRPG.GameEngine.Core.Events;
 using miniRPG.GameEngine.EventBasedSystems;
 using miniRPG.GameEngine.Rendering;
 using miniRPG.GameEngine.Rendering.Layers;
@@ -31,6 +32,8 @@ public class Engine
     private readonly InteractionSystem _interactions;
     private readonly InventoryManagementSystem _inventoryManagement;
     private readonly LevelingSystem _levelSystem;
+    private readonly ItemPickupSystem _itemPickup;
+    private readonly ChestSystem _chestSystem;
     
     // --- UI ---
     private readonly UiLayer _uiLayer;
@@ -58,6 +61,8 @@ public class Engine
         _hitHandle = new(World); // damage subtraction - must be first
         _inventoryManagement = new(World); // Then check for health subtractions etc. - must be last
         _levelSystem = new(World);
+        _itemPickup = new(World);
+        _chestSystem = new(World);
     }
 
     public void Update(float deltaTime)

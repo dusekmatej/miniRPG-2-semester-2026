@@ -7,5 +7,6 @@ public enum ItemType
     Weapon,
     Armor,
     Food,
+    Potion,
     Misc
 }

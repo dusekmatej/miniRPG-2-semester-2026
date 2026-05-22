@@ -56,6 +56,9 @@ public static class TextureDatabase
         private static readonly string BASE_ORES =  Path.Join(BASE_TERRAIN, "Items/Ores");
         private static readonly string BASE_INGOTS = Path.Join(BASE_TERRAIN, "Items/Ingots");
         private static readonly string BASE_UI = Path.Join(BASE_TERRAIN, "Ui");
+        private static readonly string BASE_FOOD  = Path.Join(BASE_TERRAIN, "Items/Food");
+        private static readonly string BASE_POTION = Path.Join(BASE_TERRAIN, "Items/Potions");
+        private static readonly string BASE_CHEST = Path.Join(BASE_TERRAIN, "Objects/Chests");
         #endregion
         
         #region ADD TEXTURES ONLY HERE!
@@ -69,11 +72,14 @@ public static class TextureDatabase
                 $"{BASE_ROCKS}/coal_rock",
                 $"{BASE_ROCKS}/bronze_rock",
                 $"{BASE_ROCKS}/iron_rock",
-                $"{BASE_ROCKS}/gold_rock"
+                $"{BASE_ROCKS}/gold_rock",
+                
+                
         };
 
         private static readonly string[] _imagePaths =
         {
+                
                 $"{BASE_UI}/Inventory/inventory_hotbar.png",
                 $"{BASE_UI}/Inventory/inventory_open.png",
                 
@@ -90,7 +96,17 @@ public static class TextureDatabase
                 $"{BASE_TOOLS}/axe.png",
                 $"{BASE_TOOLS}/pickaxe.png",
                 $"{BASE_TOOLS}/shovel.png",
-                $"{BASE_TOOLS}/sword.png"
+                $"{BASE_TOOLS}/sword.png",
+                
+                $"{BASE_FOOD}/brown_meat.png",
+                $"{BASE_FOOD}/light_meat.png",
+                
+                $"{BASE_POTION}/small_health_potion.png",
+                
+                $"{BASE_CHEST}/small_iron_chest.png"
+                
+                
+                
         };
         
         #endregion

@@ -17,11 +17,11 @@ public static class EntityFactory
     {
         MainInventory = new Inventory();
     }
-    
+
     public static Entity CreatePlayer(float posX = 0, float posY = 0, int windowWidth = 0, int windowHeight = 0)
     {
         var e = new Entity();
-        
+
         // Add components to the player entity
         e.AddComponent(new PlayerComponent { Stone = 100 });
         e.AddComponent(new TransformComponent { X = posX, Y = posY, Width = 150, Height = 150 });
@@ -37,32 +37,37 @@ public static class EntityFactory
             },
             CharacterLevel = 1,
         });
-        
+
 
         e.AddComponent(new InventoryComponent
         {
             Inventory = MainInventory,
-            X = 20, Y = 20, Width = 200, Height = 200, 
+            X = 20, Y = 20, Width = 200, Height = 200,
             InventorySprite = TextureDatabase.Get("inventory_open"),
-        } );
-        
+        });
+
         e.AddComponent(new HotbarComponent
         {
             Inventory = MainInventory,
-            X = 0, Y = 0, 
+            X = 0, Y = 0,
             Width = 250, Height = 50,
             SlotOffsetX = 40,
             SlotOffsetY = 50,
             HotbarSprite = TextureDatabase.Get("inventory_hotbar"),
         });
         e.AddComponent(
-            new StatisticBarComponent 
-                { StatBarColor = Brushes.Red,
-                    CurrentValue = 100, X = windowWidth - 150,
-                    Y = windowHeight - (windowHeight / 2) - 200,
-                    Width = 100, Height = 30  });
-        
-        e.AddComponent(
+            new HealthBarComponent
+            {
+                CurrentHealth = 100,
+                MaxHealth = 100,
+                MinHealth = 1,
+                X = windowWidth ,
+                Y = windowHeight -(windowHeight/2) -150,
+                Width = 100,
+                Height = 30
+            });
+
+    e.AddComponent(
             new AnimationComponent
             {
                 CurrentFrameIndex = 0,
@@ -101,4 +106,7 @@ public static class EntityFactory
 
         return e;
     }
+
+    
+    
 }

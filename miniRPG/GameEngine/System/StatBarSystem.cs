@@ -11,32 +11,31 @@ public class StatBarSystem
     {
         foreach (var e in world.Entities)
         {
-            if (!e.HasComponent<StatisticBarComponent>())
+            if (!e.HasComponent<HealthBarComponent>())
                 continue;
 
-            var comp = e.GetComponent<StatisticBarComponent>();
+            var healthBar = e.GetComponent<HealthBarComponent>();
 
-            if (comp == null)
+            if (healthBar == null)
                 continue;
 
             if (Keyboard.GetPressedKey() == Keys.K)
             {
-                comp.CurrentValue += comp.ModifyBy;
-                if (comp.CurrentValue > comp.MaxValue)
+                healthBar.CurrentHealth += 10;
+                if (healthBar.CurrentHealth > healthBar.MaxHealth)
                 {
-                    comp.CurrentValue = comp.MaxValue;
+                    healthBar.CurrentHealth = healthBar.MaxHealth;
                 }
             }
 
             if (Keyboard.GetPressedKey() == Keys.O)
             {
-                comp.CurrentValue -= comp.ModifyBy;
-                if (comp.CurrentValue < comp.MinValue)
+                healthBar.CurrentHealth -= 10;
+                if (healthBar.CurrentHealth < 0)
                 {
-                    comp.CurrentValue = comp.MinValue;
+                    healthBar.CurrentHealth = 0;
                 }
             }
-            
         }
     }
 }
