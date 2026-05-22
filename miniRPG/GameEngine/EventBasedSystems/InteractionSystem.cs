@@ -20,14 +20,11 @@ public class InteractionSystem
         if (e.Target.HasComponent<OreComponent>())
             _world.EventBus.Post(new RockHitEvent(e.Source, e.Target, 25));
         else if (e.Target.HasComponent<ChestComponent>())
-        {
-            Console.WriteLine("Looting...");
             _world.EventBus.Post(new LootChestEvent(e.Source, e.Target));
-            Console.WriteLine("Loot event posted");
-            
-        }
         else if (e.Target.HasComponent<ItemPickupComponent>())
             _world.EventBus.Post(new ItemPickupEvent(e.Source, e.Target));
+        else if (e.Target.HasComponent<EnemyComponent>())
+            _world.EventBus.Post(new EnemyHitEvent(e.Source, e.Target));
         else
             throw new Exception("Event not identified!");
     }

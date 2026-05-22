@@ -14,7 +14,7 @@ public static class OtherHelpers
         return start + (end - start) * amount;
     }
     
-    public static float GetDistance(TransformComponent self, TransformComponent other)
+    public static float GetDistance(this TransformComponent self, TransformComponent other)
     {
         var distanceX = self.X - other.X;
         var distanceY = self.Y - other.Y;

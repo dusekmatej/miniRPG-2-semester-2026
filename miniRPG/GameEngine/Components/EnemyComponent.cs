@@ -2,8 +2,17 @@
 
 public class EnemyComponent
 {
-    public int Health;
-    public int Damage;
-    public bool IsAttackRange;
-    public bool IsSeeRange;
+    public float CurrentHealth;
+    public float MaxHealth;
+    public float Damage;
+    public bool IsInAttackRange;
+    public bool IsPlayerDetected;
+    public int ExperienceReward;
+
+    public float AttackRange;
+    public float DetectRange;
+    public float ChaseSpeed;
+    public float StopDistance;
+
+    public float HealthBarHeight;
 }

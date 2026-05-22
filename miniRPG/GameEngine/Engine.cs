@@ -18,7 +18,6 @@ public class Engine
     // ### Systems ###
     public readonly Renderer Renderer = new();
     private readonly PlayerInputSystem _input;
-    private readonly DebugSystem _debug = new();
     private readonly MovementSystem _movement = new();
     private readonly AnimationSystem _animation = new();
     private readonly CheckRadius _checkRadius = new();
@@ -69,7 +68,6 @@ public class Engine
     public void Update(float deltaTime)
     {
         World.Update(deltaTime);
-        _debug.Update();
         _input.Update(World, deltaTime);
         _checkRadius.Update(World);
         _movement.Update(World);
@@ -80,6 +78,6 @@ public class Engine
         _inventoryInteraction.Update(World);
         _hotbarInteractionSystem.Update(World);
         _uiLayer.Update(deltaTime);
-        _enemySystem.Update(World);
+        _enemySystem.Update(World, deltaTime);
     }
 }

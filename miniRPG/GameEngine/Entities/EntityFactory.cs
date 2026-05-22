@@ -49,7 +49,6 @@ public static class EntityFactory
         e.AddComponent(new HotbarComponent
         {
             Inventory = MainInventory,
-            X = 0, Y = 0,
             Width = 250, Height = 50,
             SlotOffsetX = 40,
             SlotOffsetY = 50,
@@ -103,11 +102,34 @@ public static class EntityFactory
 
         e.AddComponent(new TransformComponent { X = posX, Y = posY, Width = 150, Height = 150 });
         e.AddComponent(new VelocityComponent { X = 0, Y = 0 });
-        e.AddComponent(new EnemyComponent());
+        e.AddComponent(new Interactable{ Radius = 100 });
+        e.AddComponent(new EnemyComponent
+        {
+            DetectRange = 100f * 15,
+            AttackRange = 100f * 5f,
+            ChaseSpeed = 120f,
+            StopDistance = 60f,
+            CurrentHealth = 200,
+            MaxHealth = 200,
+            Damage = 50,
+            ExperienceReward = 15,
+            HealthBarHeight = 10f,
+        });
+        e.AddComponent(new AnimationComponent
+        {
+            IsIdle = true,
+            IsRunningUp = false,
+            IsRunningDown = false,
+            IsRunningRight = false,
+            IsRunningLeft = false,
+            
+            AnimationFramesIdle = TextureDatabase.GetAnimation("idle_enemy") ?? [],
+            AnimationFramesUp = TextureDatabase.GetAnimation("run_up_enemy") ?? [],
+            AnimationFramesDown = TextureDatabase.GetAnimation("run_down_enemy") ?? [],
+            AnimationFramesRight = TextureDatabase.GetAnimation("run_right_enemy") ?? [],
+            AnimationFramesLeft = TextureDatabase.GetAnimation("run_left_enemy") ?? [],
+        });
 
         return e;
     }
-
-    
-    
 }

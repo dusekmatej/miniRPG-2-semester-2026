@@ -18,6 +18,7 @@ public class InventoryManagementSystem
         _world.EventBus.Subscribe<InventoryToggleEvent>(OnInventoryToggle);
         _world.EventBus.Subscribe<RockBrokenEvent>(OnRockBroken);
         _world.EventBus.Subscribe<RandomInventoryEvent>(OnRandomItemAdd);
+        _world.EventBus.Subscribe<EnemyDeathEvent>(OnEnemyDeath);
         _world.EventBus.Subscribe<AddItemEvent>(OnItemAdd); 
         _world.EventBus.Subscribe<RemoveItemEvent>(OnItemRemove); // Essentialy říka že čekame na to že tenhle event se stane a potom zavolam tu metodu a v parametru musí být ten event co čekáme 
         _world.EventBus.Subscribe<ChestLootedEvent>(OnChestLooted);
@@ -62,6 +63,13 @@ public class InventoryManagementSystem
         _world.RemoveEntity(e.Target);
     }
 
+    private void OnEnemyDeath(EnemyDeathEvent e)
+    {
+        _inventory = GetInventory();
+        
+        _world.RemoveEntity(e.Target);
+    }
+
     private void OnInventoryToggle(InventoryToggleEvent e) =>
         GetInventory().IsOpen = !GetInventory().IsOpen;
 
@@ -77,7 +85,7 @@ public class InventoryManagementSystem
 
     private void OnItemRemove(RemoveItemEvent e)
     {
-        
+        throw new NotImplementedException();
     }
 
     private void OnChestLooted(ChestLootedEvent e)
