@@ -18,6 +18,7 @@ public class InventoryManagementSystem
         _world.EventBus.Subscribe<InventoryToggleEvent>(OnInventoryToggle);
         _world.EventBus.Subscribe<RockBrokenEvent>(OnRockBroken);
         _world.EventBus.Subscribe<RandomInventoryEvent>(OnRandomItemAdd);
+        _world.EventBus.Subscribe<EnemyDeathEvent>(OnEnemyDeath);
     }
 
     private InventoryComponent GetInventory()
@@ -55,6 +56,13 @@ public class InventoryManagementSystem
                 throw new Exception("Unknown ore type detected: " + oreComponent.Type);
         }
 
+        _world.RemoveEntity(e.Target);
+    }
+
+    private void OnEnemyDeath(EnemyDeathEvent e)
+    {
+        _inventory = GetInventory();
+        
         _world.RemoveEntity(e.Target);
     }
 

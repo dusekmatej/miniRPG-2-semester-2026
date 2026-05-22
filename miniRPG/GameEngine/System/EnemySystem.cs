@@ -6,30 +6,58 @@ namespace miniRPG.GameEngine.System;
 
 public class EnemySystem
 {
-    private Entity _player;
+    private Entity? _player;
     
-    public void Update(World world)
+    public void Update(World world, float deltaTime)
     {
         _player = world.PlayerEntity;
         var playerTransform = _player.GetComponent<TransformComponent>();
 
+        if (playerTransform == null)
+            return;
+
         foreach (var e in world.Entities)
         {
-            if (!e.HasComponent<EnemyComponent>() && !e.HasComponent<VelocityComponent>()) continue;
+            if (!e.HasComponent<EnemyComponent>() || !e.HasComponent<VelocityComponent>()) continue;
 
             var enemyTransform = e.GetComponent<TransformComponent>();
             if (enemyTransform == null) continue;
 
             var velocityComponent = e.GetComponent<VelocityComponent>();
             var enemyComponent = e.GetComponent<EnemyComponent>();
+            
+            var seeRangeSq = enemyComponent.DetectRange * enemyComponent.DetectRange;
+            var stopDistanceSq = enemyComponent.StopDistance * enemyComponent.StopDistance;
+            var distance = enemyTransform.GetDistance(playerTransform);
 
-            var seeRange = (100 * 20) * (100 * 20);
-            var distance = OtherHelpers.GetDistance(enemyTransform, playerTransform);
-
-            if (distance < seeRange)
+            if (distance <= stopDistanceSq)
             {
-                velocityComponent.X = playerTransform.X > enemyTransform.X ? 1 : -1;
-                velocityComponent.Y = playerTransform.Y > enemyTransform.Y ? 1 : -1;
+                velocityComponent!.X = 0;
+                velocityComponent.Y = 0;
+                continue;
+            }
+
+            if (distance < seeRangeSq)
+            {
+                var dx = playerTransform.X - enemyTransform.X;
+                var dy = playerTransform.Y - enemyTransform.Y;
+                var length = MathF.Sqrt(distance);
+
+                if (length <= 0.0001f)
+                {
+                    velocityComponent!.X = 0;
+                    velocityComponent.Y = 0;
+                    continue;
+                }
+
+                var scale = enemyComponent!.ChaseSpeed * deltaTime / length;
+                velocityComponent!.X = dx * scale;
+                velocityComponent.Y = dy * scale;
+            }
+            else
+            {
+                velocityComponent!.X = 0;
+                velocityComponent.Y = 0;
             }
         }
     }

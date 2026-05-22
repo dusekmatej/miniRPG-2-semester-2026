@@ -26,7 +26,7 @@ public class CheckRadius
             
             var interactable = e.GetComponent<Interactable>();
             
-            var distance = OtherHelpers.GetDistance(playerTransform!, entityTransform);
+            var distance = playerTransform!.GetDistance(entityTransform);
             float radiusSquared = interactable!.Radius * interactable.Radius;
             
             interactable.IsInRange = distance < radiusSquared;

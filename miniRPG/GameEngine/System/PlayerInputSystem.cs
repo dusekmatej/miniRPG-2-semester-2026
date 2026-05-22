@@ -9,7 +9,7 @@ public class PlayerInputSystem
 {
     private readonly CheckRadius _checkRadius;
 
-    // ReSharper disable project ConvertToPrimaryConstructor
+    // ReSharper disable ConvertToPrimaryConstructor
     public PlayerInputSystem(CheckRadius checkRadius)
     {
         _checkRadius = checkRadius;
@@ -52,6 +52,9 @@ public class PlayerInputSystem
             // Add random inventory item (for testing purposes only)
             if (Keyboard.WasKeyPressed(Keys.R))
                 world.EventBus.Post(new RandomInventoryEvent());
+            
+            if (Keyboard.WasKeyPressed(Keys.F3))
+                Flags.IsGraphicDebug = !Flags.IsGraphicDebug;
             
             // Movement handling
             switch (Keyboard.GetPressedKey())

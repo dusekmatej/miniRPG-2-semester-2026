@@ -52,6 +52,7 @@ public static class TextureDatabase
         private static readonly string BASE_TERRAIN = Path.Join(APP_BASE, "Art/Terrain");
         private static readonly string BASE_ROCKS = Path.Join(BASE_TERRAIN, "Objects/Rocks");
         private static readonly string BASE_CHARACTER = Path.Join(APP_BASE, "Art/Character");
+        private static readonly string BASE_ENEMY = Path.Join(APP_BASE, "Art/Enemy");
         private static readonly string BASE_TOOLS = Path.Join(APP_BASE, "Art/Terrain/Items/Tools");
         private static readonly string BASE_ORES =  Path.Join(BASE_TERRAIN, "Items/Ores");
         private static readonly string BASE_INGOTS = Path.Join(BASE_TERRAIN, "Items/Ingots");
@@ -66,6 +67,13 @@ public static class TextureDatabase
                 $"{BASE_CHARACTER}/run_left",
                 $"{BASE_CHARACTER}/run_right",
                 $"{BASE_CHARACTER}/run_up",
+                
+                $"{BASE_ENEMY}/idle_enemy",
+                $"{BASE_ENEMY}/run_down_enemy",
+                $"{BASE_ENEMY}/run_left_enemy",
+                $"{BASE_ENEMY}/run_right_enemy",
+                $"{BASE_ENEMY}/run_up_enemy",
+                
                 $"{BASE_ROCKS}/coal_rock",
                 $"{BASE_ROCKS}/bronze_rock",
                 $"{BASE_ROCKS}/iron_rock",

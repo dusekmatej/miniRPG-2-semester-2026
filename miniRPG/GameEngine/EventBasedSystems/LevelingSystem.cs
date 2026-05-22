@@ -15,6 +15,7 @@ public class LevelingSystem
         _world = world;
 
         _world.EventBus.Subscribe<RockBrokenEvent>(OnRockBroken);
+        _world.EventBus.Subscribe<EnemyDeathEvent>(OnEnemyDeath);
     }
 
     private void AddExperience(SkillsComponent skillsComponent, SkillType skillType, int amount)
@@ -44,5 +45,15 @@ public class LevelingSystem
             return;
         
         AddExperience(skillsComponent, SkillType.Mining, oreComponent.XpAward);
+    }
+
+    private void OnEnemyDeath(EnemyDeathEvent e)
+    {
+        var enemyComponent = e.Target.GetComponent<EnemyComponent>();
+        var skillsComponent = e.Source.GetComponent<SkillsComponent>();
+
+        if (enemyComponent == null || skillsComponent == null) return;
+        
+        AddExperience(skillsComponent, SkillType.Combat, enemyComponent.ExperienceReward);
     }
 }

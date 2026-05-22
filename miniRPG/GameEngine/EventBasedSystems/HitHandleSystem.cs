@@ -13,7 +13,8 @@ public class HitHandleSystem
     {
         _world = world;
         
-        world.EventBus.Subscribe<RockHitEvent>(OnRockInteract);
+        _world.EventBus.Subscribe<RockHitEvent>(OnRockInteract);
+        _world.EventBus.Subscribe<EnemyHitEvent>(OnEnemyInteract);
     }
 
     private void OnRockInteract(RockHitEvent e)
@@ -39,5 +40,14 @@ public class HitHandleSystem
         
         if (oreComponent.CurrentHealth <= 0)
             _world.EventBus.Post(new RockBrokenEvent(e.Source, e.Target));
+    }
+
+    private void OnEnemyInteract(EnemyHitEvent e)
+    {
+        var enemyComponent = e.Target.GetComponent<EnemyComponent>();
+        
+        enemyComponent.CurrentHealth -= enemyComponent.Damage;
+        if (enemyComponent.CurrentHealth <= 0)
+            _world.EventBus.Post(new EnemyDeathEvent(e.Source, e.Target));
     }
 }
