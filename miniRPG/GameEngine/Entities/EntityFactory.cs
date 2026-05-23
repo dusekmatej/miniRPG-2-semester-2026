@@ -63,7 +63,13 @@ public static class EntityFactory
                 X = windowWidth ,
                 Y = windowHeight -(windowHeight/2) -150,
                 Width = 100,
-                Height = 30
+                Height = 30,
+                
+                FillColor = Color.LimeGreen,
+                BackgroundColor = Color.DarkRed,
+                BorderColor = Color.Black,
+                ShowText = true,
+                FontSize = 10f
             });
 
     e.AddComponent(
@@ -129,6 +135,7 @@ public static class EntityFactory
             AnimationFramesRight = TextureDatabase.GetAnimation("run_right_enemy") ?? [],
             AnimationFramesLeft = TextureDatabase.GetAnimation("run_left_enemy") ?? [],
         });
+        
 
         return e;
     }

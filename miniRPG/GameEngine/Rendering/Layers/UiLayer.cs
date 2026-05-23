@@ -258,24 +258,29 @@ public class UiLayer : IRenderLayer
             int filledWidth = (int)(healthPercent * healthBar.Width);
 
             // Draw background 
-            context.Graphics.FillRectangle(Brushes.Red, healthBar.X, healthBar.Y, healthBar.Width, healthBar.Height);
-
+            using var bgBrush = new SolidBrush(healthBar.BackgroundColor);
+            context.Graphics.FillRectangle(bgBrush, healthBar.X, healthBar.Y, healthBar.Width, healthBar.Height);
             // Draw foreground (
-            context.Graphics.FillRectangle(Brushes.Green, healthBar.X, healthBar.Y, filledWidth, healthBar.Height);
+            var fillBrush = new SolidBrush(healthBar.FillColor);
+            context.Graphics.FillRectangle(fillBrush, healthBar.X, healthBar.Y, filledWidth, healthBar.Height);
 
             // Draw border
-            context.Graphics.DrawRectangle(Pens.Black, healthBar.X, healthBar.Y, healthBar.Width, healthBar.Height);
+            using var borderPen = new Pen(healthBar.BorderColor);
+            context.Graphics.DrawRectangle(borderPen, healthBar.X, healthBar.Y, healthBar.Width, healthBar.Height);
 
             // Draw health text
+            if (!healthBar.ShowText)
+                continue;
+            
             string healthText = $"{healthBar.CurrentHealth}/{healthBar.MaxHealth}";
-            using (var font = new Font("Arial", 10, FontStyle.Bold))
-            {
+            using var font = new Font("Arial", healthBar.FontSize, FontStyle.Bold);
+            
                 var textSize = context.Graphics.MeasureString(healthText, font);
                 float textX = healthBar.X + (healthBar.Width - textSize.Width) / 2;
                 float textY = healthBar.Y + (healthBar.Height - textSize.Height) / 2;
             
                 context.Graphics.DrawString(healthText, font, Brushes.White, textX, textY);
-            }
+            
         }
     }
     

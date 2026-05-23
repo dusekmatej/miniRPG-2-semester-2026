@@ -62,7 +62,7 @@ public class ObjectsLayer : IRenderLayer
         g.DrawImage(texture.Image, coordinates.X, coordinates.Y, transform.Width, transform.Height);
     
 
-    private void DrawHealthBar(RenderContext context, EnemyComponent comp, PointF coordinates)
+   private void DrawHealthBar(RenderContext context, EnemyComponent comp, PointF coordinates)
     {
         _widthHealthPoints = (float)(comp.CurrentHealth / (comp.MaxHealth / 100) * 1.5);
         
