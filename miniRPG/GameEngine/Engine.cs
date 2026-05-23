@@ -34,6 +34,8 @@ public class Engine
     private readonly LevelingSystem _levelSystem;
     private readonly ItemPickupSystem _itemPickup;
     private readonly ChestSystem _chestSystem;
+    private readonly ItemUseSystem _itemUseSystem;
+    private readonly StatisticManagerSystem _statisticManagerSystem;
     
     // --- UI ---
     private readonly UiLayer _uiLayer;
@@ -63,6 +65,9 @@ public class Engine
         _levelSystem = new(World);
         _itemPickup = new(World);
         _chestSystem = new(World);
+        _statisticManagerSystem = new(World);
+        _itemUseSystem = new(World);
+        
     }
 
     public void Update(float deltaTime)

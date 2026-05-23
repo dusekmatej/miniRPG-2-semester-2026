@@ -63,7 +63,13 @@ public static class EntityFactory
                 X = windowWidth ,
                 Y = windowHeight -(windowHeight/2) -150,
                 Width = 100,
-                Height = 30
+                Height = 30,
+                
+                FillColor = Color.LimeGreen,
+                BackgroundColor = Color.DarkRed,
+                BorderColor = Color.Black,
+                ShowText = true,
+                FontSize = 10f
             });
 
     e.AddComponent(
@@ -129,6 +135,29 @@ public static class EntityFactory
             AnimationFramesRight = TextureDatabase.GetAnimation("run_right_enemy") ?? [],
             AnimationFramesLeft = TextureDatabase.GetAnimation("run_left_enemy") ?? [],
         });
+        
+
+        return e;
+    }
+    public static Entity CreateChest(float posX, float posY)
+    {
+        var e = new Entity();
+
+        e.AddComponent(new TransformComponent { X = posX, Y = posY, Width = 50, Height = 50 });
+        e.AddComponent(new TextureMultipleComponent { Textures = new[] { TextureDatabase.Get("small_iron_chest") }, CurrentTextureIndex = 0 });
+        e.AddComponent(new Interactable { Radius = 100 });
+        e.AddComponent(new ChestComponent());
+
+        return e;
+    }
+    public static Entity CreateHealingItem(float posX, float posY, string databaseName)
+    { 
+        var e = new Entity();
+        
+        e.AddComponent(new TransformComponent { X = posX, Y = posY, Width = 32, Height = 32 });
+        e.AddComponent(new TextureMultipleComponent{ Textures = new[] { TextureDatabase.Get("small_health_potion") }, CurrentTextureIndex = 0 });
+        e.AddComponent(new Interactable { Radius = 100 });
+        e.AddComponent(new ItemPickupComponent { Item = ItemDatabase.Get("small_health_potion") });
 
         return e;
     }

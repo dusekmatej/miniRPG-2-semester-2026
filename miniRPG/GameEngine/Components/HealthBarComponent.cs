@@ -11,4 +11,11 @@ public class HealthBarComponent
     public int Y;
     public int Width;
     public int Height;
+
+    public Color FillColor = Color.Green;
+    public Color BackgroundColor = Color.Red;
+    public Color BorderColor = Color.Black;
+    public bool ShowText = true;
+    public float FontSize = 10f;
+
 }
