@@ -21,9 +21,10 @@ public class StatisticManagerSystem
         var component = _world.PlayerEntity.GetComponent<HealthBarComponent>();
 
         if (component == null) return;
-        
-        if (component.CurrentHealth + e.Amount <= component.MaxHealth)
+
+        if (component.CurrentHealth + e.Amount <= component.MaxHealth) 
             component.CurrentHealth += e.Amount;
+        
     }
 
     private void OnPlayerDamage(DamagePlayerEvent e)
