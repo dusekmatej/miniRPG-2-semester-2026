@@ -37,12 +37,28 @@ public class PlayerInputSystem
             if (Keyboard.WasKeyPressed(Keys.E))
             {
                 var nearest = _checkRadius.GetNearestInteractable();
-                if (nearest == null) return;
+                
+                if (nearest != null)
+                {
+                    var interactable = nearest.GetComponent<Interactable>();
+                    if (interactable != null && interactable.IsInRange)
+                    {
+                        world.EventBus.Post(new InteractEvent(entity, nearest));
+                        return;
+                    }
+                }
+            }
 
-                var interactable = nearest.GetComponent<Interactable>();
-                if (interactable == null && !interactable!.IsInRange) return;
+            if (Keyboard.WasKeyPressed(Keys.F))
+            {
+                var hotbar = entity.GetComponent<HotbarComponent>();
+                if (hotbar == null) return;
 
-                world.EventBus.Post(new InteractEvent(entity, nearest));
+                var slot = hotbar.Slots[hotbar.SelectedSlotIndex];
+                if (slot?.Item == null || !slot.Item.IsUsable) return;
+
+                world.EventBus.Post(new UseItemEvent(entity, slot.Item, hotbar.SelectedSlotIndex));
+                Console.WriteLine("Posted UseItemEvent for item: " + slot.Item.Name);
             }
             
             // Toggle inventory

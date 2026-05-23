@@ -49,8 +49,8 @@ public class Game
         var testEnemy = EntityFactory.CreateGhost(mapCenterX + 200, mapCenterY + 200);
         
         
-        var chest = Prefabs.CreateChest(mapCenterX + 200, mapCenterY + 200);
-        var smallHealingPotion = Prefabs.CreateHealingItem(mapCenterX + 250, mapCenterY + 250, "small_health_potion");
+        var chest = EntityFactory.CreateChest(mapCenterX + 200, mapCenterY + 200);
+        var smallHealingPotion = EntityFactory.CreateHealingItem(mapCenterX + 250, mapCenterY + 250, "small_health_potion");
 
         if (_engine == null)
             throw new NullReferenceException("Engine is not initialized!");
