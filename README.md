@@ -84,4 +84,5 @@ graph TD
 
 ---
 
-[Zobrazit AI Logbook](AILogbook.MD)
+## AI Logbook
+Bohužel jsem nezaznamenal moc promptů AI logbooku a už nestíhám dodat ale v některých částech kodu je prompt napsaný nahoře, momentálně AI bylo použito hlavně pro poslední změny kvůli nedostatku času. Jako třeba pro útok enemy, dodělání tradera a dodělání generace.
