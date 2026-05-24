@@ -37,6 +37,7 @@ public class Engine
     private readonly ItemUseSystem _itemUseSystem;
     private readonly StatisticManagerSystem _statisticManagerSystem;
     
+    
     // --- UI ---
     private readonly UiLayer _uiLayer;
     
@@ -50,10 +51,13 @@ public class Engine
         // Add render layers to the Renderer
         Renderer.Add(new TerrainLayer());
         Renderer.Add(new ObjectsLayer());
+        Renderer.Add(new NamePlateLayer());
         Renderer.Add(new StatisticBarLayer());
         Renderer.Add(new InventoryLayer());
         _uiLayer = new UiLayer(World);
         Renderer.Add(_uiLayer);
+        
+        
 
         // Initialize Event Based systems be aware of the order in which they are initialized, 
         // it matters when there is more listeners and the order in which they "fire"
@@ -67,6 +71,7 @@ public class Engine
         _chestSystem = new(World);
         _statisticManagerSystem = new(World);
         _itemUseSystem = new(World);
+        
         
     }
 
@@ -84,5 +89,6 @@ public class Engine
         _hotbarInteractionSystem.Update(World);
         _uiLayer.Update(deltaTime);
         _enemySystem.Update(World, deltaTime);
+        
     }
 }
