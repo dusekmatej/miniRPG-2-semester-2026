@@ -23,6 +23,7 @@ public class InventoryManagementSystem
         _world.EventBus.Subscribe<RemoveItemEvent>(OnItemRemove); // Essentialy říka že čekame na to že tenhle event se stane a potom zavolam tu metodu a v parametru musí být ten event co čekáme 
         _world.EventBus.Subscribe<ChestLootedEvent>(OnChestLooted);
         _world.EventBus.Subscribe<ItemPickedUpEvent>(OnItemPickedUp);
+        _world.EventBus.Subscribe<TreeBrokenEvent>(OnTreeBroken);
     }
 
     private InventoryComponent GetInventory()
@@ -94,6 +95,12 @@ public class InventoryManagementSystem
     }
     private void OnItemPickedUp(ItemPickedUpEvent e)
     {
+        _world.RemoveEntity(e.Target);
+    }
+
+    private void OnTreeBroken(TreeBrokenEvent e)
+    {
+        GetInventory().Inventory.Add(ItemDatabase.Get("log"));
         _world.RemoveEntity(e.Target);
     }
 

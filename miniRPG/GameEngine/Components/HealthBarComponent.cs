@@ -6,7 +6,6 @@ public class HealthBarComponent
     public int MaxHealth;
     public int MinHealth;
     
-
     public int X;
     public int Y;
     public int Width;

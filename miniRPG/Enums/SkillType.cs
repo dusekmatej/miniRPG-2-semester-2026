@@ -3,7 +3,7 @@
 public enum SkillType
 {
     Mining,
-    Foraging,
+    Woodcutting,
     Fishing,
     Combat
 }

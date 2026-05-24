@@ -48,12 +48,14 @@ public static class TextureDatabase
         public static bool AnimationContains(string name) => _animationDatabase.ContainsKey(name);
         
         #region BASE PATHS
-        private static readonly string APP_BASE = AppDomain.CurrentDomain.BaseDirectory;
-        private static readonly string BASE_TERRAIN = Path.Join(APP_BASE, "Art/Terrain");
+        private static readonly string BASE = AppDomain.CurrentDomain.BaseDirectory;
+        private static readonly string BASE_TERRAIN = Path.Join(BASE, "Art/Terrain");
+        private static readonly string BASE_TRADER = Path.Join(BASE, "Art/Trader");
+        private static readonly string BASE_ITEMS = Path.Join(BASE_TERRAIN, "/Items");
         private static readonly string BASE_ROCKS = Path.Join(BASE_TERRAIN, "Objects/Rocks");
-        private static readonly string BASE_CHARACTER = Path.Join(APP_BASE, "Art/Character");
-        private static readonly string BASE_ENEMY = Path.Join(APP_BASE, "Art/Enemy");
-        private static readonly string BASE_TOOLS = Path.Join(APP_BASE, "Art/Terrain/Items/Tools");
+        private static readonly string BASE_CHARACTER = Path.Join(BASE, "Art/Character");
+        private static readonly string BASE_ENEMY = Path.Join(BASE, "Art/Enemy");
+        private static readonly string BASE_TOOLS = Path.Join(BASE, "Art/Terrain/Items/Tools");
         private static readonly string BASE_ORES =  Path.Join(BASE_TERRAIN, "Items/Ores");
         private static readonly string BASE_INGOTS = Path.Join(BASE_TERRAIN, "Items/Ingots");
         private static readonly string BASE_UI = Path.Join(BASE_TERRAIN, "Ui");
@@ -77,16 +79,21 @@ public static class TextureDatabase
                 $"{BASE_ENEMY}/run_right_enemy",
                 $"{BASE_ENEMY}/run_up_enemy",
                 
+                $"{BASE_TRADER}/idle_trader1",
+                $"{BASE_TRADER}/run_down_trader1",
+                $"{BASE_TRADER}/run_left_trader1",
+                $"{BASE_TRADER}/run_right_trader1",
+                $"{BASE_TRADER}/run_up_trader1",
+                
                 $"{BASE_ROCKS}/coal_rock",
                 $"{BASE_ROCKS}/bronze_rock",
                 $"{BASE_ROCKS}/iron_rock",
                 $"{BASE_ROCKS}/gold_rock",
-                
-                
         };
 
         private static readonly string[] _imagePaths =
         {
+                $"{BASE_ITEMS}/Misc/coin.png",
                 
                 $"{BASE_UI}/Inventory/inventory_hotbar.png",
                 $"{BASE_UI}/Inventory/inventory_open.png",
@@ -111,10 +118,13 @@ public static class TextureDatabase
                 
                 $"{BASE_POTION}/small_health_potion.png",
                 
-                $"{BASE_CHEST}/small_iron_chest.png"
+                $"{BASE_CHEST}/small_iron_chest.png",
                 
+                $"{BASE_TERRAIN}/Tiles/Trees/tree0.png",
+                $"{BASE_TERRAIN}/Tiles/Trees/tree1.png",
+                $"{BASE_TERRAIN}/Tiles/Trees/tree2.png",
                 
-                
+                $"{BASE_ITEMS}/Log/log.png",
         };
         
         #endregion

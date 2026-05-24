@@ -15,6 +15,7 @@ public class HitHandleSystem
         
         _world.EventBus.Subscribe<RockHitEvent>(OnRockInteract);
         _world.EventBus.Subscribe<EnemyHitEvent>(OnEnemyInteract);
+        _world.EventBus.Subscribe<TreeHitEvent>(OnTreeInteract);
     }
 
     private void OnRockInteract(RockHitEvent e)
@@ -49,5 +50,20 @@ public class HitHandleSystem
         enemyComponent.CurrentHealth -= enemyComponent.Damage;
         if (enemyComponent.CurrentHealth <= 0)
             _world.EventBus.Post(new EnemyDeathEvent(e.Source, e.Target));
+    }
+
+    private void OnTreeInteract(TreeHitEvent e)
+    {
+        Console.WriteLine("OnTreeInteract entry!");
+        var treeComponent = e.Target.GetComponent<TreeComponent>();
+
+        treeComponent.Health -= e.Damage;
+
+        Console.WriteLine(treeComponent.Health);
+        if (treeComponent.Health <= 0)
+        {
+            Console.WriteLine("Posting treebrokenevent!");
+            _world.EventBus.Post(new TreeBrokenEvent(e.Source, e.Target));
+        }
     }
 }

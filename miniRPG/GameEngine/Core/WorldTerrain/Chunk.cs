@@ -12,9 +12,11 @@ public class Chunk
     public int ChunkY { get; }
     public Tile[,] Map { get; } = new Tile[Size, Size];
     
-    // Ore spawning
+    // Chunk entities
     public Dictionary<(int x, int y), OreType> Ores { get; } = new();
-    public bool OresSpawned = false;
+    public Dictionary<(int x, int y), int> Trees { get; } = new(); 
+    
+    public bool EntitiesSpawned = false;
     
     public bool IsDirty = true; // Means that something has been modified and needs a re-render
     public Bitmap? Bitmap { get; set; }

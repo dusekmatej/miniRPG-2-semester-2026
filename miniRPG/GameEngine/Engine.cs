@@ -1,13 +1,10 @@
 using miniRPG.GameEngine.Core;
-using miniRPG.GameEngine.Core.Events;
 using miniRPG.GameEngine.EventBasedSystems;
 using miniRPG.GameEngine.Rendering;
 using miniRPG.GameEngine.Rendering.Layers;
 using miniRPG.GameEngine.System;
 
 namespace miniRPG.GameEngine;
-
-// TODO: Add wombats
 
 public class Engine
 {
@@ -26,6 +23,7 @@ public class Engine
     private readonly InventoryInteractionSystem _inventoryInteraction = new();
     private readonly HotbarInteractionSystem _hotbarInteractionSystem  = new();
     private readonly EnemySystem _enemySystem = new();
+    private readonly TraderWanderSystem _traderWanderSystem = new();
     
     // ### Event Based Systems ###
     private readonly HitHandleSystem _hitHandle;
@@ -34,6 +32,7 @@ public class Engine
     private readonly LevelingSystem _levelSystem;
     private readonly ItemPickupSystem _itemPickup;
     private readonly ChestSystem _chestSystem;
+    private readonly TraderSystem _traderSystem;
     private readonly ItemUseSystem _itemUseSystem;
     private readonly StatisticManagerSystem _statisticManagerSystem;
     
@@ -69,6 +68,7 @@ public class Engine
         _levelSystem = new(World);
         _itemPickup = new(World);
         _chestSystem = new(World);
+        _traderSystem = new(World);
         _statisticManagerSystem = new(World);
         _itemUseSystem = new(World);
         
@@ -89,6 +89,6 @@ public class Engine
         _hotbarInteractionSystem.Update(World);
         _uiLayer.Update(deltaTime);
         _enemySystem.Update(World, deltaTime);
-        
+        _traderWanderSystem.Update(World, deltaTime);
     }
 }

@@ -2,7 +2,7 @@ using miniRPG.Helpers;
 using miniRPG.GameEngine.Components;
 using miniRPG.GameEngine.Core;
 using miniRPG.GameEngine.Core.Events;
-using miniRPG.GameEngine.DataObjects;
+using miniRPG.GameEngine.Databases;
 
 namespace miniRPG.GameEngine.System;
 
@@ -39,6 +39,7 @@ public class PlayerInputSystem
             if (Keyboard.WasKeyPressed(Keys.E))
             {
                 var nearest = _checkRadius.GetNearestInteractable();
+                if (nearest == null) return;
 
                 if (nearest != null)
                 {
@@ -49,6 +50,8 @@ public class PlayerInputSystem
                         return;
                     }
                 }
+                
+                world.EventBus.Post(new InteractEvent(entity, nearest));
             }
 
             if (Keyboard.WasKeyPressed(Keys.F))
@@ -83,6 +86,28 @@ public class PlayerInputSystem
 
             if (Keyboard.WasKeyPressed(Keys.F5))
                 world.EventBus.Post(new SaveRequestEvent());
+
+            if (Keyboard.WasKeyPressed(Keys.N))
+            {
+                var nearest = _checkRadius.GetNearestInteractable();
+                if (nearest == null || !nearest.HasComponent<TraderComponent>()) return;
+                
+                var interactable = nearest.GetComponent<Interactable>();
+                if (interactable == null || !interactable.IsInRange) return;
+                
+                world.EventBus.Post(new NextTraderEvent(nearest));
+            }
+
+            if (Keyboard.WasKeyPressed(Keys.B))
+            {
+                var nearest = _checkRadius.GetNearestInteractable();
+                if (nearest == null || !nearest.HasComponent<TraderComponent>()) return;
+                
+                var interactable = nearest.GetComponent<Interactable>();
+                if (interactable == null || !interactable.IsInRange) return;
+                
+                world.EventBus.Post(new ToggleTraderModeEvent(nearest));
+            }
             
             if (Keyboard.WasKeyPressed(Keys.F6))
                 world.EventBus.Post(new LoadRequestEvent());
@@ -96,6 +121,10 @@ public class PlayerInputSystem
             // Add random inventory item (for testing purposes only)
             if (Keyboard.WasKeyPressed(Keys.R))
                 world.EventBus.Post(new RandomInventoryEvent());
+
+            // Add coin (for testing trader logic)
+            if (Keyboard.WasKeyPressed(Keys.C))
+                world.EventBus.Post(new AddItemEvent(ItemDatabase.Get("coin")));
             
             if (Keyboard.WasKeyPressed(Keys.F3))
                 Flags.IsGraphicDebug = !Flags.IsGraphicDebug;

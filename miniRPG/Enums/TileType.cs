@@ -4,7 +4,6 @@ public enum TileType
 {
     DeepWater,
     Water,
-    Sand,
     Grass,
     Forest,
     Mountain

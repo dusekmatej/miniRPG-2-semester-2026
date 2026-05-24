@@ -23,7 +23,7 @@ public static class EntityFactory
         var e = new Entity();
 
         // Add components to the player entity
-        e.AddComponent(new PlayerComponent { Stone = 100 });
+        e.AddComponent(new PlayerComponent());
         e.AddComponent(new TransformComponent { X = posX, Y = posY, Width = 150, Height = 150 });
         e.AddComponent(new VelocityComponent { X = 0, Y = 0 });
         e.AddComponent(new SkillsComponent
@@ -31,11 +31,10 @@ public static class EntityFactory
             Skills = new Dictionary<SkillType, SkillObject>
             {
                 { SkillType.Mining, new SkillObject() },
-                { SkillType.Foraging, new SkillObject() },
+                { SkillType.Woodcutting, new SkillObject() },
                 { SkillType.Combat, new SkillObject() },
                 { SkillType.Fishing, new SkillObject() }
             },
-            CharacterLevel = 1,
         });
 
 
@@ -48,7 +47,6 @@ public static class EntityFactory
 
         e.AddComponent(new HotbarComponent
         {
-            Inventory = MainInventory,
             Width = 250, Height = 50,
             SlotOffsetX = 40,
             SlotOffsetY = 50,
@@ -109,7 +107,7 @@ public static class EntityFactory
 
         e.AddComponent(new TransformComponent { X = posX, Y = posY, Width = 150, Height = 150 });
         e.AddComponent(new VelocityComponent { X = 0, Y = 0 });
-        e.AddComponent(new Interactable{ Radius = 100 });
+        e.AddComponent(new Interactable(100));
         e.AddComponent(new EnemyComponent
         {
             DetectRange = 100f * 15,
@@ -125,11 +123,6 @@ public static class EntityFactory
         e.AddComponent(new AnimationComponent
         {
             IsIdle = true,
-            IsRunningUp = false,
-            IsRunningDown = false,
-            IsRunningRight = false,
-            IsRunningLeft = false,
-            
             AnimationFramesIdle = TextureDatabase.GetAnimation("idle_enemy") ?? [],
             AnimationFramesUp = TextureDatabase.GetAnimation("run_up_enemy") ?? [],
             AnimationFramesDown = TextureDatabase.GetAnimation("run_down_enemy") ?? [],
@@ -158,6 +151,49 @@ public static class EntityFactory
         e.AddComponent(new TextureMultipleComponent{ Textures = new[] { TextureDatabase.Get("small_health_potion") }, CurrentTextureIndex = 0 });
         e.AddComponent(new Interactable { Radius = 100 });
         e.AddComponent(new ItemPickupComponent { Item = ItemDatabase.Get("small_health_potion") });
+
+        return e;
+    }
+
+    public static Entity CreateTrader(float posX = 0, float posY = 0)
+    {
+        var e = new Entity();
+        
+        e.AddComponent(new TransformComponent { X = posX, Y = posY, Width = 64 * 2, Height = 64 * 2 });
+        e.AddComponent(new VelocityComponent { X = 0, Y = 0 });
+        e.AddComponent(new Interactable(150));
+        e.AddComponent(new TraderWanderComponent(40, 150));
+        e.AddComponent(new AnimationComponent
+        {
+            IsIdle = true,
+            AnimationFramesIdle = TextureDatabase.GetAnimation("idle_trader1") ?? [],
+            AnimationFramesUp = TextureDatabase.GetAnimation("run_up_trader1") ?? [],
+            AnimationFramesDown = TextureDatabase.GetAnimation("run_down_trader1") ?? [],
+            AnimationFramesRight = TextureDatabase.GetAnimation("run_right_trader1") ?? [],
+            AnimationFramesLeft = TextureDatabase.GetAnimation("run_left_trader1") ?? [],
+        });
+        
+        e.AddComponent(new TraderComponent
+        {
+            Type = TraderType.Selling, // Set default type to selling
+            Items = new Dictionary<Item, int>
+            {
+                { ItemDatabase.Get("bronze_ore"), 15 },  
+                { ItemDatabase.Get("coal_ore"), 30 }, 
+                { ItemDatabase.Get("iron_ore"), 40 }, 
+            },
+        });
+        
+        return e;
+    }
+
+    public static Entity CreateCoin(float posX, float posY)
+    {
+        var e = new Entity();
+        e.AddComponent(new TransformComponent { X = posX, Y = posY, Width = 25, Height = 25 });
+        e.AddComponent(new ItemPickupComponent { Item = ItemDatabase.Get("coin") });
+        e.AddComponent(new Interactable(150));
+        e.AddComponent(TextureDatabase.Get("coin"));
 
         return e;
     }

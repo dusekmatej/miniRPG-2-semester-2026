@@ -38,11 +38,15 @@ public class ChunkManager
     {
         if (!_chunks.TryGetValue((chunkX, chunkY), out var chunk))
         {
+            Console.WriteLine($"X: {chunkX} Y: {chunkY}");
             chunk = new Chunk(chunkX, chunkY);
             _terrain.FillChunkPerlin(chunk);
             _chunks[(chunkX, chunkY)] = chunk;
         }
 
+        // Spawn ores inside the chunk
+        if (chunk.EntitiesSpawned) return chunk;
+        
         if (chunk.OresSpawned) return chunk;
 
         Console.WriteLine($"[ChunkManager] Spawning ores for chunk {chunkX},{chunkY} | HasSavedOres: {_chunksWithSavedOres.Contains((chunkX, chunkY))}");
@@ -54,6 +58,9 @@ public class ChunkManager
         }
 
         _terrain.SpawnChunkOres(world, chunk);
+        _terrain.SpawnChunkTrees(world, chunk);
+        chunk.EntitiesSpawned = true;
+        
         chunk.OresSpawned = true;
 
         return chunk;
