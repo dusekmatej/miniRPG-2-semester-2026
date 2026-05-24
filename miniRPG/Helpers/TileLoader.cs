@@ -16,6 +16,7 @@ public class TileLoader
     private static Texture?[]? _waterTextures;
     private static  Texture?[]? _grassTextures;
     private static Texture?[]? _mountainTextures;
+    private static Texture?[]? _forestTextures;
 
     public static void ResetCache()
     {
@@ -32,6 +33,7 @@ public class TileLoader
         {
             _grassTextures = TileDatabase.Get("grass");
             _mountainTextures = TileDatabase.Get("mountain");
+            _forestTextures = TileDatabase.Get("forest");
             _waterTextures = TileDatabase.Get("water");
             _deepWaterTexture = TileDatabase.GetSingle("deepwater");
             
@@ -50,6 +52,8 @@ public class TileLoader
                 return _waterTextures[tile.Variation];
             case TileType.Grass:
                 return _grassTextures[tile.Variation];
+            case TileType.Forest:
+                return _forestTextures[tile.Variation];
             case TileType.Mountain:
                 return _mountainTextures[tile.Variation];
         }

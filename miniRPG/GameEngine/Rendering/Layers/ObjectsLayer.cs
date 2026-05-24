@@ -1,6 +1,7 @@
 using miniRPG.GameEngine.Components;
 using miniRPG.GameEngine.Core;
 using miniRPG.GameEngine.DataObjects;
+using miniRPG.Helpers;
 
 namespace miniRPG.GameEngine.Rendering.Layers;
 
@@ -11,6 +12,7 @@ public class ObjectsLayer : IRenderLayer
 
     private float _widthHealthPoints;
     private float _maxWidth;
+    private int _unloadDistance = 1100;
 
     public ObjectsLayer()
     {
@@ -23,6 +25,8 @@ public class ObjectsLayer : IRenderLayer
         var camera = world.CameraEntity.GetComponent<Camera>() ??
                      throw new Exception("Camera component was not found!");
 
+        var playerTransform = world.PlayerEntity.GetComponent<TransformComponent>();
+
         foreach (var entity in world.Entities)
         {
             if (!entity.HasComponent<TransformComponent>()) continue;
@@ -31,8 +35,12 @@ public class ObjectsLayer : IRenderLayer
             var coordinates = new PointF(transform!.X - camera.X + context.ScreenWidth / 2f,
                 transform!.Y - camera.Y + context.ScreenHeight / 2f);
 
+            bool isUnloaded = MathF.Sqrt(OtherHelpers.GetDistance(playerTransform, transform)
+            ) <= _unloadDistance;
+            
+            
             var animationComponent = entity.GetComponent<AnimationComponent>();
-            if (animationComponent?.CurrentFrame != null)
+            if (animationComponent?.CurrentFrame != null && isUnloaded)
             {
                 DrawImage(context, animationComponent.CurrentFrame, coordinates, transform);
                 
@@ -89,32 +97,42 @@ public class ObjectsLayer : IRenderLayer
             else
             {
                 var textureMultipleComponent = entity.GetComponent<TextureMultipleComponent>();
-                if (textureMultipleComponent != null)
+                if (textureMultipleComponent != null && isUnloaded)
                 {
-                    var currentTexture = textureMultipleComponent.Textures![textureMultipleComponent.CurrentTextureIndex];
-                    DrawImage(context, currentTexture, coordinates, transform);
+                    if (entity.HasComponent<TreeComponent>())
+                    {
+                        var centeredCoords = new PointF(coordinates.X - transform.Width / 2, coordinates.Y - transform.Height / 2);
+                        var currentTexture = textureMultipleComponent.Textures![textureMultipleComponent.CurrentTextureIndex];
+                        DrawImage(context, currentTexture, centeredCoords, transform);
+                    }
+                    else
+                    {
+                        var currentTexture = textureMultipleComponent.Textures![textureMultipleComponent.CurrentTextureIndex];
+                        DrawImage(context, currentTexture, coordinates, transform);
+                    }
                     continue;
                 }
                 
                 var textureComponent = entity.GetComponent<Texture>();
-                if (textureComponent != null)
+                if (textureComponent != null && isUnloaded)
                 {
-
-                    
                     DrawImage(context, textureComponent, coordinates, transform);
                 }
-                else
-                    context.Graphics.FillRectangle(_redBrush, coordinates.X, coordinates.Y, transform.Width, transform.Height);
+                else 
+                {
+                    if (isUnloaded)
+                        context.Graphics.FillRectangle(_redBrush, coordinates.X, coordinates.Y, transform.Width, transform.Height);
+                }
             }
         }
     }
 
     private void DrawImage(RenderContext c, Texture texture, PointF coordinates, TransformComponent transform)
     {
-        if (texture.Image == null) 
-            c.Graphics.FillEllipse(Brushes.Magenta, coordinates.X, coordinates.Y, transform.Width, transform.Height);
-        else
+        if (texture.Image != null) 
             c.Graphics.DrawImage(texture.Image, coordinates.X, coordinates.Y, transform.Width, transform.Height);
+        else
+            c.Graphics.FillEllipse(Brushes.Magenta, coordinates.X, coordinates.Y, transform.Width, transform.Height);
     }
     
 

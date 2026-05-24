@@ -28,6 +28,7 @@ public static class TileDatabase
         Load("grass", $"{BASE_PATH}/Grass/");
         Load("mountain", $"{BASE_PATH}/Mountains/");
         Load("water", $"{BASE_PATH}/Water/");
+        Load("forest", $"{BASE_PATH}/Forest/");
         LoadSingle("deepwater", $"{BASE_PATH}/DeepWater/deepwater.png");
     }
 

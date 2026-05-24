@@ -498,6 +498,21 @@
         <None Update="Art\Terrain\Items\Log\log.png">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
+        <None Update="Art\Terrain\Tiles\Forest\forest0.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="Art\Terrain\Tiles\Forest\forest1.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="Art\Terrain\Tiles\Forest\forest2.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="Art\Terrain\Tiles\Forest\forest3.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="Art\Terrain\Tiles\Forest\forest4.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
 
     <ItemGroup>

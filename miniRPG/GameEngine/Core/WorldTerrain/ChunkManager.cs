@@ -45,6 +45,18 @@ public class ChunkManager
         }
 
         // Spawn ores inside the chunk
+        if (!chunk.OresSpawned)
+        {
+            _terrain.SpawnChunkOres(world, chunk);
+            chunk.OresSpawned = true;
+        }
+
+        // Spawn trees inside the chunk
+        if (!chunk.TreesSpawned)
+        {
+            _terrain.SpawnChunkTrees(world, chunk);
+            chunk.TreesSpawned = true;
+        }
         if (chunk.EntitiesSpawned) return chunk;
         
         if (chunk.OresSpawned) return chunk;

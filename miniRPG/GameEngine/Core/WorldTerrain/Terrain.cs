@@ -17,12 +17,26 @@ public class Terrain
     private readonly PerlinNoise _detailNoise;
     private readonly PerlinNoise _oreNoise;
     private readonly PerlinNoise _forestNoise;
-    private readonly Random _rand;
+    private readonly PerlinNoise _treeNoise;
+    private readonly Random     _rand;
 
-    private const float BiomeScale  = 0.008f;
+    // Raised from 0.014 → 0.028 so mountain blobs are roughly 2x smaller in diameter.
+    private const float BiomeScale  = 0.028f;
+
+    // Forest uses its own lower scale so patches stay large and coherent.
+    private const float ForestScale = 0.04f;
+
     private const float DetailScale = 0.12f;
     private const float OreScale    = 0.18f;
-    private const float ForestScale = 0.09f;
+    private const float TreeScale   = 0.15f;
+
+    // Mountain start raised from 0.65 → 0.72 so less of the noise range qualifies.
+    // Combined with the higher BiomeScale this makes mountains noticeably smaller.
+    private const float MountainThreshold = 0.72f;
+
+    // Forest thresholds
+    private const float ForestTileThreshold = 0.52f;
+    private const float TreeSpawnThreshold  = 0.60f;
 
     public Terrain(int seed, int width = 1000, int height = 1000)
     {
@@ -34,6 +48,7 @@ public class Terrain
         _detailNoise = new PerlinNoise(seed + 1);
         _oreNoise    = new PerlinNoise(seed + 2);
         _forestNoise = new PerlinNoise(seed + 3);
+        _treeNoise   = new PerlinNoise(seed + 4);
 
         Map = new Tile[width, height];
     }
@@ -43,6 +58,7 @@ public class Terrain
         int offsetX = chunk.ChunkX * Chunk.Size;
         int offsetY = chunk.ChunkY * Chunk.Size;
 
+        // --- First pass: fill tiles and determine ores ---
         for (int x = 0; x < Chunk.Size; x++)
         {
             for (int y = 0; y < Chunk.Size; y++)
@@ -57,7 +73,6 @@ public class Terrain
 
                 chunk.Map[x, y] = GenerateTile(biome, detail, forest);
                 chunk.Ores[(worldX, worldY)] = GetOreType(chunk.Map[x, y], ore);
-                chunk.Trees[(worldX, worldY)] = GetTreeVariation(chunk.Map[x, y], forest);
             }
         }
     }
@@ -70,93 +85,101 @@ public class Terrain
     {
         var tile = new Tile();
 
-        if (biome < 0.25f)
+        if (biome < 0.30f)
+        {
             tile.Type = TileType.DeepWater;
-        else if (biome < 0.38f)
+        }
+        else if (biome < 0.44f)
         {
             tile.Type = TileType.Water;
         }
-        else if (biome < 0.65f)
+        else if (biome < MountainThreshold)
         {
-            tile.Type = TileType.Grass;
-
-            tile.Variation = detail switch
+            if (forest > ForestTileThreshold)
             {
-                < 0.35f => 0,
-                < 0.50f => 1,
-                < 0.62f => 2,
-                < 0.75f => 3,
-                _       => 4
-            };
-        }
-        else if (biome < 0.80f)
-        {
-            tile.Type = TileType.Mountain;
+                tile.Type = TileType.Forest;
+
+                tile.Variation = detail switch
+                {
+                    < 0.30f => 0,
+                    < 0.55f => 1,
+                    < 0.68f => 2,
+                    < 0.82f => 3,
+                    _       => 4
+                };
+            }
+            else
+            {
+                tile.Type = TileType.Grass;
+
+                tile.Variation = detail switch
+                {
+                    < 0.35f => 0,
+                    < 0.50f => 1,
+                    < 0.62f => 2,
+                    < 0.75f => 3,
+                    _       => 4
+                };
+            }
         }
         else
         {
             tile.Type = TileType.Mountain;
+
+            tile.Variation = detail switch
+            {
+                < 0.50f => 0,
+                _       => 1
+            };
         }
 
         return tile;
     }
 
     // ------------------------------------------------------------------ //
-    //  Forest generation                                                   //
-    // ------------------------------------------------------------------ //
-
-    // Returns tree variation (0,1,2) if a tree should spawn here, -1 if not.
-    // Trees only grow on grass, and forest noise drives where they cluster.
-    private int GetTreeVariation(Tile tile, float forestNoise)
-    {
-        if (tile.Type != TileType.Grass)
-            return -1;
-
-        // Only dense forest areas get trees, and not every tile — 40% chance inside those areas
-        if (forestNoise > 0.65f && Roll(40))
-            return _rand.Next(0, 2); // 3 tree textures
-
-        return -1;
-    }
-
-    // ------------------------------------------------------------------ //
     //  Ore generation                                                      //
     // ------------------------------------------------------------------ //
 
-    // The key fix here: we check from rarest to most common, and use
-    // early returns so only ONE ore type can spawn per tile.
-    // Before, coal was winning because all checks ran independently.
-    //
-    //  Ore    | Noise threshold | Spawn chance
-    //  ------ | --------------- | ------------
-    //  Gold   | > 0.82          | 8%
-    //  Bronze | > 0.75          | 15%
-    //  Iron   | > 0.68          | 22%
-    //  Coal   | > 0.58          | 30%
+    //  Ore       | Biome              | Noise threshold | Roll
+    //  --------- | ------------------ | --------------- | ----
+    //  Gold      | Mountain only      | > 0.75          | 10%
+    //  Bronze    | Mountain + Forest  | > 0.65 / > 0.72 | 25% / 8%
+    //  Iron      | Mountain only      | > 0.70          | 20%
+    //  Coal      | Mountain only      | > 0.62          | 28%
 
     private OreType GetOreType(Tile tile, float oreNoise)
     {
-        if (tile.Type != TileType.Mountain)
-            return OreType.None;
+        bool isMountain = tile.Type == TileType.Mountain;
+        bool isForest   = tile.Type == TileType.Forest;
 
-        // Rarest first — if gold passes, we never even check coal
-        if (oreNoise > 0.82f && Roll(8))
-            return OreType.Gold;
-
-        if (oreNoise > 0.75f && Roll(15))
+        // Bronze rarely spawns in forest biomes — higher threshold, much lower roll
+        if (isForest && oreNoise > 0.72f && Roll(8))
             return OreType.Bronze;
 
-        if (oreNoise > 0.68f && Roll(22))
+        if (!isMountain)
+            return OreType.None;
+
+        // Gold — rarest, checked first
+        if (oreNoise > 0.75f && Roll(10))
+            return OreType.Gold;
+
+        // Bronze — second least rare on mountains
+        if (oreNoise > 0.65f && Roll(25))
+            return OreType.Bronze;
+
+        // Iron — medium
+        if (oreNoise > 0.70f && Roll(20))
             return OreType.Iron;
 
-        if (oreNoise > 0.58f && Roll(30))
+        // Coal — most common, threshold and roll both loosened
+        if (oreNoise > 0.62f && Roll(28))
             return OreType.Coal;
 
         return OreType.None;
     }
 
     // ------------------------------------------------------------------ //
-    //  Entity spawning                                                     //
+    //  Entity spawn — Ores                                                 //
     // ------------------------------------------------------------------ //
 
     public void SpawnChunkOres(World world, Chunk chunk)
@@ -182,22 +205,44 @@ public class Terrain
         }
     }
 
+    // ------------------------------------------------------------------ //
+    //  Entity spawn — Trees                                                //
+    // ------------------------------------------------------------------ //
+
     public void SpawnChunkTrees(World world, Chunk chunk)
     {
-        foreach (var (pos, treeVariation) in chunk.Trees)
+        int offsetX = chunk.ChunkX * Chunk.Size;
+        int offsetY = chunk.ChunkY * Chunk.Size;
+
+        for (int x = 0; x < Chunk.Size; x++)
         {
-            if (treeVariation == -1)
-                continue;
+            for (int y = 0; y < Chunk.Size; y++)
+            {
+                var tile = chunk.Map[x, y];
 
-            var (worldX, worldY) = pos;
+                int worldX = offsetX + x;
+                int worldY = offsetY + y;
 
-            var entity = Prefabs.CreateTree(
-                worldX * TileDatabase.TileSize,
-                worldY * TileDatabase.TileSize,
-                treeVariation
-            );
+                float tree   = _treeNoise.SampleOctaves(  worldX * TreeScale,   worldY * TreeScale,   octaves: 2, persistence: 0.5f, lacunarity: 2f);
+                float forest = _forestNoise.SampleOctaves(worldX * ForestScale, worldY * ForestScale, octaves: 3, persistence: 0.5f, lacunarity: 2f);
 
-            world.Entities.Add(entity);
+                if (tile.Type == TileType.Forest)
+                {
+                    if (forest > TreeSpawnThreshold && tree > 0.50f && Roll(65))
+                    {
+                        int variation = Roll(25) ? 1 : 0;
+                        world.Entities.Add(Prefabs.CreateTree(worldX * TileDatabase.TileSize, worldY * TileDatabase.TileSize, variation));
+                    }
+                }
+                else if (tile.Type == TileType.Grass)
+                {
+                    if (forest < ForestTileThreshold - 0.10f && tree > 0.78f && Roll(6))
+                    {
+                        int variation = Roll(15) ? 1 : 0;
+                        world.Entities.Add(Prefabs.CreateTree(worldX * TileDatabase.TileSize, worldY * TileDatabase.TileSize, variation));
+                    }
+                }
+            }
         }
     }
 
@@ -206,12 +251,4 @@ public class Terrain
     // ------------------------------------------------------------------ //
 
     private bool Roll(int percent) => _rand.Next(100) < percent;
-
-    private bool IsDifferent(int x, int y, TileType type)
-    {
-        if (x < 0 || y < 0 || x >= Width || y >= Height)
-            return false;
-
-        return Map[x, y].Type != type;
-    }
 }
