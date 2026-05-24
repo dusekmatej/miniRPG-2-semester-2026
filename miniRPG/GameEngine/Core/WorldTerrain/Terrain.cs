@@ -143,17 +143,17 @@ public class Terrain
     //  Ore       | Biome              | Noise threshold | Roll
     //  --------- | ------------------ | --------------- | ----
     //  Gold      | Mountain only      | > 0.75          | 10%
-    //  Bronze    | Mountain + Forest  | > 0.65 / > 0.72 | 25% / 8%
+    //  Bronze    | Mountain + Forest  | > 0.65 / > 0.78 | 25% / 4%
     //  Iron      | Mountain only      | > 0.70          | 20%
-    //  Coal      | Mountain only      | > 0.62          | 28%
+    //  Coal      | Mountain only      | > 0.60          | 35%
 
     private OreType GetOreType(Tile tile, float oreNoise)
     {
         bool isMountain = tile.Type == TileType.Mountain;
         bool isForest   = tile.Type == TileType.Forest;
 
-        // Bronze rarely spawns in forest biomes — higher threshold, much lower roll
-        if (isForest && oreNoise > 0.72f && Roll(8))
+        // Bronze very rarely spawns in forest biomes — higher threshold, much lower roll
+        if (isForest && oreNoise > 0.78f && Roll(4))
             return OreType.Bronze;
 
         if (!isMountain)
@@ -172,7 +172,7 @@ public class Terrain
             return OreType.Iron;
 
         // Coal — most common, threshold and roll both loosened
-        if (oreNoise > 0.62f && Roll(28))
+        if (oreNoise > 0.60f && Roll(35))
             return OreType.Coal;
 
         return OreType.None;
@@ -228,6 +228,8 @@ public class Terrain
 
                 if (tile.Type == TileType.Forest)
                 {
+                    // Trees only where forestNoise is well above the tile threshold —
+                    // insets them away from biome edges so nothing bleeds into Grass tiles
                     if (forest > TreeSpawnThreshold && tree > 0.50f && Roll(65))
                     {
                         int variation = Roll(25) ? 1 : 0;
@@ -236,6 +238,7 @@ public class Terrain
                 }
                 else if (tile.Type == TileType.Grass)
                 {
+                    // Rare lone trees — must be far from any forest edge
                     if (forest < ForestTileThreshold - 0.10f && tree > 0.78f && Roll(6))
                     {
                         int variation = Roll(15) ? 1 : 0;

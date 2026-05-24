@@ -12,7 +12,7 @@ public class ObjectsLayer : IRenderLayer
 
     private float _widthHealthPoints;
     private float _maxWidth;
-    private int _unloadDistance = 1100;
+    private int _unloadDistance = 1000;
 
     public ObjectsLayer()
     {
@@ -136,7 +136,7 @@ public class ObjectsLayer : IRenderLayer
     }
     
 
-   private void DrawHealthBar(RenderContext context, EnemyComponent comp, PointF coordinates)
+    private void DrawHealthBar(RenderContext context, EnemyComponent comp, PointF coordinates)
     {
         _widthHealthPoints = (float)(comp.CurrentHealth / (comp.MaxHealth / 100) * 1.5);
         

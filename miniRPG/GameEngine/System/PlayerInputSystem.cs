@@ -131,16 +131,16 @@ public class PlayerInputSystem
             switch (Keyboard.GetPressedKey())
             {
                 case Keys.W:
-                    velocity!.Y = -(180 * deltaTime) * 0.1f;
+                    velocity!.Y = -(180 * deltaTime);
                     break;
                 case Keys.S:
-                    velocity!.Y = (180 * deltaTime) * 0.1f;
+                    velocity!.Y = (180 * deltaTime);
                     break;
                 case Keys.A:
-                    velocity!.X = -(180 * deltaTime) * 0.1f;
+                    velocity!.X = -(180 * deltaTime);
                     break;
                 case Keys.D:
-                    velocity!.X = (180 * deltaTime) * 0.1f;
+                    velocity!.X = (180 * deltaTime);
                     break;
             }
         }
