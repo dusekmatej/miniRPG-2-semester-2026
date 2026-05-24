@@ -39,4 +39,5 @@ public class EntitySaveData
     public string? OreType { get; set; }
     public int OreCurrentHealth { get; set; }
     public string? ItemDatabaseName { get; set; }
+    public int TreeHealth { get; set; }
 }

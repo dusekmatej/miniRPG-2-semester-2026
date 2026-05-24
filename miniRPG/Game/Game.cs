@@ -117,6 +117,8 @@ public class Game
         if (data == null) return;
 
         _currentSeed = data.WorldSeed;
+        
+        // Create a new engine and terrain to ensure a clean state
         _engine = new Engine(_currentSeed);
         _terrain = new Terrain(_currentSeed);
 

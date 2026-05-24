@@ -111,10 +111,8 @@ public class PlayerInputSystem
             
             if (Keyboard.WasKeyPressed(Keys.F6))
                 world.EventBus.Post(new LoadRequestEvent());
-            
 
-
-        // Toggle inventory
+            // Toggle inventory
             if (Keyboard.WasKeyPressed(Keys.I))
                 world.EventBus.Post(new InventoryToggleEvent());
             
@@ -133,16 +131,16 @@ public class PlayerInputSystem
             switch (Keyboard.GetPressedKey())
             {
                 case Keys.W:
-                    velocity!.Y = -(180 * deltaTime);
+                    velocity!.Y = -(180 * deltaTime) * 0.1f;
                     break;
                 case Keys.S:
-                    velocity!.Y = (180 * deltaTime);
+                    velocity!.Y = (180 * deltaTime) * 0.1f;
                     break;
                 case Keys.A:
-                    velocity!.X = -(180 * deltaTime);
+                    velocity!.X = -(180 * deltaTime) * 0.1f;
                     break;
                 case Keys.D:
-                    velocity!.X = (180 * deltaTime);
+                    velocity!.X = (180 * deltaTime) * 0.1f;
                     break;
             }
         }

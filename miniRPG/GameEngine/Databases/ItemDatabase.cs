@@ -37,7 +37,7 @@ public static class ItemDatabase
     #region ADD ITEMS ONLY HERE!
     private static readonly Item[] _itemsArray =
     {
-        new Item("coin", "coin", "coin", ItemType.Misc, TextureDatabase.Get("coin")),
+        new Item("coin", "coin", "coin", ItemType.Misc, TextureDatabase.Get("coin"), 0),
         
         // ORES
         new Item("bronze_ore", "Bronze Ore", "Bronze ore", ItemType.Ore, TextureDatabase.Get("bronze_ore"),0),
@@ -62,7 +62,7 @@ public static class ItemDatabase
         //Potions
         new Item("small_health_potion", "Small Health Potion", "A magical potion that heals 20 HP", ItemType.Potion, TextureDatabase.Get("small_health_potion"),20, true,true),
         
-        new Item("brown_meat", "Brown Meat", "Brown cooked meat that heals 10 HP", ItemType.Food, TextureDatabase.Get("brown_meat"), true),
+        new Item("brown_meat", "Brown Meat", "Brown cooked meat that heals 10 HP", ItemType.Food, TextureDatabase.Get("brown_meat"),0 , true),
         new Item("log", "Log", "Log", ItemType.Misc, TextureDatabase.Get("log"), 0),
     };
     #endregion

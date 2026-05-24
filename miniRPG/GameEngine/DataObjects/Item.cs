@@ -16,7 +16,7 @@ public class Item
     public bool IsUsable { get; set; }
     public int HealAmount { get; set; }
     
-    public Item(string databaseName, string name, string description, ItemType type, Texture sprite,int healAmount, bool isStackable = true , bool isUsable = false )
+    public Item(string databaseName, string name, string description, ItemType type, Texture sprite, int healAmount = 0, bool isStackable = true , bool isUsable = false )
     {
         DatabaseName = databaseName;
         Name = name;

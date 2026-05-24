@@ -44,6 +44,14 @@ public class ChunkManager
             _chunks[(chunkX, chunkY)] = chunk;
         }
 
+        // Return early if we already determined this chunk shouldn't spawn new entities
+        if (_chunksWithSavedOres.Contains((chunkX, chunkY)))
+        {
+            chunk.OresSpawned = true;
+            chunk.TreesSpawned = true; // Block tree spawning as well if loading from save
+            return chunk;
+        }
+
         // Spawn ores inside the chunk
         if (!chunk.OresSpawned)
         {
@@ -57,23 +65,6 @@ public class ChunkManager
             _terrain.SpawnChunkTrees(world, chunk);
             chunk.TreesSpawned = true;
         }
-        if (chunk.EntitiesSpawned) return chunk;
-        
-        if (chunk.OresSpawned) return chunk;
-
-        Console.WriteLine($"[ChunkManager] Spawning ores for chunk {chunkX},{chunkY} | HasSavedOres: {_chunksWithSavedOres.Contains((chunkX, chunkY))}");
-
-        if (_chunksWithSavedOres.Contains((chunkX, chunkY)))
-        {
-            chunk.OresSpawned = true;
-            return chunk;
-        }
-
-        _terrain.SpawnChunkOres(world, chunk);
-        _terrain.SpawnChunkTrees(world, chunk);
-        chunk.EntitiesSpawned = true;
-        
-        chunk.OresSpawned = true;
 
         return chunk;
     }
@@ -113,7 +104,6 @@ public class ChunkManager
         {
             _chunks[key].Dispose();
             _chunks.Remove(key);
-            Console.WriteLine($"Removing {key}");
         }
     }
     public void RegisterSavedOrePositions(List<(int x, int y)> positions)

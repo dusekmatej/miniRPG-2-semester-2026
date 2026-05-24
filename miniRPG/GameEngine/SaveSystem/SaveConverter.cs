@@ -121,6 +121,17 @@ public class SaveConverter
                     OreCurrentHealth = ore.CurrentHealth
                 });
             }
+            else if (e.HasComponent<TreeComponent>())
+            {
+                var tree = e.GetComponent<TreeComponent>();
+                entities.Add(new EntitySaveData
+                {
+                    EntityType = "tree",
+                    TileX = tileX,
+                    TileY = tileY,
+                    TreeHealth = tree!.Health
+                });
+            }
             else if (e.HasComponent<ChestComponent>())
             {
                 entities.Add(new EntitySaveData
@@ -214,12 +225,12 @@ public class SaveConverter
     private void ApplyWorldEntities(List<EntitySaveData> entities, World world)
     {
         // Collect ore positions to block chunk spawner from re-spawning them
-        var savedOrePositions = entities
-            .Where(e => e.EntityType == "ore")
+        var savedEntityPositions = entities
+            .Where(e => e.EntityType == "ore" || e.EntityType == "tree")
             .Select(e => (e.TileX, e.TileY))
             .ToList();
 
-        world.ChunkManager.RegisterSavedOrePositions(savedOrePositions);
+        world.ChunkManager.RegisterSavedOrePositions(savedEntityPositions);
 
         foreach (var data in entities)
         {
@@ -230,6 +241,7 @@ public class SaveConverter
             Entity? e = data.EntityType switch
             {
                 "ore"  => CreateOreFromSave(data, pixelX, pixelY),
+                "tree" => CreateTreeFromSave(data, pixelX, pixelY),
                 "chest" => EntityFactory.CreateChest(pixelX, pixelY),
                 "item" when data.ItemDatabaseName != null => EntityFactory.CreateHealingItem(pixelX, pixelY, data.ItemDatabaseName),
                 _ => null
@@ -265,4 +277,14 @@ public class SaveConverter
         return e;
     }
     
+    private Entity? CreateTreeFromSave(EntitySaveData data, float pixelX, float pixelY)
+    {
+        // For now, variation is hardcoded to 0. This can be expanded later.
+        var e = Prefabs.CreateTree(pixelX, pixelY, 0);
+        var tree = e.GetComponent<TreeComponent>();
+        if (tree != null)
+            tree.Health = data.TreeHealth;
+
+        return e;
+    }
 }
