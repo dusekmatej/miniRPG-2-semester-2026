@@ -2,6 +2,7 @@ using miniRPG.Helpers;
 using miniRPG.GameEngine.Components;
 using miniRPG.GameEngine.Core;
 using miniRPG.GameEngine.Core.Events;
+using miniRPG.GameEngine.DataObjects;
 
 namespace miniRPG.GameEngine.System;
 
@@ -51,15 +52,35 @@ public class PlayerInputSystem
 
             if (Keyboard.WasKeyPressed(Keys.F))
             {
-                var hotbar = entity.GetComponent<HotbarComponent>();
-                if (hotbar == null) return;
+                var inventoryComponent = entity.GetComponent<InventoryComponent>();
+                var hotbarComponent = entity.GetComponent<HotbarComponent>();
+                
+                
+                if (inventoryComponent != null && inventoryComponent.IsOpen &&
+                    inventoryComponent.selectedFromInventory && inventoryComponent.selectedSlotIndex >=0)
+                {
+                    var inventorySlot = inventoryComponent.Inventory.Slots[inventoryComponent.selectedSlotIndex];
+                    if (inventorySlot.Item != null && inventorySlot.Item.IsUsable)
+                    {
+                        world.EventBus.Post(new UseItemFromInventoryEvent(entity, inventorySlot.Item, inventoryComponent.selectedSlotIndex));
+                        inventoryComponent.selectedSlotIndex = -1;
+                        inventoryComponent.selectedFromInventory = false;
+                        return;
+                    }
+                }
+                
+                
+                if (hotbarComponent == null) return;
 
-                var slot = hotbar.Slots[hotbar.SelectedSlotIndex];
-                if (slot?.Item == null || !slot.Item.IsUsable) return;
+                var hotbarSlot = hotbarComponent.Slots[hotbarComponent.SelectedSlotIndex];
+                if (hotbarSlot?.Item == null || !hotbarSlot.Item.IsUsable) return;
 
-                world.EventBus.Post(new UseItemEvent(entity, slot.Item, hotbar.SelectedSlotIndex));
-                Console.WriteLine("Posted UseItemEvent for item: " + slot.Item.Name);
+                world.EventBus.Post(new UseItemEvent(entity, hotbarSlot.Item, hotbarComponent.SelectedSlotIndex));
+                Console.WriteLine("Posted UseItemEvent for item: " + hotbarSlot.Item.Name);
+                
+                 
             }
+            
             
             // Toggle inventory
             if (Keyboard.WasKeyPressed(Keys.I))
