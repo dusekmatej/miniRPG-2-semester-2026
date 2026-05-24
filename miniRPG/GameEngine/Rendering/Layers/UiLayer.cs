@@ -43,6 +43,21 @@ public class UiLayer : IRenderLayer
     private int _experienceForNextLevel;
     private const float AnimationSpeed = 5.0f;
 
+    // --- Wave Message Fields ---
+    private bool _isWaveMessageVisible;
+    private int _currentWaveNumber;
+    private float _waveMessageScale = 0f;
+    private float _waveMessageAlpha = 0f;
+    private double _waveMessageEndTime = 0.0;
+    private const double WaveMessageDurationSeconds = 4.0;
+
+    // --- Death Message Fields ---
+    private bool _isDeathMessageVisible;
+    private float _deathMessageScale = 0f;
+    private float _deathMessageAlpha = 0f;
+    private double _deathMessageEndTime = 0.0;
+    private const double DeathMessageDurationSeconds = 3.0;
+
     public UiLayer(World world)
     {
         _world = world;
@@ -52,6 +67,8 @@ public class UiLayer : IRenderLayer
 
         _world.EventBus.Subscribe<LevelUpEvent>(OnLevelUp);
         _world.EventBus.Subscribe<ExperienceGainedEvent>(OnExperienceGained);
+        _world.EventBus.Subscribe<EnemyWaveEvent>(OnEnemyWave);
+        _world.EventBus.Subscribe<PlayerDeathEvent>(OnPlayerDeath);
     }
 
     public void Update(float deltaTime)
@@ -59,6 +76,12 @@ public class UiLayer : IRenderLayer
         // --- Update Timers ---
         if (_isLevelUpMessageVisible && _stopwatch.Elapsed.TotalSeconds >= _levelUpMessageEndTime)
             _isLevelUpMessageVisible = false;
+
+        if (_isWaveMessageVisible && _stopwatch.Elapsed.TotalSeconds >= _waveMessageEndTime)
+            _isWaveMessageVisible = false;
+
+        if (_isDeathMessageVisible && _stopwatch.Elapsed.TotalSeconds >= _deathMessageEndTime)
+            _isDeathMessageVisible = false;
 
         if (_isExperienceBarVisible && _stopwatch.Elapsed.TotalSeconds >= _experienceBarEndTime)
             _isExperienceBarVisible = false;
@@ -87,6 +110,50 @@ public class UiLayer : IRenderLayer
             _levelUpMessageAlpha = 0f;
         }
 
+        // --- Animate Wave Message ---
+        if (_isWaveMessageVisible)
+        {
+            var timeSinceDisplay = (_stopwatch.Elapsed.TotalSeconds - (_waveMessageEndTime - WaveMessageDurationSeconds));
+            var fadeTime = 0.5;
+
+            // Fade In
+            if (timeSinceDisplay < fadeTime)
+                _waveMessageAlpha = (float)(timeSinceDisplay / fadeTime);
+            // Fade Out
+            else if (timeSinceDisplay > WaveMessageDurationSeconds - fadeTime)
+                _waveMessageAlpha = (float)((WaveMessageDurationSeconds - timeSinceDisplay) / fadeTime);
+            else
+                _waveMessageAlpha = 1f;
+            
+            _waveMessageScale = OtherHelpers.Lerp(_waveMessageScale, 1f, deltaTime * 10f);
+        }
+        else
+        {
+            _waveMessageScale = 0f;
+            _waveMessageAlpha = 0f;
+        }
+
+        // --- Animate Death Message ---
+        if (_isDeathMessageVisible)
+        {
+            var fadeTime = 0.5;
+            var timeSinceDisplay = (_stopwatch.Elapsed.TotalSeconds - (_deathMessageEndTime - DeathMessageDurationSeconds));
+
+            if (timeSinceDisplay < fadeTime)
+                _deathMessageAlpha = (float)(timeSinceDisplay / fadeTime);
+            else if (timeSinceDisplay > DeathMessageDurationSeconds - fadeTime)
+                _deathMessageAlpha = (float)((DeathMessageDurationSeconds - timeSinceDisplay) / fadeTime);
+            else
+                _deathMessageAlpha = 1f;
+
+            _deathMessageScale = OtherHelpers.Lerp(_deathMessageScale, 1f, deltaTime * 8f);
+        }
+        else
+        {
+            _deathMessageScale = 0f;
+            _deathMessageAlpha = 0f;
+        }
+
         // --- Animate Experience Bar ---
         if (_isExperienceBarVisible)
             _animatedExperience = OtherHelpers.Lerp(_animatedExperience, _targetExperience, deltaTime * AnimationSpeed);
@@ -97,6 +164,16 @@ public class UiLayer : IRenderLayer
         if (_levelUpMessageAlpha > 0)
         {
             RenderLevelUpMessage(context);
+        }
+
+        if (_waveMessageAlpha > 0)
+        {
+            RenderWaveMessage(context);
+        }
+
+        if (_deathMessageAlpha > 0)
+        {
+            RenderDeathMessage(context);
         }
 
         if (_isExperienceBarVisible)
@@ -141,6 +218,80 @@ public class UiLayer : IRenderLayer
             var subtitleX = x + (boxWidth - subtitleSize.Width) / 2;
             var subtitleY = titleY + titleSize.Height;
             context.Graphics.DrawString(newLevelText, _subtitleFont, new SolidBrush(Color.FromArgb(currentAlpha, Color.White)), subtitleX, subtitleY);
+        }
+    }
+
+    private void RenderWaveMessage(RenderContext context)
+    {
+        var waveText = $"WAVE {_currentWaveNumber} SPAWNED!";
+        var subtitleText = "Prepare yourself!";
+
+        using (var titleFont = new Font("Impact", 24, FontStyle.Regular))
+        using (var subtitleFont = new Font("Segoe UI", 12, FontStyle.Italic))
+        {
+            var titleSize = context.Graphics.MeasureString(waveText, titleFont);
+            var subtitleSize = context.Graphics.MeasureString(subtitleText, subtitleFont);
+            
+            var boxWidth = Math.Max(titleSize.Width, subtitleSize.Width) + 40;
+            var boxHeight = titleSize.Height + subtitleSize.Height + 20;
+
+            var x = (context.ScreenWidth - boxWidth) / 2;
+            var y = 150; // Render a bit lower than Level Up msg
+
+            var transform = context.Graphics.Transform;
+            context.Graphics.TranslateTransform(x + boxWidth / 2, y + boxHeight / 2);
+            context.Graphics.ScaleTransform(_waveMessageScale, _waveMessageScale);
+            context.Graphics.TranslateTransform(-(x + boxWidth / 2), -(y + boxHeight / 2));
+
+            var currentAlpha = (int)(_waveMessageAlpha * 255);
+
+            // --- Draw Text ---
+            var titleX = x + (boxWidth - titleSize.Width) / 2;
+            var titleY = y + 10;
+            context.Graphics.DrawString(waveText, titleFont, new SolidBrush(Color.FromArgb(currentAlpha, Color.Red)), titleX, titleY);
+
+            var subtitleX = x + (boxWidth - subtitleSize.Width) / 2;
+            var subtitleY = titleY + titleSize.Height;
+            context.Graphics.DrawString(subtitleText, subtitleFont, new SolidBrush(Color.FromArgb(currentAlpha, Color.White)), subtitleX, subtitleY);
+
+            context.Graphics.Transform = transform; // Reset transform
+        }
+    }
+
+    private void RenderDeathMessage(RenderContext context)
+    {
+        var deathText = "YOU DIED";
+        var subtitleText = "Respawning at center...";
+
+        using (var titleFont = new Font("Impact", 36, FontStyle.Regular))
+        using (var subtitleFont = new Font("Segoe UI", 14, FontStyle.Italic))
+        {
+            var titleSize = context.Graphics.MeasureString(deathText, titleFont);
+            var subtitleSize = context.Graphics.MeasureString(subtitleText, subtitleFont);
+            
+            var boxWidth = Math.Max(titleSize.Width, subtitleSize.Width) + 40;
+            var boxHeight = titleSize.Height + subtitleSize.Height + 20;
+
+            var x = (context.ScreenWidth - boxWidth) / 2;
+            var y = context.ScreenHeight / 2 - boxHeight / 2; // Center horizontally and vertically
+
+            var transform = context.Graphics.Transform;
+            context.Graphics.TranslateTransform(x + boxWidth / 2, y + boxHeight / 2);
+            context.Graphics.ScaleTransform(_deathMessageScale, _deathMessageScale);
+            context.Graphics.TranslateTransform(-(x + boxWidth / 2), -(y + boxHeight / 2));
+
+            var currentAlpha = (int)(_deathMessageAlpha * 255);
+
+            // --- Draw Text ---
+            var titleX = x + (boxWidth - titleSize.Width) / 2;
+            var titleY = y + 10;
+            context.Graphics.DrawString(deathText, titleFont, new SolidBrush(Color.FromArgb(currentAlpha, Color.DarkRed)), titleX, titleY);
+
+            var subtitleX = x + (boxWidth - subtitleSize.Width) / 2;
+            var subtitleY = titleY + titleSize.Height;
+            context.Graphics.DrawString(subtitleText, subtitleFont, new SolidBrush(Color.FromArgb(currentAlpha, Color.DarkGray)), subtitleX, subtitleY);
+
+            context.Graphics.Transform = transform; // Reset transform
         }
     }
 
@@ -198,6 +349,21 @@ public class UiLayer : IRenderLayer
         _justLeveledUp = true;
         // schedule when the message should stop being visible
         _levelUpMessageEndTime = _stopwatch.Elapsed.TotalSeconds + LevelUpMessageDurationSeconds;
+    }
+
+    private void OnEnemyWave(EnemyWaveEvent e)
+    {
+        _isWaveMessageVisible = true;
+        _currentWaveNumber = e.WaveNumber;
+        _waveMessageScale = 0.5f; 
+        _waveMessageEndTime = _stopwatch.Elapsed.TotalSeconds + WaveMessageDurationSeconds;
+    }
+
+    private void OnPlayerDeath(PlayerDeathEvent e)
+    {
+        _isDeathMessageVisible = true;
+        _deathMessageScale = 0.5f;
+        _deathMessageEndTime = _stopwatch.Elapsed.TotalSeconds + DeathMessageDurationSeconds;
     }
 
     private void OnExperienceGained(ExperienceGainedEvent e)

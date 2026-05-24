@@ -23,6 +23,7 @@ public class Engine
     private readonly InventoryInteractionSystem _inventoryInteraction = new();
     private readonly HotbarInteractionSystem _hotbarInteractionSystem  = new();
     private readonly EnemySystem _enemySystem = new();
+    private readonly EnemyWaveSystem _enemyWaveSystem = new();
     private readonly TraderWanderSystem _traderWanderSystem = new();
     
     // ### Event Based Systems ###
@@ -89,6 +90,7 @@ public class Engine
         _hotbarInteractionSystem.Update(World);
         _uiLayer.Update(deltaTime);
         _enemySystem.Update(World, deltaTime);
+        _enemyWaveSystem.Update(World, deltaTime);
         _traderWanderSystem.Update(World, deltaTime);
     }
 }

@@ -38,7 +38,6 @@ public class ChunkManager
     {
         if (!_chunks.TryGetValue((chunkX, chunkY), out var chunk))
         {
-            Console.WriteLine($"X: {chunkX} Y: {chunkY}");
             chunk = new Chunk(chunkX, chunkY);
             _terrain.FillChunkPerlin(chunk);
             _chunks[(chunkX, chunkY)] = chunk;
@@ -48,7 +47,7 @@ public class ChunkManager
         if (_chunksWithSavedOres.Contains((chunkX, chunkY)))
         {
             chunk.OresSpawned = true;
-            chunk.TreesSpawned = true; // Block tree spawning as well if loading from save
+            chunk.TreesSpawned = true;
             return chunk;
         }
 
@@ -90,7 +89,6 @@ public class ChunkManager
         for (int cx = minCX; cx <= maxCX; cx++)
         for (int cy = minCY; cy <= maxCY; cy++)
             yield return GetChunk(world, cx, cy);
-            //yield return Task.Run(() => GetChunk(cx, cy)).Result; // Test to run on different thread
     }
     
     public void UnloadChunks(int centerChunkX, int centerChunkY)

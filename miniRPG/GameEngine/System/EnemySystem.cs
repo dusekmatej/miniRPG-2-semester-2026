@@ -1,5 +1,6 @@
 ﻿using miniRPG.GameEngine.Components;
 using miniRPG.GameEngine.Core;
+using miniRPG.GameEngine.Core.Events;
 using miniRPG.Helpers;
 
 namespace miniRPG.GameEngine.System;
@@ -25,34 +26,54 @@ public class EnemySystem
 
             var velocityComponent = e.GetComponent<VelocityComponent>();
             var enemyComponent = e.GetComponent<EnemyComponent>();
+            if (enemyComponent == null) continue;
             
-            var seeRangeSq = enemyComponent.DetectRange * enemyComponent.DetectRange;
-            var stopDistanceSq = enemyComponent.StopDistance * enemyComponent.StopDistance;
-            var distance = enemyTransform.GetDistance(playerTransform);
+            if (enemyComponent.TimeSinceLastAttack < enemyComponent.AttackCooldown)
+            {
+                enemyComponent.TimeSinceLastAttack += deltaTime;
+            }
 
-            if (distance <= stopDistanceSq)
+            var seeRange = enemyComponent.DetectRange;
+            var stopDistance = enemyComponent.StopDistance;
+            var attackRange = enemyComponent.AttackRange;
+
+            var distance = MathF.Sqrt(enemyTransform.GetDistance(playerTransform));
+
+            if (distance <= stopDistance)
             {
                 velocityComponent!.X = 0;
                 velocityComponent.Y = 0;
+                
+                if (distance <= attackRange && enemyComponent.TimeSinceLastAttack >= enemyComponent.AttackCooldown)
+                {
+                    enemyComponent.TimeSinceLastAttack = 0;
+                    world.EventBus.Post(new PlayerHitEvent(_player, enemyComponent.PlayerDamage));
+                }
+                
                 continue;
             }
 
-            if (distance < seeRangeSq)
+            if (distance < seeRange)
             {
-                var dx = playerTransform.X - enemyTransform.X;
-                var dy = playerTransform.Y - enemyTransform.Y;
-                var length = MathF.Sqrt(distance);
+                var distanceX = playerTransform.X - enemyTransform.X;
+                var distanceY = playerTransform.Y - enemyTransform.Y;
 
-                if (length <= 0.0001f)
+                if (distance <= 0.001f)
                 {
                     velocityComponent!.X = 0;
                     velocityComponent.Y = 0;
+
+                    if (distance <= attackRange && enemyComponent.TimeSinceLastAttack >= enemyComponent.AttackCooldown)
+                    {
+                        enemyComponent.TimeSinceLastAttack = 0;
+                        world.EventBus.Post(new PlayerHitEvent(_player, enemyComponent.Damage));
+                    }
                     continue;
                 }
 
-                var scale = enemyComponent!.ChaseSpeed * deltaTime / length;
-                velocityComponent!.X = dx * scale;
-                velocityComponent.Y = dy * scale;
+                var scale = enemyComponent.ChaseSpeed * deltaTime / distance;
+                velocityComponent!.X = distanceX * scale;
+                velocityComponent.Y = distanceY * scale;
             }
             else
             {

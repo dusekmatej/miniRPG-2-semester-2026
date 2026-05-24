@@ -48,7 +48,7 @@ public class SaveConverter
             for (int i = 0; i < inventoryComp.Inventory.Slots.Length; i++)
             {
                 var slot = inventoryComp.Inventory.Slots[i];
-                if (slot?.Item == null) continue; // skip empty slots
+                if (slot?.Item == null) continue;
 
                 data.InventorySlots.Add(new InventorySlotSaveData
                 {

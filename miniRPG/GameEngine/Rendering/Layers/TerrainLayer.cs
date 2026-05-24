@@ -26,7 +26,6 @@ public class TerrainLayer : IRenderLayer
         
         foreach (var chunk in visibleChunks)
         {
-            // Bake once, reuse until dirty
             if (chunk.IsDirty || chunk.Bitmap == null)
             {
                 _baker.Bake(chunk);

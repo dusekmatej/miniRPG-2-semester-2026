@@ -56,7 +56,10 @@ public class Game
         var coinEntity = EntityFactory.CreateCoin(mapCenterX + 150, mapCenterY + 150);
         var trader = EntityFactory.CreateTrader(mapCenterX + 300, mapCenterY + 300);
 
-        _engine!.World.CacheEntities(cameraEntity);
+        if (_engine == null)
+            throw new NullReferenceException("Engine is not initialized!");
+
+        _engine.World.CacheEntities(cameraEntity);
         _engine.World.CacheEntities(playerEntity);
 
         // Skip test entities when loading — save data will restore them
@@ -67,22 +70,13 @@ public class Game
             var chest = EntityFactory.CreateChest(mapCenterX + 200, mapCenterY + 200);
             var smallHealingPotion = EntityFactory.CreateHealingItem(mapCenterX + 250, mapCenterY + 250, "small_health_potion");
 
-        if (_engine == null)
-            throw new NullReferenceException("Engine is not initialized!");
-
-        // Import them to the world
-        _engine.World.CacheEntities(cameraEntity);
-        _engine.World.CacheEntities(playerEntity);
-        _engine.World.Entities.Add(testInteractable);
-        _engine.World.Entities.Add(testEnemy);
-        _engine.World.Entities.Add(chest);
-        _engine.World.Entities.Add(smallHealingPotion);
-        _engine.World.Entities.Add(coinEntity);
-        _engine.World.Entities.Add(trader);
-        _engine.World.Entities.Add(testInteractable);
-        _engine.World.Entities.Add(testEnemy);
-        _engine.World.Entities.Add(chest);
-        _engine.World.Entities.Add(smallHealingPotion);
+            // Import them to the world
+            _engine.World.Entities.Add(testInteractable);
+            _engine.World.Entities.Add(testEnemy);
+            _engine.World.Entities.Add(chest);
+            _engine.World.Entities.Add(smallHealingPotion);
+            _engine.World.Entities.Add(coinEntity);
+            _engine.World.Entities.Add(trader);
         }
     }
 

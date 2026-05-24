@@ -116,9 +116,12 @@ public static class EntityFactory
             StopDistance = 60f,
             CurrentHealth = 200,
             MaxHealth = 200,
-            Damage = 50,
+            Damage = 20,
+            PlayerDamage = 10,
             ExperienceReward = 15,
             HealthBarHeight = 10f,
+            AttackCooldown = 2f,
+            TimeSinceLastAttack = 0f,
         });
         e.AddComponent(new AnimationComponent
         {

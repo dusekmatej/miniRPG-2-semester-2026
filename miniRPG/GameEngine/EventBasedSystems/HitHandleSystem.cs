@@ -16,6 +16,31 @@ public class HitHandleSystem
         _world.EventBus.Subscribe<RockHitEvent>(OnRockInteract);
         _world.EventBus.Subscribe<EnemyHitEvent>(OnEnemyInteract);
         _world.EventBus.Subscribe<TreeHitEvent>(OnTreeInteract);
+        _world.EventBus.Subscribe<PlayerHitEvent>(OnPlayerHit);
+    }
+
+    private void OnPlayerHit(PlayerHitEvent e)
+    {
+        var healthBar = e.Target.GetComponent<HealthBarComponent>();
+        if (healthBar != null)
+        {
+            healthBar.CurrentHealth -= e.Damage;
+            if (healthBar.CurrentHealth <= 0)
+            {
+                // Handle player death
+                healthBar.CurrentHealth = healthBar.MaxHealth;
+                
+                var transform = e.Target.GetComponent<TransformComponent>();
+                if (transform != null)
+                {
+                    // Reset position to center map
+                    transform.X = 0;
+                    transform.Y = 0;
+                }
+                
+                _world.EventBus.Post(new PlayerDeathEvent(e.Target));
+            }
+        }
     }
 
     private void OnRockInteract(RockHitEvent e)

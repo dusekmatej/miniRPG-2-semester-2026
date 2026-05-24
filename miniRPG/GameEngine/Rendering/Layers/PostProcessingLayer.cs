@@ -6,6 +6,8 @@ namespace miniRPG.GameEngine.Rendering.Layers;
 
 public class PostProcessingLayer : IRenderLayer
 {
+    // NOT IN USE CURRENTLY JUST A PROTOTYPE
+    
     private static readonly Color WarmTint = Color.FromArgb(15, 255, 200, 100);
     private static readonly Color VignetteColor = Color.FromArgb(80, 0, 0, 0);
 

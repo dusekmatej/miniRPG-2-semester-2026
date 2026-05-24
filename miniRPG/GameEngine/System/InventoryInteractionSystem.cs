@@ -8,7 +8,7 @@ namespace miniRPG.GameEngine.System;
 
 public class InventoryInteractionSystem
 {
-    World world;
+    private World _world;
     
     public void Update(World world)
     {
@@ -38,7 +38,6 @@ public class InventoryInteractionSystem
                 clickY >= hotbarComp.Y + hotbarComp.SlotOffsetY &&
                 clickY < hotbarComp.Y + hotbarComp.SlotOffsetY + hotbarComp.SlotSize)
             {
-                Console.WriteLine("HANDLE HOTBAR");
                 HandleHotbarClick(clickX, clickY, hotbarComp, inventoryComp);
             }
             

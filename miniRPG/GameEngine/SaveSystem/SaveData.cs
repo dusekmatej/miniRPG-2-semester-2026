@@ -11,7 +11,7 @@ public class PlayerSaveData
 {
     public float X { get; set; }
     public float Y { get; set; }
-    public int CurrentHealth { get; set; }
+    public float CurrentHealth { get; set; }
     public List<InventorySlotSaveData> InventorySlots { get; set; } = new();
     public List<InventorySlotSaveData> HotbarSlots { get; set; } = new();
     public Dictionary<string, SkillSaveData> Skills { get; set; } = new();

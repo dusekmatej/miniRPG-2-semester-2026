@@ -1,113 +1,93 @@
 namespace miniRPG.GameEngine.Rendering.Layers;
 using Components;
 using Core;
-
-
-
-
-
 public class InventoryLayer : IRenderLayer
 {
+    private Entity PlayerEntity;
+    
+    private Brush _highlightBrush = new SolidBrush(Color.FromArgb(100, 255, 215, 0));
+    private Brush _whiteBrush = new SolidBrush(Color.White);
+    
     public void Render(World world, RenderContext context)
     {
+        PlayerEntity = world.PlayerEntity;
+        
+        if (!PlayerEntity.HasComponent<InventoryComponent>()) return;
 
-        foreach (var e in world.Entities)
+        var inventoryComp = PlayerEntity.GetComponent<InventoryComponent>();
+        var hotbarComponent = PlayerEntity.GetComponent<HotbarComponent>();
+
+        if (inventoryComp == null || hotbarComponent == null) return;
+        
+        if (inventoryComp.IsOpen)
         {
+            if (inventoryComp.InventorySprite?.Image != null)
+                context.Graphics.DrawImage(inventoryComp.InventorySprite.Image, inventoryComp.X - 20, inventoryComp.Y + 30, inventoryComp.Width, inventoryComp.Height);
 
-            if (!e.HasComponent<InventoryComponent>())
-                continue;
-
-            var inventoryComp = e.GetComponent<InventoryComponent>();
-           
-            var hotbarComponent = e.GetComponent<HotbarComponent>();
-
-            if ( inventoryComp == null ||  hotbarComponent == null)
-                continue;
-            if (inventoryComp.IsOpen)
+            for (int i = 0; i < inventoryComp.Inventory.Slots.Length; i++)
             {
-                if (inventoryComp.InventorySprite?.Image != null)
-                    context.Graphics.DrawImage(inventoryComp.InventorySprite.Image, inventoryComp.X - 20, inventoryComp.Y + 30, inventoryComp.Width, inventoryComp.Height);
-
-                for (int i = 0; i < inventoryComp.Inventory.Slots.Length; i++)
-                {
-                    var slot = inventoryComp.Inventory.Slots[i];
-
-                    if (slot != null && slot.Item?.Sprite?.Image != null)
-                    {
-                        
-                        int col = i % 4;
-                        int row = i / 4;
-
-                        int itemX = inventoryComp.X - 20  + inventoryComp.SlotOffsetX + (col * inventoryComp.SlotSize);
-                        int itemY = inventoryComp.Y - 20 + inventoryComp.SlotOffsetY + (row * inventoryComp.SlotSize);
-                        
-                        if (inventoryComp.selectedFromInventory && inventoryComp.selectedSlotIndex == i)
-                        {
-                            using var highlightBrush = new SolidBrush(Color.FromArgb(100, 255, 215, 0));
-                            context.Graphics.FillRectangle(highlightBrush, itemX, itemY +25,
-                                inventoryComp.SlotSize, inventoryComp.SlotSize);
-                        }
-                        
-                        context.Graphics.DrawImage(slot.Item.Sprite.Image, itemX, itemY +25, inventoryComp.SlotSize, inventoryComp.SlotSize);
-                        if (slot.Amount > 0)
-                        {
-                            string amountText = slot.Amount.ToString();
-                            using var font = new Font("Arial", 8, FontStyle.Bold);
-                            using var brush = new SolidBrush(Color.White);
-                        
-                            SizeF textSize = context.Graphics.MeasureString(amountText, font);
-                            int textX = (int)(itemX + inventoryComp.SlotSize - textSize.Width - 2);
-                            int textY = (int)(itemY + 25 + inventoryComp.SlotSize - textSize.Height - 2);
-                        
-                            context.Graphics.DrawString(amountText, font, brush, textX, textY);
-                        }
-
-                    }
-                }
-            }
-
-
-            if (hotbarComponent.HotbarSprite?.Image != null)
-                context.Graphics.DrawImage(hotbarComponent.HotbarSprite.Image, hotbarComponent.X, hotbarComponent.Y + 5, hotbarComponent.Width, hotbarComponent.Height);
-            
-            for (int i = 0; i < hotbarComponent.Slots.Length; i++)
-            {
-                var slot = hotbarComponent.Slots[i];
+                var slot = inventoryComp.Inventory.Slots[i];
 
                 if (slot != null && slot.Item?.Sprite?.Image != null)
                 {
-                    int itemX = hotbarComponent.X + hotbarComponent.SlotOffsetX + (i * hotbarComponent.SlotSize);
-                    int itemY = hotbarComponent.Y + hotbarComponent.SlotOffsetY;
-                    if (hotbarComponent.SelectedSlotIndex == i)
-                    {
-                        using var highlightBrush = new SolidBrush(Color.FromArgb(100, 255, 255, 255));
-                        context.Graphics.FillRectangle(highlightBrush, itemX - 25, itemY - 40,
-                            hotbarComponent.SlotSize, hotbarComponent.SlotSize);
-                    }
-                    if (inventoryComp.selectedFromHotbar && inventoryComp.selectedSlotIndex == i)
-                    {
-                        using var highlightBrush = new SolidBrush(Color.FromArgb(100, 255, 215, 0));
-                        context.Graphics.FillRectangle(highlightBrush, itemX - 25, itemY - 40,
-                            hotbarComponent.SlotSize, hotbarComponent.SlotSize);
-                    }
+                    var col = i % 4;
+                    var row = i / 4;
+
+                    var itemX = inventoryComp.X - 20  + inventoryComp.SlotOffsetX + (col * inventoryComp.SlotSize);
+                    var itemY = inventoryComp.Y - 20 + inventoryComp.SlotOffsetY + (row * inventoryComp.SlotSize);
                     
-                    context.Graphics.DrawImage(slot.Item.Sprite.Image, itemX - 25, itemY - 40,hotbarComponent.SlotSize, hotbarComponent.SlotSize);
+                    if (inventoryComp.selectedFromInventory && inventoryComp.selectedSlotIndex == i)
+                        context.Graphics.FillRectangle(_highlightBrush, itemX, itemY +25, inventoryComp.SlotSize, inventoryComp.SlotSize);
+                    
+                    context.Graphics.DrawImage(slot.Item.Sprite.Image, itemX, itemY +25, inventoryComp.SlotSize, inventoryComp.SlotSize);
                     if (slot.Amount > 0)
                     {
                         string amountText = slot.Amount.ToString();
-                        using var font = new Font("Arial", 7, FontStyle.Bold);
-                        using var brush = new SolidBrush(Color.White);
+                        using var font = new Font("Arial", 8, FontStyle.Bold);
                     
                         SizeF textSize = context.Graphics.MeasureString(amountText, font);
-                        int textX = (int)(itemX - 25 + hotbarComponent.SlotSize - textSize.Width - 1);
-                        int textY = (int)(itemY - 40 + hotbarComponent.SlotSize - textSize.Height - 1);
+                        int textX = (int)(itemX + inventoryComp.SlotSize - textSize.Width - 2);
+                        int textY = (int)(itemY + 25 + inventoryComp.SlotSize - textSize.Height - 2);
                     
-                        context.Graphics.DrawString(amountText, font, brush, textX, textY);
+                        context.Graphics.DrawString(amountText, font, _whiteBrush, textX, textY);
                     }
 
                 }
             }
-            
+        }
+
+
+        if (hotbarComponent.HotbarSprite?.Image != null)
+            context.Graphics.DrawImage(hotbarComponent.HotbarSprite.Image, hotbarComponent.X, hotbarComponent.Y + 5, hotbarComponent.Width, hotbarComponent.Height);
+        
+        for (int i = 0; i < hotbarComponent.Slots.Length; i++)
+        {
+            var slot = hotbarComponent.Slots[i];
+
+            if (slot != null && slot.Item?.Sprite?.Image != null)
+            {
+                var itemX = hotbarComponent.X + hotbarComponent.SlotOffsetX + (i * hotbarComponent.SlotSize);
+                var itemY = hotbarComponent.Y + hotbarComponent.SlotOffsetY;
+                
+                if (hotbarComponent.SelectedSlotIndex == i)
+                    context.Graphics.FillRectangle(_highlightBrush, itemX - 25, itemY - 40, hotbarComponent.SlotSize, hotbarComponent.SlotSize);
+                
+                if (inventoryComp.selectedFromHotbar && inventoryComp.selectedSlotIndex == i)
+                    context.Graphics.FillRectangle(_highlightBrush, itemX - 25, itemY - 40, hotbarComponent.SlotSize, hotbarComponent.SlotSize);
+                
+                context.Graphics.DrawImage(slot.Item.Sprite.Image, itemX - 25, itemY - 40,hotbarComponent.SlotSize, hotbarComponent.SlotSize);
+                if (slot.Amount > 0)
+                {
+                    var amountText = slot.Amount.ToString();
+                    using var font = new Font("Arial", 7, FontStyle.Bold);
+                
+                    SizeF textSize = context.Graphics.MeasureString(amountText, font);
+                    var textX = (int)(itemX - 25 + hotbarComponent.SlotSize - textSize.Width - 1);
+                    var textY = (int)(itemY - 40 + hotbarComponent.SlotSize - textSize.Height - 1);
+                
+                    context.Graphics.DrawString(amountText, font, _whiteBrush, textX, textY);
+                }
+            }
         }
     }
 }

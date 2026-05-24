@@ -2,9 +2,9 @@
 
 public class HealthBarComponent
 {
-    public int CurrentHealth;
-    public int MaxHealth;
-    public int MinHealth;
+    public float CurrentHealth;
+    public float MaxHealth;
+    public float MinHealth;
     
     public int X;
     public int Y;

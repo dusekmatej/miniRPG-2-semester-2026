@@ -1,16 +1,87 @@
 # miniRPG
-This is my current semester project for my high school of applied cybernetics. I'm collaborating with my classmate.
-## Idea
-The initial idea for this project was to remake a "game" that I worked on nearly a year ago, it was an RPG game inside of command line. But I though that I should take this project deeper than before. Because of that, this project is focused strictly on **clean architecture** and **quality of code**. I make it more like **GameEngine** than only a game.
-## Current Features
-- Basic Perlin Noise Map Generation
-- Fully animated characacter
-- Character Movement
-- Base for interactable blocks
-- Smooth camera system
 
-## Challenges
-One of the most challenging things is, that we always have to be thinking about the performance impact, finding ways to cut some corners somewhere for better performance. Because the whole game is inside of **Windows Forms**, which is not optimized for making a game. For sure not a 2D Top-Down game that runs on 60FP/S with open-world map.
+Tento projekt je pololetní práce na střední škole kybernetiky. Vyvíjeno ve spolupráci se spolužákem.
 
-## What's next?
-My vision for this is currently implement some basic game mechanics like mining, woodcutting, inventory system, survival elements. I will probably keep working on this game even after the semester project will be due.
+---
+
+## Návod ke spuštění a ovládání
+
+### Spuštění
+1. Otevřete soubor `miniRPG.sln` v aplikaci Visual Studio nebo JetBrains Rider.
+2. Ujistěte se, že máte nainstalované SDK pro `.NET 10.0-windows`.
+3. Sestavte a spusťte projekt (klávesa `F5` nebo `shift + F10` - zaleží na editoru).
+
+### Ovládání
+- **Pohyb:** `W`, `A`, `S`, `D`
+- **Interakce (Těžba/Boj/Truhly/Dialog):** `E` (všeobecná klávesa pro akci s nejbližším objektem – skály, stromy, nepřátelé, truhly)
+- **Použití předmětu (Hotbar/Inventář):** `F` (použije vybraný předmět z hotbaru nebo označený předmět v otevřeném inventáři)
+- **Otevření/Zavření Inventáře:** `I`
+- **Obchodování (u Obchodníka):**
+  - `N` - Další nabídka (přepínání mezi předměty)
+  - `B` - Přepnutí módu (Koupit / Prodat)
+- **Hotbar (Výběr slotu):** `NumPad 1` - `NumPad 7` (přepínání aktivního slotu)
+- **Systémové:**
+  - `F5` - Rychlé uložení (Quick Save)
+  * `F6` - Rychlé načtení (Quick Load)
+  * `F3` - Debug režim grafiky
+- **Testovací/Cheat klávesy:**
+  * `R` - Přidání náhodného předmětu
+  * `C` - Přidání mince (Coin)
+
+---
+
+## Architektura projektu
+
+Projekt je postaven na principu vlastního **Game Enginu**, kde je herní logika striktně oddělena od vizuální vrstvy (WinForms). Využívá se architektura inspirovaná **ECS (Entity Component System)** a komunikace mezi komponentami probíhá pomocí delegátů a událostí přes centrální `EventBus`.
+
+### Mermaid Diagram Architektury
+
+```mermaid
+graph TD
+    subgraph UI_Layer [Vizuální Vrstva - WinForms]
+        MainForm[MainForm.cs]
+        LoadForm[Load.cs]
+    end
+
+    subgraph Core_Engine [Herní Engine]
+        Engine[Engine.cs - Herní smyčka]
+        Renderer[Renderer.cs - Graphics vykreslování]
+        World[World.cs - Správa entit]
+        SaveManager[SaveManager.cs - JSON Serializace]
+    end
+
+    subgraph Data_Logic [Herní Logika a Data]
+        Components[Komponenty - Health, Transform, AI]
+        Systems[Systémy - Movement, Combat, Animation]
+        Terrain[Terrain.cs - Procedurálně generovaný svět]
+    end
+
+    MainForm --> Engine
+    Engine --> Renderer
+    Engine --> Systems
+    Systems --> Components
+    Renderer --> UI_Layer
+    Engine -- Events/Delegates --> MainForm
+    SaveManager -- JSON Serialization --> Data_Logic
+```
+
+---
+
+## Tým a rozdělení rolí
+
+| Jméno | Role | Hlavní zodpovědnost |
+|-------|------|---------------------|
+| **Matěj Dušek** | **Lead Engine & Terrain** | Jádro enginu, rendering, procedurální generování (Perlin Noise), systémy entit. |
+| **František Kopecký** | **UI & Logic Systems** | WinForms UI, Save/Load systém (JSON), inventář, interakce a herní mechaniky. |
+
+---
+
+## Klíčové technologie a implementace
+- **Vlastní Algoritmus:** Procedurální generování světa pomocí **Perlin Noise** ve třídě `Terrain.cs`.
+- **Game Loop:** Plynulá herní smyčka běžící na stabilních 60 FPS pomocí WinForms Graphics.
+- **Save/Load:** Strukturované ukládání stavu světa a hráče do **JSON** souborů s validací poškození dat.
+- **Komunikace:** Striktní decoupling pomocí `EventBus` a delegátů.
+
+---
+
+[Zobrazit AI Logbook](AILogbook.MD)

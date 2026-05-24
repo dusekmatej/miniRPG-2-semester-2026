@@ -81,7 +81,6 @@ public class PlayerInputSystem
                 if (hotbarSlot?.Item == null || !hotbarSlot.Item.IsUsable) return;
 
                 world.EventBus.Post(new UseItemEvent(entity, hotbarSlot.Item, hotbarComponent.SelectedSlotIndex));
-                Console.WriteLine("Posted UseItemEvent for item: " + hotbarSlot.Item.Name);
             }
 
             if (Keyboard.WasKeyPressed(Keys.F5))

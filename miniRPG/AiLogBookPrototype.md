@@ -1,19 +1,32 @@
-I have a problem with the game not running on 60FPS, help me reach
-at least 60 FPS. Here is my MainForm code:  
-[MainForm.cs] \
-And here is the designer side: \
-[MainForm.Designer.cs] \
-Help me improve the target FPS, it should already reach thanks to the timer to the timer that is set on 16ms, but it
-caps out at 40 FPS.
-Don't change the code that could influence the game logic. Make sure to take into accountability that if you speed up
-the loop
-itself it speeds up the whole game.
+# AI Logbook - Záznam využití AI v projektu
 
-[UiLayer.cs] \
-// PROMPT: I need you to implement these features: Every time I gain some xp I need a Statístic Bar (something like in Minecraft there is a "boss-bar" which
-// displays the health of the current boss you are fighting, but in this case it will be an experience bar) to display at the top of the screen with the name
-// of the skill and the amount of xp gained, and it should disappear after 4 seconds.
-// Also, when I level up I want a message to appear in the middle of the screen with the text "LEVEL UP!" and
-// "You are now Level X" where X is the new level number, and this message should have a nice animation and disappear after 2 seconds.
-// Please implement these features in the UiLayer class.
-// Keep the structure and architecture as CLOSE to other RenderLayers and my other code! 
+Tato sekce obsahuje popis konkrétních úloh, u kterých bylo využito AI (např. GitHub Copilot, ChatGPT), a ukázky promptů, které byly použity k vyřešení technických problémů.
+
+## 1. Optimalizace vykreslovací smyčky (Performance)
+**Problém:** Windows Forms mají tendenci se při vykreslování většího množství objektů zasekávat a hra běžela pod 40 FPS.
+**Využití AI:** Pomoc s nastavením `DoubleBuffered` a optimalizací cyklu v `MainForm`.
+
+**Prompt:**
+> "Mám problém s tím, že mi hra WinForms neběží plynule na 60 FPS. Mám MainForm s timerem nastaveným na 16ms, ale reálně to dosahuje jen k 40 FPS. Jaké jsou nejlepší praktiky pro plynulé vykreslování v C# Windows Forms bez změny herní logiky?"
+
+## 2. Procedurální generování (Perlin Noise)
+**Problém:** Implementace vlastního algoritmu pro pseudonáhodné generování mapy.
+**Využití AI:** Vysvětlení matematického pozadí Perlin Noise a pomoc s optimalizací interpolace.
+
+**Prompt:**
+> "Potřebuji implementovat Perlin Noise třídu v C# pro generování 2D mapy v mém RPG. Můžeš mi vysvětlit, jak fungují gradientní vektory a jak nejefektivněji napsat Fade funkci pro plynulé přechody mezi biomy?"
+
+## 3. UI Systém - Experience Bar
+**Problém:** Potřeba dynamicky zobrazovat XP bar a hlášky o level upu s animací.
+**Využití AI:** Návrh struktury pro `UiLayer` a časování zmizení elementů.
+
+**Prompt:**
+> "Implementuj do třídy UiLayer následující: Kdykoliv získám XP, chci nahoře vidět 'Statistic Bar' (podobně jako boss-bar v Minecraftu), který ukáže název skillu a hodnotu XP. Bar musí po 4 sekundách zmizet. Při level-upu ukaž uprostřed obrazovky velký nápis 'LEVEL UP!' s jednoduchou animací."
+
+## 4. Save/Load Systém (JSON Serializace)
+**Problém:** Robustní ukládání herního stavu a ošetření poškozených souborů.
+**Využití AI:** Pomoc s nastavením `JsonSerializerOptions` a strukturou try-catch bloku pro detekci chyb v souborech.
+
+**Prompt:**
+> "Jak v C# nejlépe ošetřit situaci, kdy načítám JSON soubor přes System.Text.Json, ale soubor je poškozený nebo má neplatnou strukturu? Potřebuji, aby mi SaveManager vyhodil smysluplnou chybu a nespadla celá hra."
+ 

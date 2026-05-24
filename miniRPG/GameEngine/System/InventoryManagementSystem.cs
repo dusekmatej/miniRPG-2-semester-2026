@@ -67,6 +67,7 @@ public class InventoryManagementSystem
     private void OnEnemyDeath(EnemyDeathEvent e)
     {
         _inventory = GetInventory();
+        _inventory.Inventory.Add(ItemDatabase.Get("coin"));
         
         _world.RemoveEntity(e.Target);
     }

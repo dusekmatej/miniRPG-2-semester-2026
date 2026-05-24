@@ -16,7 +16,6 @@ public class AnimationSystem
     private readonly Stopwatch _internalClock = Stopwatch.StartNew();
     private long _lastUpdateMs = 0;
 
-    // Driven by the main game loop; deltaMs is elapsed ms since last update
     public void Update(World world)
     {
         long currentMs = _internalClock.ElapsedMilliseconds;
@@ -42,7 +41,6 @@ public class AnimationSystem
         if (_accumulatorMs < _frameIntervalMs)
             return;
 
-        // advance frames as many intervals passed
         var steps = _accumulatorMs / _frameIntervalMs;
         _accumulatorMs %= _frameIntervalMs;
 
@@ -72,7 +70,6 @@ public class AnimationSystem
             if (frames == null || frames.Count() == 0)
                 continue;
 
-            // Ensure index is inside bounds
             if (comp.CurrentFrameIndex < 0 || comp.CurrentFrameIndex >= frames.Count())
                 comp.CurrentFrameIndex = 0;
 
