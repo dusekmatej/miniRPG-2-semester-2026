@@ -90,6 +90,7 @@ public static class EntityFactory
                 AnimationFramesRight = TextureDatabase.GetAnimation("run_right") ?? [],
                 AnimationFramesLeft = TextureDatabase.GetAnimation("run_left") ?? [],
             });
+    e.AddComponent(new NamePlateComponent { Name = "Player", Color = Color.White });
         
         return e;
     }
@@ -136,7 +137,6 @@ public static class EntityFactory
             AnimationFramesLeft = TextureDatabase.GetAnimation("run_left_enemy") ?? [],
         });
         
-
         return e;
     }
     public static Entity CreateChest(float posX, float posY)
@@ -147,7 +147,7 @@ public static class EntityFactory
         e.AddComponent(new TextureMultipleComponent { Textures = new[] { TextureDatabase.Get("small_iron_chest") }, CurrentTextureIndex = 0 });
         e.AddComponent(new Interactable { Radius = 100 });
         e.AddComponent(new ChestComponent());
-
+        
         return e;
     }
     public static Entity CreateHealingItem(float posX, float posY, string databaseName)

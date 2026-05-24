@@ -13,6 +13,7 @@ public class ItemUseSystem
     {
         _world = world;
         _world.EventBus.Subscribe<UseItemEvent>(OnItemUsed);
+        _world.EventBus.Subscribe<UseItemFromInventoryEvent>(OnItemFromInventoryUsed);
     }
 
     private void OnItemUsed(UseItemEvent e)
@@ -31,13 +32,35 @@ public class ItemUseSystem
             return;
 
         var slot = hotbarComponent.Slots[e.SlotIndex];
-        if (slot?.Item == null)
+        if (slot.Item == null)
             return;
 
         slot.Amount--;
         if (slot.Amount <= 0)
             hotbarComponent.Slots[e.SlotIndex] = null;
+
+    }
+
+    private void OnItemFromInventoryUsed(UseItemFromInventoryEvent e)
+    {
+        if (e.Item.Type != ItemType.Potion && e.Item.Type != ItemType.Food)
+            return;
         
+        if (e.Item.HealAmount <= 0)
+            return;
         
+        _world.EventBus.Post(new HealPlayerEvent(e.Item.HealAmount));
+        
+        var inventoryComponent = e.Source.GetComponent<InventoryComponent>();
+        if (inventoryComponent == null)
+            return;
+
+        var inventorySlot = inventoryComponent.Inventory.Slots[e.SlotIndex];
+        if (inventorySlot.Item == null)
+            return;
+        
+        inventorySlot.Amount--;
+        if (inventorySlot.Amount <= 0)
+            inventoryComponent.Inventory.Slots[e.SlotIndex] = null;
     }
 }

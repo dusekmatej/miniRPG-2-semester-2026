@@ -13,6 +13,8 @@ public class ChunkManager
     private const int RenderDistance = 2;
     private readonly Entity _cameraEntity;
     private Camera _camera;
+    private readonly HashSet<(int x, int y)> _savedOrePositions = new();
+    private readonly HashSet<(int chunkX, int chunkY)> _chunksWithSavedOres = new();
     
     private int _lastChunkX = int.MinValue;
     private int _lastChunkY = int.MinValue;
@@ -36,17 +38,24 @@ public class ChunkManager
     {
         if (!_chunks.TryGetValue((chunkX, chunkY), out var chunk))
         {
-            Console.WriteLine($"X: {chunkX} Y: {chunkY}");
             chunk = new Chunk(chunkX, chunkY);
             _terrain.FillChunkPerlin(chunk);
             _chunks[(chunkX, chunkY)] = chunk;
         }
 
-        // Spawn ores inside the chunk
         if (chunk.OresSpawned) return chunk;
+
+        Console.WriteLine($"[ChunkManager] Spawning ores for chunk {chunkX},{chunkY} | HasSavedOres: {_chunksWithSavedOres.Contains((chunkX, chunkY))}");
+
+        if (_chunksWithSavedOres.Contains((chunkX, chunkY)))
+        {
+            chunk.OresSpawned = true;
+            return chunk;
+        }
+
         _terrain.SpawnChunkOres(world, chunk);
         chunk.OresSpawned = true;
-        
+
         return chunk;
     }
     
@@ -87,5 +96,23 @@ public class ChunkManager
             _chunks.Remove(key);
             Console.WriteLine($"Removing {key}");
         }
+    }
+    public void RegisterSavedOrePositions(List<(int x, int y)> positions)
+    {
+        _savedOrePositions.Clear();
+        _chunksWithSavedOres.Clear();
+    
+        foreach (var pos in positions)
+        {
+            _savedOrePositions.Add(pos);
+        
+            int chunkX = (int)MathF.Floor((float)pos.x / Chunk.Size);
+            int chunkY = (int)MathF.Floor((float)pos.y / Chunk.Size);
+            _chunksWithSavedOres.Add((chunkX, chunkY));
+        
+            Console.WriteLine($"[SaveSystem] Registered ore at tile ({pos.x},{pos.y}) → chunk ({chunkX},{chunkY})");
+        }
+    
+        Console.WriteLine($"[SaveSystem] Total chunks blocked from ore spawn: {_chunksWithSavedOres.Count}");
     }
 }
