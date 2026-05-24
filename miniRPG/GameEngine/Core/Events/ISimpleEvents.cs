@@ -17,3 +17,5 @@ public class DamagePlayerEvent(int amount) : ISimpleEvents
 {
     public int Amount = amount;
 }
+public class SaveRequestEvent : ISimpleEvents {}
+public class LoadRequestEvent :  ISimpleEvents {}

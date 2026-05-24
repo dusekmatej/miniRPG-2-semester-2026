@@ -9,6 +9,7 @@ namespace miniRPG.GameEngine.System;
 public class PlayerInputSystem
 {
     private readonly CheckRadius _checkRadius;
+    
 
     // ReSharper disable ConvertToPrimaryConstructor
     public PlayerInputSystem(CheckRadius checkRadius)
@@ -20,14 +21,14 @@ public class PlayerInputSystem
     {
         if (_checkRadius == null)
             throw new Exception("CheckRadius is null!");
-        
+
         foreach (var entity in world.Entities)
         {
             if (!entity.HasComponent<PlayerComponent>())
                 continue;
-            
+
             var velocity = entity.GetComponent<VelocityComponent>();
-            
+
             if (velocity != null)
             {
                 velocity.X = 0;
@@ -38,7 +39,7 @@ public class PlayerInputSystem
             if (Keyboard.WasKeyPressed(Keys.E))
             {
                 var nearest = _checkRadius.GetNearestInteractable();
-                
+
                 if (nearest != null)
                 {
                     var interactable = nearest.GetComponent<Interactable>();
@@ -54,22 +55,23 @@ public class PlayerInputSystem
             {
                 var inventoryComponent = entity.GetComponent<InventoryComponent>();
                 var hotbarComponent = entity.GetComponent<HotbarComponent>();
-                
-                
+
+
                 if (inventoryComponent != null && inventoryComponent.IsOpen &&
-                    inventoryComponent.selectedFromInventory && inventoryComponent.selectedSlotIndex >=0)
+                    inventoryComponent.selectedFromInventory && inventoryComponent.selectedSlotIndex >= 0)
                 {
                     var inventorySlot = inventoryComponent.Inventory.Slots[inventoryComponent.selectedSlotIndex];
                     if (inventorySlot.Item != null && inventorySlot.Item.IsUsable)
                     {
-                        world.EventBus.Post(new UseItemFromInventoryEvent(entity, inventorySlot.Item, inventoryComponent.selectedSlotIndex));
+                        world.EventBus.Post(new UseItemFromInventoryEvent(entity, inventorySlot.Item,
+                            inventoryComponent.selectedSlotIndex));
                         inventoryComponent.selectedSlotIndex = -1;
                         inventoryComponent.selectedFromInventory = false;
                         return;
                     }
                 }
-                
-                
+
+
                 if (hotbarComponent == null) return;
 
                 var hotbarSlot = hotbarComponent.Slots[hotbarComponent.SelectedSlotIndex];
@@ -77,12 +79,17 @@ public class PlayerInputSystem
 
                 world.EventBus.Post(new UseItemEvent(entity, hotbarSlot.Item, hotbarComponent.SelectedSlotIndex));
                 Console.WriteLine("Posted UseItemEvent for item: " + hotbarSlot.Item.Name);
-                
-                 
             }
+
+            if (Keyboard.WasKeyPressed(Keys.F5))
+                world.EventBus.Post(new SaveRequestEvent());
             
+            if (Keyboard.WasKeyPressed(Keys.F6))
+                world.EventBus.Post(new LoadRequestEvent());
             
-            // Toggle inventory
+
+
+        // Toggle inventory
             if (Keyboard.WasKeyPressed(Keys.I))
                 world.EventBus.Post(new InventoryToggleEvent());
             

@@ -40,4 +40,11 @@ public class World
         int centerCY = (int)camera.Y / (Chunk.Size * Chunk.TileSize);
         Task.Run(() => ChunkManager.UpdateChunks(centerCX, centerCY));
     }
+    public void Clear()
+    {
+        Entities.Clear();
+        _pendingRemoval.Clear();
+        PlayerEntity = null;
+        CameraEntity = null;
+    }
 }
