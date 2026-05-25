@@ -71,7 +71,7 @@ graph TD
 
 | Jméno | Role | Hlavní zodpovědnost |
 |-------|------|---------------------|
-| **Matěj Dušek** | **Lead Engine & Terrain** | Jádro enginu, rendering, procedurální generování (Perlin Noise), systémy entit. |
+| **Matěj Dušek** | **Engine & Terrain** | Jádro enginu, rendering, procedurální generování (Perlin Noise), hlavní systémy entit. |
 | **František Kopecký** | **UI & Logic Systems** | WinForms UI, Save/Load systém (JSON), inventář, interakce a herní mechaniky. |
 
 ---
@@ -85,4 +85,4 @@ graph TD
 ---
 
 ## AI Logbook
-Bohužel jsem nezaznamenal moc promptů AI logbooku a už nestíhám dodat ale v některých částech kodu je prompt napsaný nahoře, momentálně AI bylo použito hlavně pro poslední změny kvůli nedostatku času. Jako třeba pro útok enemy, dodělání tradera a dodělání generace.
+Bohužel jsem nezaznamenal moc promptů do AI logbooku a už nestíhám dodat, ale v některých částech kodu je prompt napsaný nahoře, momentálně AI bylo použito hlavně pro poslední změny kvůli nedostatku času. Jako třeba pro útok enemy, dodělání tradera a dodělání generace.
